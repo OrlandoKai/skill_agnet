@@ -1,0 +1,242 @@
+[
+  {
+    "task_id": "task_001",
+    "instruction": "Calculate 12 * (3 + 4).",
+    "gold_skills": ["calculator"],
+    "expected_answer": "84",
+    "task_type": "single_skill",
+    "notes": "Basic arithmetic expression."
+  },
+  {
+    "task_id": "task_002",
+    "instruction": "Convert 10 cm to m.",
+    "gold_skills": ["unit_converter"],
+    "expected_answer": "0.1 m",
+    "task_type": "single_skill",
+    "notes": "Simple length conversion."
+  },
+  {
+    "task_id": "task_003",
+    "instruction": "Summarize this text: Skill retrieval finds useful tools. Skill calling executes them. The agent observes results.",
+    "gold_skills": ["summarizer"],
+    "expected_answer": "Skill retrieval finds useful tools. Skill calling executes them.",
+    "task_type": "single_skill",
+    "notes": "Rule-based summarization."
+  },
+  {
+    "task_id": "task_004",
+    "instruction": "Translate this Chinese text into English: 你好，人工智能智能体系统",
+    "gold_skills": ["translator_zh_en"],
+    "expected_answer": "hello artificial intelligence agent system",
+    "task_type": "single_skill",
+    "notes": "Chinese to English translation."
+  },
+  {
+    "task_id": "task_005",
+    "instruction": "Translate this English text into Chinese: hello skill retrieval agent",
+    "gold_skills": ["translator_en_zh"],
+    "expected_answer": "你好 技能 检索 智能体",
+    "task_type": "single_skill",
+    "notes": "English to Chinese translation."
+  },
+  {
+    "task_id": "task_006",
+    "instruction": "Extract keywords from: Skill retrieval and skill calling are important for agent systems.",
+    "gold_skills": ["keyword_extractor"],
+    "expected_answer": "skill, retrieval, calling, agent",
+    "task_type": "single_skill",
+    "notes": "Keyword extraction."
+  },
+  {
+    "task_id": "task_007",
+    "instruction": "Rewrite this sentence clearly: skill calling helps agents use tools",
+    "gold_skills": ["text_rewriter"],
+    "expected_answer": "skill calling helps agents use tools.",
+    "task_type": "single_skill",
+    "notes": "Light rewrite and punctuation cleanup."
+  },
+  {
+    "task_id": "task_008",
+    "instruction": "Analyze the sentiment of this sentence: This is a good and useful baseline.",
+    "gold_skills": ["sentiment_analyzer"],
+    "expected_answer": "positive",
+    "task_type": "single_skill",
+    "notes": "Positive sentiment."
+  },
+  {
+    "task_id": "task_009",
+    "instruction": "Answer this paper question: What is the core contribution of this paper?",
+    "gold_skills": ["paper_qa"],
+    "expected_answer": "Paper QA placeholder",
+    "task_type": "single_skill",
+    "notes": "Placeholder paper QA skill."
+  },
+  {
+    "task_id": "task_010",
+    "instruction": "Execute this Python code and return the result: x = 2 + 3\nx * 10",
+    "gold_skills": ["python_executor"],
+    "expected_answer": "50",
+    "task_type": "single_skill",
+    "notes": "Restricted Python execution."
+  },
+  {
+    "task_id": "task_011",
+    "instruction": "Compute sqrt(16) + 6.",
+    "gold_skills": ["calculator"],
+    "expected_answer": "10",
+    "task_type": "single_skill",
+    "notes": "Calculator with a math function."
+  },
+  {
+    "task_id": "task_012",
+    "instruction": "Convert 2 kg to g.",
+    "gold_skills": ["unit_converter"],
+    "expected_answer": "2000 g",
+    "task_type": "single_skill",
+    "notes": "Mass conversion."
+  },
+  {
+    "task_id": "task_013",
+    "instruction": "Summarize this paragraph: Agents can retrieve skills from a library. They can call a selected skill. Evaluation checks whether the final answer is useful.",
+    "gold_skills": ["summarizer"],
+    "expected_answer": "Agents can retrieve skills from a library. They can call a selected skill.",
+    "task_type": "single_skill",
+    "notes": "Another summarization item."
+  },
+  {
+    "task_id": "task_014",
+    "instruction": "Analyze sentiment: This attempt was bad and failed.",
+    "gold_skills": ["sentiment_analyzer"],
+    "expected_answer": "negative",
+    "task_type": "single_skill",
+    "notes": "Negative sentiment."
+  },
+  {
+    "task_id": "task_015",
+    "instruction": "Extract keywords from: local llama model skill registry benchmark retrieval evaluation",
+    "gold_skills": ["keyword_extractor"],
+    "expected_answer": "local, llama, skill, registry, benchmark, retrieval, evaluation",
+    "task_type": "single_skill",
+    "notes": "Keyword-only query."
+  },
+  {
+    "task_id": "task_016",
+    "instruction": "First calculate 12 * (3 + 4), then summarize the result in one short sentence.",
+    "gold_skills": ["calculator", "summarizer"],
+    "expected_answer": "The result is 84.",
+    "task_type": "multi_skill",
+    "notes": "Calculate then summarize."
+  },
+  {
+    "task_id": "task_017",
+    "instruction": "Translate 你好，技能检索智能体 into English, then extract keywords from the translated text.",
+    "gold_skills": ["translator_zh_en", "keyword_extractor"],
+    "expected_answer": "hello, skill, retrieval, agent",
+    "task_type": "multi_skill",
+    "notes": "Translate then extract keywords."
+  },
+  {
+    "task_id": "task_018",
+    "instruction": "Rewrite this text and then judge its sentiment: this baseline is good and useful",
+    "gold_skills": ["text_rewriter", "sentiment_analyzer"],
+    "expected_answer": "positive",
+    "task_type": "multi_skill",
+    "notes": "Rewrite then sentiment."
+  },
+  {
+    "task_id": "task_019",
+    "instruction": "Translate hello artificial intelligence system into Chinese, then summarize the translated result.",
+    "gold_skills": ["translator_en_zh", "summarizer"],
+    "expected_answer": "你好 人工智能 系统",
+    "task_type": "multi_skill",
+    "notes": "English to Chinese then summary."
+  },
+  {
+    "task_id": "task_020",
+    "instruction": "Execute Python code x = 5; y = x * 3; y, then summarize the numeric result.",
+    "gold_skills": ["python_executor", "summarizer"],
+    "expected_answer": "15",
+    "task_type": "multi_skill",
+    "notes": "Python execution then summary."
+  },
+  {
+    "task_id": "task_021",
+    "instruction": "Convert 1000 m to km, then rewrite the answer as a polished sentence.",
+    "gold_skills": ["unit_converter", "text_rewriter"],
+    "expected_answer": "1000 m is 1 km.",
+    "task_type": "multi_skill",
+    "notes": "Conversion then rewrite."
+  },
+  {
+    "task_id": "task_022",
+    "instruction": "Answer this paper question, then extract keywords from the answer: What is the contribution of the paper?",
+    "gold_skills": ["paper_qa", "keyword_extractor"],
+    "expected_answer": "paper, contribution, corpus",
+    "task_type": "multi_skill",
+    "notes": "Paper QA placeholder then keywords."
+  },
+  {
+    "task_id": "task_023",
+    "instruction": "Analyze sentiment, then summarize the result: This project is excellent and useful.",
+    "gold_skills": ["sentiment_analyzer", "summarizer"],
+    "expected_answer": "positive",
+    "task_type": "multi_skill",
+    "notes": "Sentiment then summary."
+  },
+  {
+    "task_id": "task_024",
+    "instruction": "Calculate 7 * 8, then translate the short answer 'the result is 56' into Chinese.",
+    "gold_skills": ["calculator", "translator_en_zh"],
+    "expected_answer": "56",
+    "task_type": "multi_skill",
+    "notes": "Calculate then English-to-Chinese translation."
+  },
+  {
+    "task_id": "task_025",
+    "instruction": "Translate 人工智能技能调用 into English, then summarize the translated text.",
+    "gold_skills": ["translator_zh_en", "summarizer"],
+    "expected_answer": "artificial intelligence skill calling",
+    "task_type": "multi_skill",
+    "notes": "Chinese-to-English translation then summary."
+  },
+  {
+    "task_id": "task_026",
+    "instruction": "Briefly explain why a benchmark should include both easy and hard tasks.",
+    "gold_skills": [],
+    "expected_answer": "A benchmark needs easy and hard tasks to measure basic capability and robustness.",
+    "task_type": "no_tool",
+    "notes": "General reasoning; no skill should be needed."
+  },
+  {
+    "task_id": "task_027",
+    "instruction": "Say hello and state that you are ready to help with skill retrieval experiments.",
+    "gold_skills": [],
+    "expected_answer": "Hello, I am ready to help with skill retrieval experiments.",
+    "task_type": "no_tool",
+    "notes": "Simple response without tools."
+  },
+  {
+    "task_id": "task_028",
+    "instruction": "What is the purpose of evaluating an agent loop?",
+    "gold_skills": [],
+    "expected_answer": "To measure whether the agent retrieves, calls, observes, and answers correctly.",
+    "task_type": "no_tool",
+    "notes": "Conceptual answer."
+  },
+  {
+    "task_id": "task_029",
+    "instruction": "List two components of a minimal skill-calling agent.",
+    "gold_skills": [],
+    "expected_answer": "A retriever and a skill registry.",
+    "task_type": "no_tool",
+    "notes": "No tool required."
+  },
+  {
+    "task_id": "task_030",
+    "instruction": "Explain in one sentence what invalid tool calling means.",
+    "gold_skills": [],
+    "expected_answer": "Invalid tool calling means selecting a missing or disallowed skill or making an unparsable call.",
+    "task_type": "no_tool",
+    "notes": "Definition question."
+  }
+]

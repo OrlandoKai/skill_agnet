@@ -1,0 +1,152 @@
+[
+  {
+    "name": "calculator",
+    "description": "Evaluate safe arithmetic expressions, including basic math functions.",
+    "input_schema": {
+      "type": "string",
+      "description": "A math expression such as '12 * (3 + 4)' or 'sqrt(16)'."
+    },
+    "examples": [
+      {
+        "input": "12 * (3 + 4)",
+        "output": "84"
+      }
+    ],
+    "keywords": ["math", "calculate", "calculator", "arithmetic", "expression", "compute"]
+  },
+  {
+    "name": "unit_converter",
+    "description": "Convert simple units such as cm to m, kg to g, and Celsius to Fahrenheit.",
+    "input_schema": {
+      "type": "string",
+      "description": "A conversion request such as '10 cm to m'."
+    },
+    "examples": [
+      {
+        "input": "10 cm to m",
+        "output": "10 -> 0.1 m"
+      }
+    ],
+    "keywords": ["unit", "convert", "conversion", "cm", "meter", "kg", "temperature"]
+  },
+  {
+    "name": "summarizer",
+    "description": "Produce a short rule-based summary of input text.",
+    "input_schema": {
+      "type": "string",
+      "description": "The text to summarize."
+    },
+    "examples": [
+      {
+        "input": "Skill retrieval finds tools. Skill calling executes tools.",
+        "output": "Summary: Skill retrieval finds tools. Skill calling executes tools."
+      }
+    ],
+    "keywords": ["summarize", "summary", "compress", "shorten", "abstract"]
+  },
+  {
+    "name": "translator_zh_en",
+    "description": "Translate simple Chinese phrases into English with a rule-based placeholder.",
+    "input_schema": {
+      "type": "string",
+      "description": "Chinese text to translate into English."
+    },
+    "examples": [
+      {
+        "input": "人工智能技能检索",
+        "output": "artificial intelligenceskillretrieval"
+      }
+    ],
+    "keywords": ["translate", "translation", "Chinese", "English", "zh", "en", "中译英"]
+  },
+  {
+    "name": "translator_en_zh",
+    "description": "Translate simple English phrases into Chinese with a rule-based placeholder.",
+    "input_schema": {
+      "type": "string",
+      "description": "English text to translate into Chinese."
+    },
+    "examples": [
+      {
+        "input": "hello skill retrieval agent",
+        "output": "你好 技能 检索 智能体"
+      }
+    ],
+    "keywords": ["translate", "translation", "English", "Chinese", "en", "zh", "英译中"]
+  },
+  {
+    "name": "keyword_extractor",
+    "description": "Extract frequent keywords from a text input.",
+    "input_schema": {
+      "type": "string",
+      "description": "The text to extract keywords from."
+    },
+    "examples": [
+      {
+        "input": "Skill retrieval and skill calling are important for agents.",
+        "output": "Keywords: skill, retrieval, calling, important, agents"
+      }
+    ],
+    "keywords": ["keyword", "extract", "terms", "topics", "tags"]
+  },
+  {
+    "name": "text_rewriter",
+    "description": "Rewrite text with light normalization and punctuation cleanup.",
+    "input_schema": {
+      "type": "string",
+      "description": "The text to rewrite."
+    },
+    "examples": [
+      {
+        "input": "skill calling helps agents",
+        "output": "Rewritten: skill calling helps agents."
+      }
+    ],
+    "keywords": ["rewrite", "polish", "edit", "paraphrase", "normalize"]
+  },
+  {
+    "name": "sentiment_analyzer",
+    "description": "Classify simple sentiment as positive, negative, or neutral.",
+    "input_schema": {
+      "type": "string",
+      "description": "The text to analyze."
+    },
+    "examples": [
+      {
+        "input": "This is a good baseline.",
+        "output": "Sentiment: positive"
+      }
+    ],
+    "keywords": ["sentiment", "emotion", "positive", "negative", "neutral", "opinion"]
+  },
+  {
+    "name": "paper_qa",
+    "description": "Placeholder paper question answering skill for later corpus integration.",
+    "input_schema": {
+      "type": "string",
+      "description": "A question about a paper."
+    },
+    "examples": [
+      {
+        "input": "What is the contribution of this paper?",
+        "output": "Paper QA placeholder: no paper corpus is loaded yet."
+      }
+    ],
+    "keywords": ["paper", "qa", "question", "answer", "research", "literature"]
+  },
+  {
+    "name": "python_executor",
+    "description": "Execute small restricted Python snippets without file, system, or network access.",
+    "input_schema": {
+      "type": "string",
+      "description": "A short Python code snippet."
+    },
+    "examples": [
+      {
+        "input": "x = 2 + 3\nx * 10",
+        "output": "50"
+      }
+    ],
+    "keywords": ["python", "code", "execute", "program", "snippet", "compute"]
+  }
+]

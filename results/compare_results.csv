@@ -1,0 +1,4 @@
+method,num_tasks,skill_recall,skill_selection_acc,task_success_rate,invalid_call_rate,avg_steps
+full,2,1.0,0.5,1.0,0.0,1.0
+bm25,2,1.0,1.0,1.0,0.0,1.0
+embedding,2,1.0,1.0,1.0,0.0,1.0
