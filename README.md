@@ -141,12 +141,25 @@ python scripts/compare_runs.py --inputs results/run_full.jsonl results/run_bm25.
 python scripts/analyze_failures.py --input results/run_bm25.jsonl
 ```
 
+## Streamlit UI
+
+Run the local interactive workbench from the project root:
+
+```bash
+.\.venv\Scripts\streamlit.exe run app.py
+```
+
+The UI includes seven pages: `总览`, `Benchmark`, `检索器实验`, `Agent 运行`, `评估指标`, `失败分析`, and `自由问答`.
+
+The `自由问答` page supports direct local Llama2 chat and Skill Agent mode. Chat sessions are saved automatically under `results/chat_sessions/`; the chat title uses the first user prompt and is truncated when it is too long.
+
 ## Outputs
 
 - `results/run_*.jsonl`: one Agent trace per line.
 - `results/metrics_*.csv`: metrics for one run.
 - `results/compare_results.csv`: method comparison table.
 - `results/failure_cases_*.json`: categorized failed cases.
+- `results/chat_sessions/*.json`: saved UI chat sessions.
 
 ## Evaluation Metrics
 
