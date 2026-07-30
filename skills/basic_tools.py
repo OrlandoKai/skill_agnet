@@ -980,7 +980,17 @@ def _numbers_from_text(text: str) -> list[float]:
 def _extract_csv_block(text: str) -> str:
     lines = [line.strip() for line in str(text).strip().splitlines() if line.strip()]
     if len(lines) >= 2:
-        csv_like = [line for line in lines if "," in line]
+        csv_like = []
+        for line in lines:
+            if "," not in line:
+                continue
+            lowered = line.lower()
+            if (
+                ("request" in lowered or "confuse" in lowered or "intended operation" in lowered)
+                and ":" in line
+            ):
+                continue
+            csv_like.append(line)
         if len(csv_like) >= 2:
             return "\n".join(csv_like)
 

@@ -802,3 +802,72 @@ This keeps the research story clean:
 
 > Better skill calling requires retrieval-aware skill contracts, not simply more
 > tool names.
+
+## Completion Status: 2026-07-31
+
+Phase 1 and Phase 2 are complete.
+
+Created benchmark artifacts:
+
+- `data/skillbench_dev.json`: 240 tasks
+- `data/skillbench_hard.json`: 120 tasks
+- `data/skillbench_hidden.json`: 80 hidden tasks
+- `data/skillbench_hidden_answer_key.json`
+- `data/skill_library_v2.json`: 40 retrieval-aware skill contracts
+
+Created support scripts:
+
+- `scripts/build_skillbench_v2.py`
+- `scripts/build_skill_contracts_v2.py`
+- `scripts/inspect_skill_contracts.py`
+
+Experiment records:
+
+- `docs/iteration_records/2026-07-31_benchmark_v2_completion/README.md`
+- `docs/iteration_records/2026-07-31_loop1_enhanced_v2_diagnosis/README.md`
+- `docs/iteration_records/2026-07-31_loop2_enhanced_v3/README.md`
+- `docs/iteration_records/2026-07-31_loop3_enhanced_v4/README.md`
+- `docs/iteration_records/2026-07-31_loop4_enhanced_v5/README.md`
+
+## Iteration Summary
+
+| Loop | Agent | Main Change | Dev Parameter Strict | Hard Parameter Strict |
+|---|---|---|---:|---:|
+| 1 | Enhanced V2 | Diagnosis on new Dev/Hard benchmarks | 75.83% | 46.67% |
+| 2 | Enhanced V3 | Better abstention and implicit multi-step planning | 77.08% | 64.17% |
+| 3 | Enhanced V4 | Narrow no-tool rules and improve similar-skill priorities | 80.83% | 67.50% |
+| 4 | Enhanced V5 | Fix remaining translation/entity/checklist/citation/CSV cases | 81.25% | 69.17% |
+
+## Current Finding
+
+SkillBench V2 makes the project bottleneck clearer:
+
+```text
+retrieval-aware contracts improve skill selection,
+but high final quality now depends on argument-level correctness.
+```
+
+Enhanced V5 reaches strong control-level metrics on Hard:
+
+- Skill Recall: 100.00%
+- Skill Selection Accuracy: 98.33%
+- Exact Skill Sequence Accuracy: 98.33%
+- Need-tool Accuracy: 100.00%
+- Abstain Accuracy: 100.00%
+- Strict Task Success: 96.67%
+
+However, Hard parameter strict success is still only 69.17%. Most remaining
+failures are `argument_construction_failure`, not retrieval or high-level
+planning failures.
+
+## Next Recommended Direction
+
+The next version should avoid more one-off skill-selection patches and instead
+make tool calls more structured:
+
+1. Define per-skill parsed argument schemas.
+2. Add an argument builder that returns structured arguments before converting
+   to the legacy string input.
+3. Make observations more machine-checkable.
+4. Extend evaluation to report which exact argument slot failed.
+5. Use hidden tasks only after the argument builder is frozen.

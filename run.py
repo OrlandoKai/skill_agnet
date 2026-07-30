@@ -7,6 +7,7 @@ from agents.enhanced_agent import EnhancedSkillAgent
 from agents.enhanced_agent_v2 import ABLATION_CHOICES, EnhancedSkillAgentV2
 from agents.enhanced_agent_v3 import EnhancedSkillAgentV3
 from agents.enhanced_agent_v4 import EnhancedSkillAgentV4
+from agents.enhanced_agent_v5 import EnhancedSkillAgentV5
 from agents.react_agent import MinimalSkillAgent
 from config import DEFAULT_TOP_K, MODEL_PATH, RESULTS_DIR
 from eval.skillbench_eval import evaluate_skillbench_result
@@ -36,7 +37,14 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--agent",
-        choices=["baseline", "enhanced", "enhanced_v2", "enhanced_v3", "enhanced_v4"],
+        choices=[
+            "baseline",
+            "enhanced",
+            "enhanced_v2",
+            "enhanced_v3",
+            "enhanced_v4",
+            "enhanced_v5",
+        ],
         default="baseline",
         help="Agent policy. baseline preserves the original MinimalSkillAgent.",
     )
@@ -139,6 +147,14 @@ def build_agent(
         )
     if agent_name == "enhanced_v4":
         return EnhancedSkillAgentV4(
+            model=model,
+            retriever=retriever,
+            max_steps=max_steps,
+            top_k=top_k,
+            ablation=ablation,
+        )
+    if agent_name == "enhanced_v5":
+        return EnhancedSkillAgentV5(
             model=model,
             retriever=retriever,
             max_steps=max_steps,
