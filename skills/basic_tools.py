@@ -542,6 +542,15 @@ def range_filter(text: str) -> str:
     if not numbers:
         return "Error: range filter needs numbers."
     lowered = text.lower()
+    keep_match = re.search(
+        r"(?:keep|filter|select)\s+([-+]?\d+(?:\.\d+)?)\s+(?:to|through|and)\s+([-+]?\d+(?:\.\d+)?)\s+from\s+(.+)",
+        lowered,
+    )
+    if keep_match:
+        low, high = sorted((float(keep_match.group(1)), float(keep_match.group(2))))
+        values = _numbers_from_text(keep_match.group(3))
+        kept = [value for value in values if low <= value <= high]
+        return "Filtered values: " + (", ".join(f"{value:g}" for value in kept) if kept else "none")
     range_match = re.search(r"(?:between|from)\s+([-+]?\d+(?:\.\d+)?)\s+(?:and|to)\s+([-+]?\d+(?:\.\d+)?)", lowered)
     if range_match:
         low, high = sorted((float(range_match.group(1)), float(range_match.group(2))))
