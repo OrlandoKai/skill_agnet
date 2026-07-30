@@ -6,6 +6,16 @@ from agents.enhanced_agent import EnhancedSkillAgent
 from skills.skill_registry import call_skill, get_skill
 
 
+ABLATION_CHOICES = {
+    "none",
+    "no_need_tool_gate",
+    "no_step_retrieval",
+    "no_backfill",
+    "no_input_builder",
+    "no_rule_final_answer",
+}
+
+
 SKILL_ALIASES = {
     "summary_creator": "summarizer",
     "summary_generator": "summarizer",
@@ -47,8 +57,25 @@ DEPENDENT_INPUT_SKILLS = {
 class EnhancedSkillAgentV2(EnhancedSkillAgent):
     """Enhanced agent with step-aware retrieval and deterministic repairs."""
 
-    def __init__(self, model, retriever, max_steps: int = 2, top_k: int = 5) -> None:
+    def __init__(
+        self,
+        model,
+        retriever,
+        max_steps: int = 2,
+        top_k: int = 5,
+        ablation: str = "none",
+    ) -> None:
         super().__init__(model=model, retriever=retriever, max_steps=max_steps, top_k=top_k)
+        if ablation not in ABLATION_CHOICES:
+            raise ValueError(f"Unknown Enhanced V2 ablation: {ablation}")
+        self.ablation = ablation
+        self.ablation_config = {
+            "use_need_tool_gate": ablation != "no_need_tool_gate",
+            "use_step_retrieval": ablation != "no_step_retrieval",
+            "use_backfill": ablation != "no_backfill",
+            "use_input_builder": ablation != "no_input_builder",
+            "use_rule_final_answer": ablation != "no_rule_final_answer",
+        }
         self.skill_by_name = {
             skill.get("name", ""): skill
             for skill in getattr(self.retriever, "skills", [])
@@ -62,7 +89,7 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
         observations: list[dict] = []
         invalid_call = False
 
-        need_tool_decision = self._decide_need_tool(instruction, raw_model_outputs)
+        need_tool_decision = self._v2_need_tool_decision(instruction, raw_model_outputs)
         subtasks: list[str] = []
         retrieved: list[dict] = []
         retrieved_by_step: list[dict] = []
@@ -112,6 +139,17 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
             "final_answer_source": final_answer_source,
             "invalid_call": invalid_call,
             "raw_model_outputs": raw_model_outputs,
+            "ablation": self.ablation,
+            "ablation_config": dict(self.ablation_config),
+        }
+
+    def _v2_need_tool_decision(self, instruction: str, raw_model_outputs: list[str]) -> dict:
+        if self.ablation_config["use_need_tool_gate"]:
+            return self._decide_need_tool(instruction, raw_model_outputs)
+        return {
+            "need_tool": True,
+            "task_type": "multi_tool" if self._looks_multi_step(instruction) else "single_tool",
+            "reason": "Ablation disabled the NEED_TOOL / NO_TOOL gate.",
         }
 
     def _decompose_instruction(self, instruction: str, need_tool_decision: dict) -> list[str]:
@@ -148,6 +186,17 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
             self.retriever.retrieve(instruction, top_k=self.top_k),
             instruction,
         )
+        if not self.ablation_config["use_step_retrieval"]:
+            retrieved_by_step = [
+                {
+                    "step": index,
+                    "subtask": subtask,
+                    "retrieved_skills": [self._compact_skill(skill) for skill in overall],
+                }
+                for index, subtask in enumerate(subtasks, start=1)
+            ]
+            return list(overall), retrieved_by_step
+
         union = list(overall)
         retrieved_by_step = []
 
@@ -171,6 +220,8 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
         text: str,
         full_instruction: str | None = None,
     ) -> list[dict]:
+        if not self.ablation_config["use_backfill"]:
+            return skills
         hints = self._skill_hints_for_text(text, full_instruction or text)
         backfilled = [
             {**self.skill_by_name[name], "score": 0.0}
@@ -319,6 +370,18 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
                 else:
                     return planned_steps, False, plan_repaired
 
+            if not self.ablation_config["use_input_builder"] and not llm_input.strip():
+                llm_step = self._llm_plan_one_step(
+                    instruction=instruction,
+                    subtask=subtask,
+                    candidate_names=candidate_names,
+                    step_index=index,
+                    raw_model_outputs=raw_model_outputs,
+                )
+                llm_skill = self._repair_skill_name(llm_step.get("skill", ""), candidate_names)
+                if llm_skill == selected:
+                    llm_input = str(llm_step.get("input", "") or "")
+
             skill_input, input_source = self._build_skill_input(
                 skill_name=selected,
                 subtask=subtask,
@@ -349,6 +412,8 @@ class EnhancedSkillAgentV2(EnhancedSkillAgent):
         candidate_names: list[str],
         step_index: int,
     ) -> tuple[str, str]:
+        if not self.ablation_config["use_backfill"]:
+            return "", ""
         for skill_name in self._skill_hints_for_text(subtask, subtask):
             if skill_name in candidate_names:
                 return skill_name, "rule"
@@ -409,6 +474,11 @@ Required schema:
         step_index: int,
         llm_input: str = "",
     ) -> tuple[str, str]:
+        if not self.ablation_config["use_input_builder"]:
+            if llm_input.strip():
+                return llm_input.strip(), "llm"
+            return subtask, "fallback_subtask"
+
         quoted = self._extract_first_quote(subtask) or self._extract_first_quote(instruction)
 
         if step_index > 0 and quoted and skill_name in {"translator_en_zh", "translator_zh_en"}:
@@ -611,6 +681,15 @@ Required schema:
             return "Tool execution failed: " + "; ".join(errors), "tool_error"
 
         if observations:
+            if not self.ablation_config["use_rule_final_answer"]:
+                answer = super()._make_final_answer(
+                    instruction=instruction,
+                    observations=observations,
+                    raw_model_outputs=raw_model_outputs,
+                    need_tool_decision=need_tool_decision,
+                    invalid_call=invalid_call,
+                )
+                return answer, "llm_grounded"
             if len(observations) == 1:
                 return str(observations[0].get("output", "")).strip(), "rule_observation"
             rendered = "; ".join(

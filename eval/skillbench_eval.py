@@ -1,3 +1,6 @@
+ABSTAIN_TASK_TYPES = {"no_tool", "missing_info", "unsupported_tool"}
+
+
 def evaluate_skillbench_result(result: dict) -> dict:
     gold_skills = result.get("gold_skills", [])
     task_type = result.get("task_type", "")
@@ -18,6 +21,7 @@ def evaluate_skillbench_result(result: dict) -> dict:
         skill_call_hit = len(called_names) == 0
 
     no_tool_overcall = task_type == "no_tool" and len(called_names) > 0
+    abstain_overcall = task_type in ABSTAIN_TASK_TYPES and len(called_names) > 0
     final_answer = str(result.get("final_answer", "")).strip()
 
     return {
@@ -25,6 +29,7 @@ def evaluate_skillbench_result(result: dict) -> dict:
         "retrieval_all_hit": retrieval_all_hit,
         "skill_call_hit": skill_call_hit,
         "no_tool_overcall": no_tool_overcall,
+        "abstain_overcall": abstain_overcall,
         "invalid_call": bool(result.get("invalid_call", False)),
         "final_answer_non_empty": bool(final_answer),
     }

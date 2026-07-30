@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      background: transparent;
+    }
+    .paste-box {
+      min-height: 62px;
+      border: 1px dashed rgba(148, 163, 184, 0.85);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(148, 163, 184, 1);
+      background: rgba(148, 163, 184, 0.08);
+      outline: none;
+      box-sizing: border-box;
+      cursor: text;
+      user-select: none;
+    }
+    .paste-box:focus {
+      border-color: #ff4b4b;
+      box-shadow: 0 0 0 1px #ff4b4b inset;
+      color: inherit;
+    }
+    .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 75, 75, 0.14);
+      color: #ff4b4b;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+    .text {
+      line-height: 1.4;
+      font-size: 14px;
+    }
+    .status {
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(148, 163, 184, 1);
+    }
+  </style>
+</head>
+<body>
+  <div id="pasteBox" class="paste-box" tabindex="0" role="button" aria-label="粘贴图片区域">
+    <span class="icon">⌘</span>
+    <span class="text">点击这里后按 Ctrl+V 粘贴图片；也可以继续使用上方拖拽/上传。</span>
+  </div>
+  <div id="status" class="status">等待粘贴图片</div>
+  <script>
+    const READY = "streamlit:componentReady";
+    const SET_VALUE = "streamlit:setComponentValue";
+    const SET_HEIGHT = "streamlit:setFrameHeight";
+    const box = document.getElementById("pasteBox");
+    const status = document.getElementById("status");
+
+    function post(type, data) {
+      window.parent.postMessage({ isStreamlitMessage: true, type, ...data }, "*");
+    }
+
+    function setReady() {
+      post(READY, { apiVersion: 1 });
+      post(SET_HEIGHT, { height: document.body.scrollHeight + 4 });
+    }
+
+    function setValue(value) {
+      post(SET_VALUE, { value, dataType: "json" });
+      post(SET_HEIGHT, { height: document.body.scrollHeight + 4 });
+    }
+
+    function readFile(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const value = {
+          id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          name: file.name || "clipboard.png",
+          mime_type: file.type || "image/png",
+          data_url: reader.result,
+          size_bytes: file.size || 0,
+        };
+        status.textContent = `已捕获图片：${value.name}`;
+        setValue(value);
+      };
+      reader.onerror = () => {
+        status.textContent = "读取剪贴板图片失败";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    box.addEventListener("paste", (event) => {
+      const items = event.clipboardData && event.clipboardData.items
+        ? Array.from(event.clipboardData.items)
+        : [];
+      const item = items.find((entry) => entry.type && entry.type.startsWith("image/"));
+      if (!item) {
+        status.textContent = "剪贴板里没有图片";
+        return;
+      }
+      event.preventDefault();
+      const file = item.getAsFile();
+      if (file) {
+        readFile(file);
+      }
+    });
+
+    box.addEventListener("click", () => box.focus());
+    window.addEventListener("load", setReady);
+  </script>
+</body>
+</html>

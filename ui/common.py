@@ -7,8 +7,16 @@ import streamlit as st
 from agents.enhanced_agent import EnhancedSkillAgent
 from agents.enhanced_agent_v2 import EnhancedSkillAgentV2
 from agents.react_agent import MinimalSkillAgent
-from config import MODEL_PATH, RESULTS_DIR
+from config import (
+    MODEL_DIR,
+    MODEL_PATH,
+    N_CTX,
+    RESULTS_DIR,
+    VISION_MODEL_PATH,
+    VISION_PROJECTOR_PATH,
+)
 from model.llama_wrapper import LocalLlamaModel
+from model.vision_wrapper import LocalVisionLlamaModel
 from retrievers.bm25_retriever import BM25SkillRetriever
 from retrievers.embedding_retriever import EmbeddingSkillRetriever
 from retrievers.full_prompt_retriever import FullPromptRetriever
@@ -141,17 +149,88 @@ def dataframe_from_records(records: list[dict], columns: list[str] | None = None
     return frame[columns] if columns else frame
 
 
-def model_file_status() -> tuple[bool, str]:
-    path = Path(MODEL_PATH)
+EXCLUDED_MODEL_NAME_PARTS = ("lora", "adapter")
+EXCLUDED_MODEL_SUFFIXES = ("-vision.gguf", "_vision.gguf")
+
+
+def discover_model_files(model_dir: str | Path = MODEL_DIR) -> list[dict]:
+    """Return complete GGUF model candidates from the local model directory."""
+    directory = Path(model_dir)
+    if not directory.exists():
+        return []
+
+    models = []
+    for path in sorted(directory.rglob("*.gguf"), key=lambda item: str(item).lower()):
+        lowered = path.name.lower()
+        if any(part in lowered for part in EXCLUDED_MODEL_NAME_PARTS):
+            continue
+        if any(lowered.endswith(suffix) for suffix in EXCLUDED_MODEL_SUFFIXES):
+            continue
+        size_gb = path.stat().st_size / (1024**3)
+        relative_path = path.relative_to(directory)
+        models.append(
+            {
+                "name": path.name,
+                "path": str(path),
+                "size_gb": size_gb,
+                "label": f"{relative_path} ({size_gb:.2f} GB)",
+            }
+        )
+    return models
+
+
+def model_name_from_path(model_path: str | Path | None) -> str:
+    return Path(model_path or MODEL_PATH).name
+
+
+def model_file_status(model_path: str | Path | None = None) -> tuple[bool, str]:
+    path = Path(model_path or MODEL_PATH)
     if path.exists():
         size_gb = path.stat().st_size / (1024**3)
         return True, f"模型文件存在：{path.name} ({size_gb:.2f} GB)"
     return False, f"模型文件不存在：{path}"
 
 
+def vision_model_status(
+    model_path: str | Path = VISION_MODEL_PATH,
+    projector_path: str | Path = VISION_PROJECTOR_PATH,
+) -> tuple[bool, str]:
+    model_file = Path(model_path)
+    projector_file = Path(projector_path)
+    missing = [str(path) for path in (model_file, projector_file) if not path.exists()]
+    if missing:
+        return False, "视觉模型文件不存在：" + "; ".join(missing)
+    model_gb = model_file.stat().st_size / (1024**3)
+    projector_gb = projector_file.stat().st_size / (1024**3)
+    return (
+        True,
+        f"视觉模型存在：{model_file.name} ({model_gb:.2f} GB) + "
+        f"{projector_file.name} ({projector_gb:.2f} GB)",
+    )
+
+
 @st.cache_resource(show_spinner=False)
-def get_model() -> LocalLlamaModel:
-    return LocalLlamaModel()
+def get_model(model_path: str = MODEL_PATH, n_ctx: int = N_CTX) -> LocalLlamaModel:
+    return LocalLlamaModel(model_path=model_path, n_ctx=int(n_ctx))
+
+
+@st.cache_resource(show_spinner=False)
+def get_vision_model(
+    model_path: str = VISION_MODEL_PATH,
+    projector_path: str = VISION_PROJECTOR_PATH,
+) -> LocalVisionLlamaModel:
+    return LocalVisionLlamaModel(
+        model_path=model_path,
+        projector_path=projector_path,
+    )
+
+
+def clear_text_model_cache() -> None:
+    get_model.clear()
+
+
+def clear_vision_model_cache() -> None:
+    get_vision_model.clear()
 
 
 @st.cache_resource(show_spinner=False)
@@ -170,6 +249,7 @@ def build_agent(
     top_k: int,
     max_steps: int,
     agent_mode: str = "baseline",
+    model_path: str = MODEL_PATH,
 ) -> MinimalSkillAgent | EnhancedSkillAgent | EnhancedSkillAgentV2:
     agent_cls = {
         "baseline": MinimalSkillAgent,
@@ -177,7 +257,7 @@ def build_agent(
         "enhanced_v2": EnhancedSkillAgentV2,
     }.get(agent_mode, MinimalSkillAgent)
     return agent_cls(
-        model=get_model(),
+        model=get_model(model_path),
         retriever=get_retriever(retriever_name),
         max_steps=max_steps,
         top_k=top_k,

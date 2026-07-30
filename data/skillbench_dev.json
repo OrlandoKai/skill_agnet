@@ -1,0 +1,3789 @@
+[
+  {
+    "task_id": "task_001",
+    "instruction": "Calculate 12 * (3 + 4).",
+    "gold_skills": [
+      "calculator"
+    ],
+    "expected_answer": "84",
+    "task_type": "single_skill",
+    "notes": "Basic arithmetic expression."
+  },
+  {
+    "task_id": "task_002",
+    "instruction": "Convert 10 cm to m.",
+    "gold_skills": [
+      "unit_converter"
+    ],
+    "expected_answer": "0.1 m",
+    "task_type": "single_skill",
+    "notes": "Simple length conversion."
+  },
+  {
+    "task_id": "task_003",
+    "instruction": "Summarize this text: Skill retrieval finds useful tools. Skill calling executes them. The agent observes results.",
+    "gold_skills": [
+      "summarizer"
+    ],
+    "expected_answer": "Skill retrieval finds useful tools. Skill calling executes them.",
+    "task_type": "single_skill",
+    "notes": "Rule-based summarization."
+  },
+  {
+    "task_id": "task_004",
+    "instruction": "Translate this Chinese text into English: 你好，人工智能智能体系统",
+    "gold_skills": [
+      "translator_zh_en"
+    ],
+    "expected_answer": "hello artificial intelligence agent system",
+    "task_type": "single_skill",
+    "notes": "Chinese to English translation."
+  },
+  {
+    "task_id": "task_005",
+    "instruction": "Translate this English text into Chinese: hello skill retrieval agent",
+    "gold_skills": [
+      "translator_en_zh"
+    ],
+    "expected_answer": "你好 技能 检索 智能体",
+    "task_type": "single_skill",
+    "notes": "English to Chinese translation."
+  },
+  {
+    "task_id": "task_006",
+    "instruction": "Extract keywords from: Skill retrieval and skill calling are important for agent systems.",
+    "gold_skills": [
+      "keyword_extractor"
+    ],
+    "expected_answer": "skill, retrieval, calling, agent",
+    "task_type": "single_skill",
+    "notes": "Keyword extraction."
+  },
+  {
+    "task_id": "task_007",
+    "instruction": "Rewrite this sentence clearly: skill calling helps agents use tools",
+    "gold_skills": [
+      "text_rewriter"
+    ],
+    "expected_answer": "skill calling helps agents use tools.",
+    "task_type": "single_skill",
+    "notes": "Light rewrite and punctuation cleanup."
+  },
+  {
+    "task_id": "task_008",
+    "instruction": "Analyze the sentiment of this sentence: This is a good and useful baseline.",
+    "gold_skills": [
+      "sentiment_analyzer"
+    ],
+    "expected_answer": "positive",
+    "task_type": "single_skill",
+    "notes": "Positive sentiment."
+  },
+  {
+    "task_id": "task_009",
+    "instruction": "Answer this paper question: What is the core contribution of this paper?",
+    "gold_skills": [
+      "paper_qa"
+    ],
+    "expected_answer": "Paper QA placeholder",
+    "task_type": "single_skill",
+    "notes": "Placeholder paper QA skill."
+  },
+  {
+    "task_id": "task_010",
+    "instruction": "Execute this Python code and return the result: x = 2 + 3\nx * 10",
+    "gold_skills": [
+      "python_executor"
+    ],
+    "expected_answer": "50",
+    "task_type": "single_skill",
+    "notes": "Restricted Python execution."
+  },
+  {
+    "task_id": "task_011",
+    "instruction": "Compute sqrt(16) + 6.",
+    "gold_skills": [
+      "calculator"
+    ],
+    "expected_answer": "10",
+    "task_type": "single_skill",
+    "notes": "Calculator with a math function."
+  },
+  {
+    "task_id": "task_012",
+    "instruction": "Convert 2 kg to g.",
+    "gold_skills": [
+      "unit_converter"
+    ],
+    "expected_answer": "2000 g",
+    "task_type": "single_skill",
+    "notes": "Mass conversion."
+  },
+  {
+    "task_id": "task_013",
+    "instruction": "Summarize this paragraph: Agents can retrieve skills from a library. They can call a selected skill. Evaluation checks whether the final answer is useful.",
+    "gold_skills": [
+      "summarizer"
+    ],
+    "expected_answer": "Agents can retrieve skills from a library. They can call a selected skill.",
+    "task_type": "single_skill",
+    "notes": "Another summarization item."
+  },
+  {
+    "task_id": "task_014",
+    "instruction": "Analyze sentiment: This attempt was bad and failed.",
+    "gold_skills": [
+      "sentiment_analyzer"
+    ],
+    "expected_answer": "negative",
+    "task_type": "single_skill",
+    "notes": "Negative sentiment."
+  },
+  {
+    "task_id": "task_015",
+    "instruction": "Extract keywords from: local llama model skill registry benchmark retrieval evaluation",
+    "gold_skills": [
+      "keyword_extractor"
+    ],
+    "expected_answer": "local, llama, skill, registry, benchmark, retrieval, evaluation",
+    "task_type": "single_skill",
+    "notes": "Keyword-only query."
+  },
+  {
+    "task_id": "task_016",
+    "instruction": "First calculate 12 * (3 + 4), then summarize the result in one short sentence.",
+    "gold_skills": [
+      "calculator",
+      "summarizer"
+    ],
+    "expected_answer": "The result is 84.",
+    "task_type": "multi_skill",
+    "notes": "Calculate then summarize."
+  },
+  {
+    "task_id": "task_017",
+    "instruction": "Translate 你好，技能检索智能体 into English, then extract keywords from the translated text.",
+    "gold_skills": [
+      "translator_zh_en",
+      "keyword_extractor"
+    ],
+    "expected_answer": "hello, skill, retrieval, agent",
+    "task_type": "multi_skill",
+    "notes": "Translate then extract keywords."
+  },
+  {
+    "task_id": "task_018",
+    "instruction": "Rewrite this text and then judge its sentiment: this baseline is good and useful",
+    "gold_skills": [
+      "text_rewriter",
+      "sentiment_analyzer"
+    ],
+    "expected_answer": "positive",
+    "task_type": "multi_skill",
+    "notes": "Rewrite then sentiment."
+  },
+  {
+    "task_id": "task_019",
+    "instruction": "Translate hello artificial intelligence system into Chinese, then summarize the translated result.",
+    "gold_skills": [
+      "translator_en_zh",
+      "summarizer"
+    ],
+    "expected_answer": "你好 人工智能 系统",
+    "task_type": "multi_skill",
+    "notes": "English to Chinese then summary."
+  },
+  {
+    "task_id": "task_020",
+    "instruction": "Execute Python code x = 5; y = x * 3; y, then summarize the numeric result.",
+    "gold_skills": [
+      "python_executor",
+      "summarizer"
+    ],
+    "expected_answer": "15",
+    "task_type": "multi_skill",
+    "notes": "Python execution then summary."
+  },
+  {
+    "task_id": "task_021",
+    "instruction": "Convert 1000 m to km, then rewrite the answer as a polished sentence.",
+    "gold_skills": [
+      "unit_converter",
+      "text_rewriter"
+    ],
+    "expected_answer": "1000 m is 1 km.",
+    "task_type": "multi_skill",
+    "notes": "Conversion then rewrite."
+  },
+  {
+    "task_id": "task_022",
+    "instruction": "Answer this paper question, then extract keywords from the answer: What is the contribution of the paper?",
+    "gold_skills": [
+      "paper_qa",
+      "keyword_extractor"
+    ],
+    "expected_answer": "paper, contribution, corpus",
+    "task_type": "multi_skill",
+    "notes": "Paper QA placeholder then keywords."
+  },
+  {
+    "task_id": "task_023",
+    "instruction": "Analyze sentiment, then summarize the result: This project is excellent and useful.",
+    "gold_skills": [
+      "sentiment_analyzer",
+      "summarizer"
+    ],
+    "expected_answer": "positive",
+    "task_type": "multi_skill",
+    "notes": "Sentiment then summary."
+  },
+  {
+    "task_id": "task_024",
+    "instruction": "Calculate 7 * 8, then translate the short answer 'the result is 56' into Chinese.",
+    "gold_skills": [
+      "calculator",
+      "translator_en_zh"
+    ],
+    "expected_answer": "56",
+    "task_type": "multi_skill",
+    "notes": "Calculate then English-to-Chinese translation."
+  },
+  {
+    "task_id": "task_025",
+    "instruction": "Translate 人工智能技能调用 into English, then summarize the translated text.",
+    "gold_skills": [
+      "translator_zh_en",
+      "summarizer"
+    ],
+    "expected_answer": "artificial intelligence skill calling",
+    "task_type": "multi_skill",
+    "notes": "Chinese-to-English translation then summary."
+  },
+  {
+    "task_id": "task_026",
+    "instruction": "Briefly explain why a benchmark should include both easy and hard tasks.",
+    "gold_skills": [],
+    "expected_answer": "A benchmark needs easy and hard tasks to measure basic capability and robustness.",
+    "task_type": "no_tool",
+    "notes": "General reasoning; no skill should be needed."
+  },
+  {
+    "task_id": "task_027",
+    "instruction": "Say hello and state that you are ready to help with skill retrieval experiments.",
+    "gold_skills": [],
+    "expected_answer": "Hello, I am ready to help with skill retrieval experiments.",
+    "task_type": "no_tool",
+    "notes": "Simple response without tools."
+  },
+  {
+    "task_id": "task_028",
+    "instruction": "What is the purpose of evaluating an agent loop?",
+    "gold_skills": [],
+    "expected_answer": "To measure whether the agent retrieves, calls, observes, and answers correctly.",
+    "task_type": "no_tool",
+    "notes": "Conceptual answer."
+  },
+  {
+    "task_id": "task_029",
+    "instruction": "List two components of a minimal skill-calling agent.",
+    "gold_skills": [],
+    "expected_answer": "A retriever and a skill registry.",
+    "task_type": "no_tool",
+    "notes": "No tool required."
+  },
+  {
+    "task_id": "task_030",
+    "instruction": "Explain in one sentence what invalid tool calling means.",
+    "gold_skills": [],
+    "expected_answer": "Invalid tool calling means selecting a missing or disallowed skill or making an unparsable call.",
+    "task_type": "no_tool",
+    "notes": "Definition question."
+  },
+  {
+    "task_id": "task_031",
+    "instruction": "Calculate the mean and median of these numbers: 2, 4, 8, 10.",
+    "gold_skills": [
+      "statistics_calculator"
+    ],
+    "expected_answer": "mean=6, median=6",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: statistics_calculator vs calculator."
+  },
+  {
+    "task_id": "task_032",
+    "instruction": "Calculate a 25% increase on 80.",
+    "gold_skills": [
+      "percentage_calculator"
+    ],
+    "expected_answer": "100",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: percentage_calculator vs calculator."
+  },
+  {
+    "task_id": "task_033",
+    "instruction": "Find the number of days between 2026-07-01 and 2026-07-15.",
+    "gold_skills": [
+      "date_difference_calculator"
+    ],
+    "expected_answer": "14 days",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: date interval vs numeric calculator."
+  },
+  {
+    "task_id": "task_034",
+    "instruction": "Extract emails and dates from this text: Contact alice@example.com before 2026-07-15.",
+    "gold_skills": [
+      "regex_extractor"
+    ],
+    "expected_answer": "alice@example.com, 2026-07-15",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: regex_extractor vs keyword_extractor."
+  },
+  {
+    "task_id": "task_035",
+    "instruction": "Extract named entities from: Alice visited OpenAI in Beijing.",
+    "gold_skills": [
+      "entity_extractor"
+    ],
+    "expected_answer": "Alice, OpenAI, Beijing",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: entity_extractor vs keyword_extractor."
+  },
+  {
+    "task_id": "task_036",
+    "instruction": "Classify the topic of this text: The model trains on a retrieval dataset for an agent system.",
+    "gold_skills": [
+      "topic_classifier"
+    ],
+    "expected_answer": "machine_learning",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: topic_classifier vs keyword_extractor."
+  },
+  {
+    "task_id": "task_037",
+    "instruction": "Classify the user intent: Please summarize this paragraph in two sentences.",
+    "gold_skills": [
+      "intent_classifier"
+    ],
+    "expected_answer": "summarization_request",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: intent_classifier vs summarizer."
+  },
+  {
+    "task_id": "task_038",
+    "instruction": "Fix the grammar in this sentence: she go to school",
+    "gold_skills": [
+      "grammar_corrector"
+    ],
+    "expected_answer": "She goes to school.",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: grammar_corrector vs text_rewriter."
+  },
+  {
+    "task_id": "task_039",
+    "instruction": "Make this sentence formal: send me the file",
+    "gold_skills": [
+      "tone_converter"
+    ],
+    "expected_answer": "Formal tone",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: tone_converter vs grammar_corrector."
+  },
+  {
+    "task_id": "task_040",
+    "instruction": "Create an outline for skill retrieval experiments.",
+    "gold_skills": [
+      "outline_generator"
+    ],
+    "expected_answer": "Outline",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: outline_generator vs summarizer."
+  },
+  {
+    "task_id": "task_041",
+    "instruction": "Format this citation: author: Smith year: 2024 title: Skill Retrieval.",
+    "gold_skills": [
+      "citation_formatter"
+    ],
+    "expected_answer": "Smith (2024). Skill Retrieval.",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: citation_formatter vs paper_qa."
+  },
+  {
+    "task_id": "task_042",
+    "instruction": "Format this as a Markdown table: method: BM25; score: 0.8; rank: 1.",
+    "gold_skills": [
+      "table_formatter"
+    ],
+    "expected_answer": "method, BM25, score, 0.8",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: table_formatter vs summarizer."
+  },
+  {
+    "task_id": "task_043",
+    "instruction": "Extract phone numbers and URLs from: Call +1 555-123-4567 or visit https://example.com.",
+    "gold_skills": [
+      "regex_extractor"
+    ],
+    "expected_answer": "+1 555-123-4567, https://example.com",
+    "task_type": "single_skill",
+    "notes": "Regex pattern extraction with phone and URL."
+  },
+  {
+    "task_id": "task_044",
+    "instruction": "Classify the topic: The stock market price and investment profit increased.",
+    "gold_skills": [
+      "topic_classifier"
+    ],
+    "expected_answer": "finance",
+    "task_type": "single_skill",
+    "notes": "Topic classification with finance terms."
+  },
+  {
+    "task_id": "task_045",
+    "instruction": "Calculate what percentage 30 is of 120.",
+    "gold_skills": [
+      "percentage_calculator"
+    ],
+    "expected_answer": "25%",
+    "task_type": "single_skill",
+    "notes": "Percentage-of calculation."
+  },
+  {
+    "task_id": "task_046",
+    "instruction": "First calculate the mean of 2, 4, 8, 10, then rewrite the result as a polished sentence.",
+    "gold_skills": [
+      "statistics_calculator",
+      "text_rewriter"
+    ],
+    "expected_answer": "mean=6",
+    "task_type": "multi_skill",
+    "notes": "Statistics then rewrite."
+  },
+  {
+    "task_id": "task_047",
+    "instruction": "First calculate a 20% discount on 50, then summarize the numeric result.",
+    "gold_skills": [
+      "percentage_calculator",
+      "summarizer"
+    ],
+    "expected_answer": "40",
+    "task_type": "multi_skill",
+    "notes": "Percentage then summary."
+  },
+  {
+    "task_id": "task_048",
+    "instruction": "Extract the email from alice@example.com, then classify the user intent of 'find an email address'.",
+    "gold_skills": [
+      "regex_extractor",
+      "intent_classifier"
+    ],
+    "expected_answer": "alice@example.com, information_extraction_request",
+    "task_type": "multi_skill",
+    "notes": "Regex extraction then intent classification."
+  },
+  {
+    "task_id": "task_049",
+    "instruction": "Extract entities from Alice works at OpenAI in Beijing, then format the entities as a Markdown table.",
+    "gold_skills": [
+      "entity_extractor",
+      "table_formatter"
+    ],
+    "expected_answer": "Alice, OpenAI, Beijing",
+    "task_type": "multi_skill",
+    "notes": "Entity extraction then table formatting."
+  },
+  {
+    "task_id": "task_050",
+    "instruction": "Classify the topic of 'students take exams in a course', then create an outline for that topic.",
+    "gold_skills": [
+      "topic_classifier",
+      "outline_generator"
+    ],
+    "expected_answer": "education, Outline",
+    "task_type": "multi_skill",
+    "notes": "Topic classification then outline."
+  },
+  {
+    "task_id": "task_051",
+    "instruction": "Fix grammar in 'they is ready', then convert the corrected sentence to a formal tone.",
+    "gold_skills": [
+      "grammar_corrector",
+      "tone_converter"
+    ],
+    "expected_answer": "they are ready, Formal tone",
+    "task_type": "multi_skill",
+    "notes": "Grammar correction then tone conversion."
+  },
+  {
+    "task_id": "task_052",
+    "instruction": "Format the citation 'author: Lee year: 2025 title: Agent Skills', then extract keywords from the formatted citation.",
+    "gold_skills": [
+      "citation_formatter",
+      "keyword_extractor"
+    ],
+    "expected_answer": "Lee, 2025, Agent, Skills",
+    "task_type": "multi_skill",
+    "notes": "Citation formatting then keyword extraction."
+  },
+  {
+    "task_id": "task_053",
+    "instruction": "Find days between 2026-01-01 and 2026-01-11, then summarize the result.",
+    "gold_skills": [
+      "date_difference_calculator",
+      "summarizer"
+    ],
+    "expected_answer": "10 days",
+    "task_type": "multi_skill",
+    "notes": "Date interval then summary."
+  },
+  {
+    "task_id": "task_054",
+    "instruction": "Classify the user intent of 'translate this sentence', then translate hello skill into Chinese.",
+    "gold_skills": [
+      "intent_classifier",
+      "translator_en_zh"
+    ],
+    "expected_answer": "translation_request",
+    "task_type": "multi_skill",
+    "notes": "Intent classification then translation."
+  },
+  {
+    "task_id": "task_055",
+    "instruction": "Generate an outline for retrieval evaluation, then format method: embedding; recall: 1.0 as a table.",
+    "gold_skills": [
+      "outline_generator",
+      "table_formatter"
+    ],
+    "expected_answer": "Outline, embedding, recall",
+    "task_type": "multi_skill",
+    "notes": "Outline generation then table formatting."
+  },
+  {
+    "task_id": "task_056",
+    "instruction": "Explain why semantically similar skills make retrieval evaluation harder.",
+    "gold_skills": [],
+    "expected_answer": "They force the retriever to distinguish intent and function, not just shared words.",
+    "task_type": "no_tool",
+    "notes": "Conceptual no-tool hard task."
+  },
+  {
+    "task_id": "task_057",
+    "instruction": "In one sentence, define a distractor skill in a benchmark.",
+    "gold_skills": [],
+    "expected_answer": "A distractor skill is a plausible but incorrect candidate that tests discrimination.",
+    "task_type": "no_tool",
+    "notes": "Definition; no tool required."
+  },
+  {
+    "task_id": "task_058",
+    "instruction": "Why should a benchmark include no-tool questions even when many skills exist?",
+    "gold_skills": [],
+    "expected_answer": "No-tool questions test whether the agent can avoid unnecessary tool calls.",
+    "task_type": "no_tool",
+    "notes": "No-tool robustness question."
+  },
+  {
+    "task_id": "task_059",
+    "instruction": "Describe the difference between retrieval recall and skill selection accuracy.",
+    "gold_skills": [],
+    "expected_answer": "Recall measures whether gold skills are retrieved; selection accuracy measures whether the agent calls them.",
+    "task_type": "no_tool",
+    "notes": "Metric explanation; no tool required."
+  },
+  {
+    "task_id": "task_060",
+    "instruction": "State one reason why exact pattern extraction is different from keyword extraction.",
+    "gold_skills": [],
+    "expected_answer": "Pattern extraction finds structured forms such as emails or dates, while keyword extraction finds topical words.",
+    "task_type": "no_tool",
+    "notes": "Semantic distinction; no tool required."
+  },
+  {
+    "task_id": "task_061",
+    "instruction": "Simplify the ratio 12:18 and give the decimal value.",
+    "gold_skills": [
+      "ratio_calculator"
+    ],
+    "expected_answer": "2:3",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: ratio_calculator vs percentage_calculator."
+  },
+  {
+    "task_id": "task_062",
+    "instruction": "Solve the linear equation 2*x + 3 = 11.",
+    "gold_skills": [
+      "equation_solver"
+    ],
+    "expected_answer": "x=4",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: equation_solver vs calculator."
+  },
+  {
+    "task_id": "task_063",
+    "instruction": "Analyze the number sequence 2, 4, 6, 8 and predict the next value.",
+    "gold_skills": [
+      "number_sequence_analyzer"
+    ],
+    "expected_answer": "next=10",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: sequence analyzer vs statistics calculator."
+  },
+  {
+    "task_id": "task_064",
+    "instruction": "Filter these numbers to keep values between 3 and 10: 1, 5, 9, 12.",
+    "gold_skills": [
+      "range_filter"
+    ],
+    "expected_answer": "5, 9",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: range_filter vs list_sorter."
+  },
+  {
+    "task_id": "task_065",
+    "instruction": "Sort this list in ascending order: 9, 1, 5.",
+    "gold_skills": [
+      "list_sorter"
+    ],
+    "expected_answer": "1, 5, 9",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: list_sorter vs deduplicator."
+  },
+  {
+    "task_id": "task_066",
+    "instruction": "Remove duplicates from this list: apple, banana, apple, orange, banana.",
+    "gold_skills": [
+      "deduplicator"
+    ],
+    "expected_answer": "apple, banana, orange",
+    "task_type": "single_skill",
+    "notes": "Deduplicate while preserving order."
+  },
+  {
+    "task_id": "task_067",
+    "instruction": "Validate this JSON string: {\"skill\": \"calculator\", \"input\": \"1+1\"}",
+    "gold_skills": [
+      "json_validator"
+    ],
+    "expected_answer": "JSON valid",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: json_validator vs table_formatter."
+  },
+  {
+    "task_id": "task_068",
+    "instruction": "Summarize this CSV data: method,score\nbm25,0.8\nfull,0.6",
+    "gold_skills": [
+      "csv_summarizer"
+    ],
+    "expected_answer": "rows=2, columns=2",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: csv_summarizer vs summarizer."
+  },
+  {
+    "task_id": "task_069",
+    "instruction": "Detect the language of this text: hello skill agent",
+    "gold_skills": [
+      "language_detector"
+    ],
+    "expected_answer": "English",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: language_detector vs translator_en_zh."
+  },
+  {
+    "task_id": "task_070",
+    "instruction": "Score the readability of: This sentence is short. It is easy to read.",
+    "gold_skills": [
+      "readability_scorer"
+    ],
+    "expected_answer": "easy",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: readability_scorer vs grammar_corrector."
+  },
+  {
+    "task_id": "task_071",
+    "instruction": "Generate a concise title for: Skill retrieval improves agent tool use.",
+    "gold_skills": [
+      "title_generator"
+    ],
+    "expected_answer": "Title",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: title_generator vs summarizer."
+  },
+  {
+    "task_id": "task_072",
+    "instruction": "Generate study questions about skill retrieval evaluation.",
+    "gold_skills": [
+      "question_generator"
+    ],
+    "expected_answer": "Questions",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: question_generator vs paper_qa."
+  },
+  {
+    "task_id": "task_073",
+    "instruction": "Create a checklist for running a benchmark experiment.",
+    "gold_skills": [
+      "checklist_generator"
+    ],
+    "expected_answer": "Checklist",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: checklist_generator vs outline_generator."
+  },
+  {
+    "task_id": "task_074",
+    "instruction": "Analyze the pros and cons of using BM25 as a retrieval baseline.",
+    "gold_skills": [
+      "pros_cons_analyzer"
+    ],
+    "expected_answer": "Pros/Cons",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: pros_cons_analyzer vs sentiment_analyzer."
+  },
+  {
+    "task_id": "task_075",
+    "instruction": "Map this argument: claim: retrieval helps agents because it narrows tool choices.",
+    "gold_skills": [
+      "argument_mapper"
+    ],
+    "expected_answer": "claim, evidence",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: argument_mapper vs summarizer."
+  },
+  {
+    "task_id": "task_076",
+    "instruction": "Draft an email to Lee about the benchmark meeting.",
+    "gold_skills": [
+      "email_drafter"
+    ],
+    "expected_answer": "Dear Lee",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: email_drafter vs tone_converter."
+  },
+  {
+    "task_id": "task_077",
+    "instruction": "Extract todos from: We need to run BM25. Todo: analyze failures.",
+    "gold_skills": [
+      "todo_extractor"
+    ],
+    "expected_answer": "run BM25, analyze failures",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: todo_extractor vs keyword_extractor."
+  },
+  {
+    "task_id": "task_078",
+    "instruction": "Extract meeting notes from: Decision: use BM25. Action: run benchmark by 2026-07-15.",
+    "gold_skills": [
+      "meeting_notes_extractor"
+    ],
+    "expected_answer": "use BM25, run benchmark, 2026-07-15",
+    "task_type": "single_skill",
+    "notes": "Hard distinction: meeting_notes_extractor vs summarizer."
+  },
+  {
+    "task_id": "task_079",
+    "instruction": "In a dataset with 30 positive and 45 negative examples, simplify the class ratio.",
+    "gold_skills": [
+      "ratio_calculator"
+    ],
+    "expected_answer": "2:3",
+    "task_type": "single_skill",
+    "notes": "Ratio wording with dataset terms as distractors."
+  },
+  {
+    "task_id": "task_080",
+    "instruction": "Find x when 5*x - 10 = 15.",
+    "gold_skills": [
+      "equation_solver"
+    ],
+    "expected_answer": "x=5",
+    "task_type": "single_skill",
+    "notes": "Equation solving with arithmetic-looking text."
+  },
+  {
+    "task_id": "task_081",
+    "instruction": "Predict the next number in the sequence 3, 9, 27, 81.",
+    "gold_skills": [
+      "number_sequence_analyzer"
+    ],
+    "expected_answer": "next=243",
+    "task_type": "single_skill",
+    "notes": "Geometric sequence hard case."
+  },
+  {
+    "task_id": "task_082",
+    "instruction": "Select numbers above 10 from 3, 12, 18, 5.",
+    "gold_skills": [
+      "range_filter"
+    ],
+    "expected_answer": "12, 18",
+    "task_type": "single_skill",
+    "notes": "Threshold filtering."
+  },
+  {
+    "task_id": "task_083",
+    "instruction": "Order these labels alphabetically: c, a, b.",
+    "gold_skills": [
+      "list_sorter"
+    ],
+    "expected_answer": "a, b, c",
+    "task_type": "single_skill",
+    "notes": "Text sorting rather than numeric sorting."
+  },
+  {
+    "task_id": "task_084",
+    "instruction": "Remove repeated skills from: calculator, calculator, summarizer, calculator.",
+    "gold_skills": [
+      "deduplicator"
+    ],
+    "expected_answer": "calculator, summarizer",
+    "task_type": "single_skill",
+    "notes": "Deduplication with skill names as distractor words."
+  },
+  {
+    "task_id": "task_085",
+    "instruction": "Check whether this JSON is valid: {\"task\": \"run\", \"top_k\": }",
+    "gold_skills": [
+      "json_validator"
+    ],
+    "expected_answer": "JSON invalid",
+    "task_type": "single_skill",
+    "notes": "Invalid JSON hard case."
+  },
+  {
+    "task_id": "task_086",
+    "instruction": "Summarize CSV rows: method,recall\nbm25,0.96\nembedding,0.90\nfull,1.0",
+    "gold_skills": [
+      "csv_summarizer"
+    ],
+    "expected_answer": "rows=3, columns=2",
+    "task_type": "single_skill",
+    "notes": "CSV summary with experimental metrics."
+  },
+  {
+    "task_id": "task_087",
+    "instruction": "Detect the language of this text: 你好，技能检索",
+    "gold_skills": [
+      "language_detector"
+    ],
+    "expected_answer": "Chinese",
+    "task_type": "single_skill",
+    "notes": "Language detection should not translate."
+  },
+  {
+    "task_id": "task_088",
+    "instruction": "Score readability: The methodological assumptions underlying this evaluation framework substantially increase interpretive complexity.",
+    "gold_skills": [
+      "readability_scorer"
+    ],
+    "expected_answer": "medium",
+    "task_type": "single_skill",
+    "notes": "Readability scoring with longer words."
+  },
+  {
+    "task_id": "task_089",
+    "instruction": "Create a title for a paragraph about retrieval recall and skill selection accuracy.",
+    "gold_skills": [
+      "title_generator"
+    ],
+    "expected_answer": "Title",
+    "task_type": "single_skill",
+    "notes": "Title generation from metric vocabulary."
+  },
+  {
+    "task_id": "task_090",
+    "instruction": "Write an email to Prof Chen about the skill retrieval project.",
+    "gold_skills": [
+      "email_drafter"
+    ],
+    "expected_answer": "Dear Prof Chen",
+    "task_type": "single_skill",
+    "notes": "Email drafting with recipient extraction."
+  },
+  {
+    "task_id": "task_091",
+    "instruction": "Solve 2*x + 3 = 11, then summarize the solution in one sentence.",
+    "gold_skills": [
+      "equation_solver",
+      "summarizer"
+    ],
+    "expected_answer": "x=4",
+    "task_type": "multi_skill",
+    "notes": "Equation solving then summarization."
+  },
+  {
+    "task_id": "task_092",
+    "instruction": "Simplify the ratio 12:18, then format ratio: 2:3; decimal: 0.6667 as a Markdown table.",
+    "gold_skills": [
+      "ratio_calculator",
+      "table_formatter"
+    ],
+    "expected_answer": "2:3, decimal",
+    "task_type": "multi_skill",
+    "notes": "Ratio calculation then table formatting."
+  },
+  {
+    "task_id": "task_093",
+    "instruction": "Predict the next value in 2, 4, 6, 8, then rewrite the result as a polished sentence.",
+    "gold_skills": [
+      "number_sequence_analyzer",
+      "text_rewriter"
+    ],
+    "expected_answer": "10",
+    "task_type": "multi_skill",
+    "notes": "Sequence analysis then rewrite."
+  },
+  {
+    "task_id": "task_094",
+    "instruction": "Filter 1, 5, 9, 12 between 3 and 10, then calculate the mean of the kept values.",
+    "gold_skills": [
+      "range_filter",
+      "statistics_calculator"
+    ],
+    "expected_answer": "7",
+    "task_type": "multi_skill",
+    "notes": "Range filtering then statistics."
+  },
+  {
+    "task_id": "task_095",
+    "instruction": "Remove duplicates from 3, 1, 3, 2, then sort the unique numbers ascending.",
+    "gold_skills": [
+      "deduplicator",
+      "list_sorter"
+    ],
+    "expected_answer": "1, 2, 3",
+    "task_type": "multi_skill",
+    "notes": "Deduplication then sorting."
+  },
+  {
+    "task_id": "task_096",
+    "instruction": "Validate {\"task\":\"translate\"}, then classify the intent of 'translate this sentence'.",
+    "gold_skills": [
+      "json_validator",
+      "intent_classifier"
+    ],
+    "expected_answer": "JSON valid, translation_request",
+    "task_type": "multi_skill",
+    "notes": "JSON validation then intent classification."
+  },
+  {
+    "task_id": "task_097",
+    "instruction": "Summarize CSV method,score\nbm25,0.8\nfull,0.6, then generate a title for the result.",
+    "gold_skills": [
+      "csv_summarizer",
+      "title_generator"
+    ],
+    "expected_answer": "rows=2, Title",
+    "task_type": "multi_skill",
+    "notes": "CSV summary then title generation."
+  },
+  {
+    "task_id": "task_098",
+    "instruction": "Detect the language of 'hello skill', then translate 'hello skill' into Chinese.",
+    "gold_skills": [
+      "language_detector",
+      "translator_en_zh"
+    ],
+    "expected_answer": "English",
+    "task_type": "multi_skill",
+    "notes": "Language detection then translation."
+  },
+  {
+    "task_id": "task_099",
+    "instruction": "Score readability of 'This is a short note.', then rewrite the sentence clearly.",
+    "gold_skills": [
+      "readability_scorer",
+      "text_rewriter"
+    ],
+    "expected_answer": "easy",
+    "task_type": "multi_skill",
+    "notes": "Readability scoring then rewrite."
+  },
+  {
+    "task_id": "task_100",
+    "instruction": "Generate a title for 'Skill retrieval improves agent calling', then extract keywords from that title.",
+    "gold_skills": [
+      "title_generator",
+      "keyword_extractor"
+    ],
+    "expected_answer": "skill, retrieval, agent",
+    "task_type": "multi_skill",
+    "notes": "Title generation then keyword extraction."
+  },
+  {
+    "task_id": "task_101",
+    "instruction": "Generate questions about benchmark design, then create a checklist for answering them.",
+    "gold_skills": [
+      "question_generator",
+      "checklist_generator"
+    ],
+    "expected_answer": "Questions, Checklist",
+    "task_type": "multi_skill",
+    "notes": "Question generation then checklist."
+  },
+  {
+    "task_id": "task_102",
+    "instruction": "Analyze pros and cons of increasing top_k, then summarize the tradeoff.",
+    "gold_skills": [
+      "pros_cons_analyzer",
+      "summarizer"
+    ],
+    "expected_answer": "Pros/Cons",
+    "task_type": "multi_skill",
+    "notes": "Tradeoff analysis then summary."
+  },
+  {
+    "task_id": "task_103",
+    "instruction": "Map the argument 'claim: BM25 is useful because it is simple', then format claim and evidence as a table.",
+    "gold_skills": [
+      "argument_mapper",
+      "table_formatter"
+    ],
+    "expected_answer": "BM25 is useful, simple",
+    "task_type": "multi_skill",
+    "notes": "Argument mapping then table formatting."
+  },
+  {
+    "task_id": "task_104",
+    "instruction": "Draft an email to Lee about results, then make the email more formal.",
+    "gold_skills": [
+      "email_drafter",
+      "tone_converter"
+    ],
+    "expected_answer": "Dear Lee, Formal tone",
+    "task_type": "multi_skill",
+    "notes": "Email drafting then tone conversion."
+  },
+  {
+    "task_id": "task_105",
+    "instruction": "Extract todos from 'Need to run full baseline. Todo: compare results.', then create a checklist from them.",
+    "gold_skills": [
+      "todo_extractor",
+      "checklist_generator"
+    ],
+    "expected_answer": "run full baseline, compare results",
+    "task_type": "multi_skill",
+    "notes": "Todo extraction then checklist."
+  },
+  {
+    "task_id": "task_106",
+    "instruction": "Extract meeting notes from 'Decision: use embedding. Action: rerun benchmark on 2026-07-20.', then summarize them.",
+    "gold_skills": [
+      "meeting_notes_extractor",
+      "summarizer"
+    ],
+    "expected_answer": "use embedding, rerun benchmark, 2026-07-20",
+    "task_type": "multi_skill",
+    "notes": "Meeting note extraction then summary."
+  },
+  {
+    "task_id": "task_107",
+    "instruction": "Validate {\"email\":\"alice@example.com\"}, then extract the email address from it.",
+    "gold_skills": [
+      "json_validator",
+      "regex_extractor"
+    ],
+    "expected_answer": "JSON valid, alice@example.com",
+    "task_type": "multi_skill",
+    "notes": "JSON validation then regex extraction."
+  },
+  {
+    "task_id": "task_108",
+    "instruction": "Extract entities from 'Professor Lee works at Tsinghua University in Beijing', then draft an email to Professor Lee.",
+    "gold_skills": [
+      "entity_extractor",
+      "email_drafter"
+    ],
+    "expected_answer": "Professor Lee, Tsinghua University, Beijing",
+    "task_type": "multi_skill",
+    "notes": "Entity extraction then email drafting."
+  },
+  {
+    "task_id": "task_109",
+    "instruction": "Classify the topic of 'students take exams in a course', then generate questions about that topic.",
+    "gold_skills": [
+      "topic_classifier",
+      "question_generator"
+    ],
+    "expected_answer": "education, Questions",
+    "task_type": "multi_skill",
+    "notes": "Topic classification then question generation."
+  },
+  {
+    "task_id": "task_110",
+    "instruction": "Sort model names bm25, embedding, full alphabetically, then format the sorted list as a table.",
+    "gold_skills": [
+      "list_sorter",
+      "table_formatter"
+    ],
+    "expected_answer": "bm25, embedding, full",
+    "task_type": "multi_skill",
+    "notes": "List sorting then table formatting."
+  },
+  {
+    "task_id": "task_111",
+    "instruction": "Explain why a sentence containing the word calculate may still not need the calculator tool.",
+    "gold_skills": [],
+    "expected_answer": "The word can be part of a conceptual explanation rather than an actual computation request.",
+    "task_type": "no_tool",
+    "notes": "No-tool task with calculator trigger word."
+  },
+  {
+    "task_id": "task_112",
+    "instruction": "Describe the difference between translating a sentence and detecting its language.",
+    "gold_skills": [],
+    "expected_answer": "Translation changes text into another language, while detection identifies the language.",
+    "task_type": "no_tool",
+    "notes": "Conceptual distinction; no tool should be called."
+  },
+  {
+    "task_id": "task_113",
+    "instruction": "What does JSON validity mean in one sentence?",
+    "gold_skills": [],
+    "expected_answer": "JSON validity means the text follows JSON syntax and can be parsed.",
+    "task_type": "no_tool",
+    "notes": "Definition question with json keyword."
+  },
+  {
+    "task_id": "task_114",
+    "instruction": "Why can a no-tool question mention summarize without needing the summarizer skill?",
+    "gold_skills": [],
+    "expected_answer": "Because the user may ask about summarization conceptually rather than request a summary of given text.",
+    "task_type": "no_tool",
+    "notes": "No-tool task with summarizer trigger word."
+  },
+  {
+    "task_id": "task_115",
+    "instruction": "In words, what is an equation solver designed to do?",
+    "gold_skills": [],
+    "expected_answer": "It finds unknown variable values that satisfy an equation.",
+    "task_type": "no_tool",
+    "notes": "Conceptual question with equation keyword."
+  },
+  {
+    "task_id": "task_116",
+    "instruction": "Why are multi-skill tasks harder than single-skill tasks?",
+    "gold_skills": [],
+    "expected_answer": "They require selecting, ordering, and combining multiple tool calls.",
+    "task_type": "no_tool",
+    "notes": "Conceptual benchmark explanation."
+  },
+  {
+    "task_id": "task_117",
+    "instruction": "Name two risks of adding too many skills to an agent system.",
+    "gold_skills": [],
+    "expected_answer": "More skills can increase retrieval confusion and selection errors.",
+    "task_type": "no_tool",
+    "notes": "Research discussion; no tool required."
+  },
+  {
+    "task_id": "task_118",
+    "instruction": "Explain how a retriever can have high recall but low skill selection accuracy.",
+    "gold_skills": [],
+    "expected_answer": "The correct skill may be retrieved, but the agent can still choose the wrong candidate.",
+    "task_type": "no_tool",
+    "notes": "Metric explanation; no tool required."
+  },
+  {
+    "task_id": "task_119",
+    "instruction": "Say that concise answers are preferred; do not rewrite this sentence.",
+    "gold_skills": [],
+    "expected_answer": "Concise answers are preferred.",
+    "task_type": "no_tool",
+    "notes": "No-tool task with rewrite trigger word."
+  },
+  {
+    "task_id": "task_120",
+    "instruction": "Give one example of a tool call failure without using any tool.",
+    "gold_skills": [],
+    "expected_answer": "Calling a nonexistent skill is a tool call failure.",
+    "task_type": "no_tool",
+    "notes": "No-tool answer about failure analysis."
+  },
+  {
+    "task_id": "dev_121",
+    "instruction": "What does the word calculate mean in a tool-using agent? Answer conceptually, do not compute anything.",
+    "gold_skills": [],
+    "expected_answer": "A conceptual explanation of calculation, without using a calculator.",
+    "task_type": "no_tool",
+    "notes": "Hard no-tool task containing a calculator trigger word.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "tool_trigger_irrelevance",
+      "calculator_negative"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "calculator",
+      "equation_solver"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(compute|arithmetic|calculation|calculate)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_122",
+    "instruction": "I am not asking you to summarize anything. Explain why summaries can lose important details.",
+    "gold_skills": [],
+    "expected_answer": "An explanation that summaries compress text and may omit details.",
+    "task_type": "no_tool",
+    "notes": "Hard no-tool task containing summarize as a quoted concept.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "tool_trigger_irrelevance",
+      "summarizer_negative"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "summarizer",
+      "text_rewriter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(summar|compress|detail|omit)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_123",
+    "instruction": "Do not translate this sentence. Explain why translation direction matters for tool calling.",
+    "gold_skills": [],
+    "expected_answer": "Translation direction decides whether zh-en or en-zh should be selected.",
+    "task_type": "no_tool",
+    "notes": "Hard no-tool task that mentions translation but asks for explanation.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "translation_direction_negative"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "translator_zh_en",
+      "translator_en_zh"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(direction|source|target|translation)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_124",
+    "instruction": "What is the difference between a keyword and an entity in information extraction?",
+    "gold_skills": [],
+    "expected_answer": "Keywords are topical terms, while entities are named people, organizations, or locations.",
+    "task_type": "no_tool",
+    "notes": "Conceptual comparison of two extraction skills without extraction input.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "semantic_confusion",
+      "extraction_negative"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "entity_extractor"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(keyword|term)",
+          "(entity|person|organization|location)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_125",
+    "instruction": "In words, why can percentage and ratio questions be confused by an agent?",
+    "gold_skills": [],
+    "expected_answer": "Both involve comparing numbers, but percentage uses a per-hundred scale while ratio compares quantities directly.",
+    "task_type": "no_tool",
+    "notes": "Conceptual no-tool contrast for similar math tools.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "semantic_confusion",
+      "math_negative"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "percentage_calculator",
+      "ratio_calculator"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(percentage|percent)",
+          "(ratio|compare)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_126",
+    "instruction": "Describe when an agent should refuse an unsupported tool request.",
+    "gold_skills": [],
+    "expected_answer": "It should refuse when no registered tool can safely perform the requested external action.",
+    "task_type": "no_tool",
+    "notes": "No-tool policy explanation with unsupported-tool wording.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "unsupported_concept"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "intent_classifier",
+      "paper_qa"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(refuse|unsupported|cannot|can't|unable|no registered)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_127",
+    "instruction": "What does JSON validation mean conceptually? Do not validate any JSON.",
+    "gold_skills": [],
+    "expected_answer": "JSON validation checks whether a string follows JSON syntax and can be parsed.",
+    "task_type": "no_tool",
+    "notes": "Mentions json validation but provides no JSON object to validate.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "json_negative"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "json_validator"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(json|syntax|valid|parse)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_128",
+    "instruction": "Why is final-answer faithfulness important after a tool call?",
+    "gold_skills": [],
+    "expected_answer": "The final answer should stay supported by the observation instead of inventing unsupported results.",
+    "task_type": "no_tool",
+    "notes": "Evaluation concept question that should not call summarizer.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "evaluation_concept"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "summarizer",
+      "paper_qa"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(faithful|faithfulness|observation|tool|supported)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_129",
+    "instruction": "Define observation in an agent pipeline in one sentence.",
+    "gold_skills": [],
+    "expected_answer": "An observation is the result returned by a skill or environment after an action.",
+    "task_type": "no_tool",
+    "notes": "Agent concept definition with no need for paper QA.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "agent_pipeline_concept"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "paper_qa",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(observation|result|returned|tool|skill)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_130",
+    "instruction": "List two risks of using a Python execution tool in an agent system.",
+    "gold_skills": [],
+    "expected_answer": "Possible risks include unsafe code execution, data leakage, file access, or system command abuse.",
+    "task_type": "no_tool",
+    "notes": "Security explanation that mentions python_executor without code.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "hard_no_tool",
+      "safety_concept"
+    ],
+    "source_inspiration": "APIBank_tool_use_safety",
+    "hard_negative_skills": [
+      "python_executor"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(risk|unsafe|security|code|command|file)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_131",
+    "instruction": "Convert this value to meters.",
+    "gold_skills": [],
+    "expected_answer": "Ask for the numeric value and source unit before converting.",
+    "task_type": "missing_info",
+    "notes": "Missing numeric value and source unit for unit conversion.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "missing_argument",
+      "unit_conversion"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "unit_converter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(need|provide|missing|what|which).*(value|number|unit)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_132",
+    "instruction": "Calculate the percentage for this group.",
+    "gold_skills": [],
+    "expected_answer": "Ask for the part and total values needed to compute a percentage.",
+    "task_type": "missing_info",
+    "notes": "Missing both numerator and denominator for percentage calculation.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "missing_argument",
+      "percentage"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "percentage_calculator"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(need|provide|missing|what).*(part|total|number|value)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_133",
+    "instruction": "Sort the list I mentioned earlier.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the list and sort order.",
+    "task_type": "missing_info",
+    "notes": "References unavailable earlier content.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "ellipsis",
+      "list_operation"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "list_sorter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(list|items|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_134",
+    "instruction": "Extract the dates from the document.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the document text.",
+    "task_type": "missing_info",
+    "notes": "Missing source text for regex extraction.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "missing_text",
+      "regex"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(document|text|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_135",
+    "instruction": "Translate the sentence into English.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the sentence to translate.",
+    "task_type": "missing_info",
+    "notes": "Missing source sentence for translation.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "translation",
+      "missing_text"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "translator_zh_en"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(sentence|text|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_136",
+    "instruction": "Validate this JSON.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the JSON string.",
+    "task_type": "missing_info",
+    "notes": "Missing JSON content for validation.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "json",
+      "missing_text"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "json_validator"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(json|content|string|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_137",
+    "instruction": "Summarize the passage.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the passage text.",
+    "task_type": "missing_info",
+    "notes": "Missing source passage for summarization.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "summarization",
+      "missing_text"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "summarizer"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(passage|text|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_138",
+    "instruction": "Compute the mean and median for my numbers.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the numbers.",
+    "task_type": "missing_info",
+    "notes": "Missing numeric sequence for statistics calculation.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "statistics",
+      "missing_values"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(numbers|values|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_139",
+    "instruction": "Put those results into a table.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the results to format.",
+    "task_type": "missing_info",
+    "notes": "Missing referenced content for table formatting.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "ellipsis",
+      "formatting"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "table_formatter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(results|data|provide|need)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_140",
+    "instruction": "Solve the equation for x.",
+    "gold_skills": [],
+    "expected_answer": "Ask the user to provide the equation.",
+    "task_type": "missing_info",
+    "notes": "Missing equation string for equation_solver.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "missing_info",
+      "equation",
+      "missing_expression"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "equation_solver"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(equation|provide|need|missing)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_141",
+    "instruction": "Book a real flight from Beijing to Shanghai for tomorrow morning.",
+    "gold_skills": [],
+    "expected_answer": "Refuse or explain that no booking skill is available.",
+    "task_type": "unsupported_tool",
+    "notes": "External real-world booking is unsupported by the local skill library.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "unsupported_tool",
+      "external_action",
+      "booking"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "intent_classifier",
+      "email_drafter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(cannot|can't|unable|unsupported|no.*tool|not able)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_142",
+    "instruction": "Open my browser and download the latest stock prices.",
+    "gold_skills": [],
+    "expected_answer": "Refuse or explain that browser automation and live market download are unsupported.",
+    "task_type": "unsupported_tool",
+    "notes": "Network/browser action is outside the skill library.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "unsupported_tool",
+      "external_action",
+      "network"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "python_executor",
+      "topic_classifier"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(cannot|can't|unable|unsupported|no.*tool|not able)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_143",
+    "instruction": "Send an actual email to Professor Lee right now.",
+    "gold_skills": [],
+    "expected_answer": "Explain that drafting is possible but sending real email is unsupported.",
+    "task_type": "unsupported_tool",
+    "notes": "Similar to email_drafter but requires external sending.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "unsupported_tool",
+      "external_action",
+      "email"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "email_drafter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(cannot|can't|unable|unsupported|draft|send)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_144",
+    "instruction": "Query live weather in Beijing for tomorrow.",
+    "gold_skills": [],
+    "expected_answer": "Explain that live weather lookup is not available in this local skill set.",
+    "task_type": "unsupported_tool",
+    "notes": "Live API/tool request with no registered weather skill.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "unsupported_tool",
+      "external_api",
+      "weather"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "topic_classifier",
+      "paper_qa"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(cannot|can't|unable|unsupported|weather|no.*tool)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_145",
+    "instruction": "Upload these experiment results to GitHub.",
+    "gold_skills": [],
+    "expected_answer": "Explain that repository upload is unsupported by the registered local skills.",
+    "task_type": "unsupported_tool",
+    "notes": "External GitHub write action is not a registered skill.",
+    "gold_sequence": [],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "unsupported_tool",
+      "external_action",
+      "github"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "python_executor",
+      "table_formatter"
+    ],
+    "expected_checks": {
+      "final_answer": {
+        "regex": [
+          "(cannot|can't|unable|unsupported|github|no.*tool)"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_146",
+    "instruction": "Calculate 18 / 72.",
+    "gold_skills": [
+      "calculator"
+    ],
+    "expected_answer": "0.25",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: arithmetic value, not percentage or ratio wording.",
+    "gold_sequence": [
+      "calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "math",
+      "calculator"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "percentage_calculator",
+      "ratio_calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "18",
+            "72"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "0.25"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "0.25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_147",
+    "instruction": "What percentage is 18 of 72?",
+    "gold_skills": [
+      "percentage_calculator"
+    ],
+    "expected_answer": "25%",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: same numbers as ratio/calculator but asks percentage.",
+    "gold_sequence": [
+      "percentage_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "math",
+      "percentage"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "calculator",
+      "ratio_calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "18",
+            "72"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "25"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_148",
+    "instruction": "Find the ratio of 18 to 72.",
+    "gold_skills": [
+      "ratio_calculator"
+    ],
+    "expected_answer": "1:4",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: ratio wording with same numbers as percentage.",
+    "gold_sequence": [
+      "ratio_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "math",
+      "ratio"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "18",
+            "72"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "1:4"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "1:4"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_149",
+    "instruction": "Solve equation 3*x + 6 = 21.",
+    "gold_skills": [
+      "equation_solver"
+    ],
+    "expected_answer": "x=5",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: equation solving, not raw arithmetic.",
+    "gold_sequence": [
+      "equation_solver"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "math",
+      "equation"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "3*x",
+            "21"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "x=5"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "x=5"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_150",
+    "instruction": "Compute statistics for 18 and 72, especially the mean.",
+    "gold_skills": [
+      "statistics_calculator"
+    ],
+    "expected_answer": "mean=45",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: average/statistics instead of arithmetic division.",
+    "gold_sequence": [
+      "statistics_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "math",
+      "statistics"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "calculator",
+      "ratio_calculator",
+      "percentage_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "18",
+            "72"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "mean=45"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "mean=45"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_151",
+    "instruction": "Find key terms in: Alice emailed Bob about SkillBench retrieval.",
+    "gold_skills": [
+      "keyword_extractor"
+    ],
+    "expected_answer": "Keywords include Alice and SkillBench.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: topical terms, not named-entity schema.",
+    "gold_sequence": [
+      "keyword_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "extraction",
+      "keywords"
+    ],
+    "source_inspiration": "ToolBench_qrels",
+    "hard_negative_skills": [
+      "entity_extractor",
+      "regex_extractor",
+      "todo_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Alice",
+            "SkillBench"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_152",
+    "instruction": "Pull entities from: Alice met Bob at OpenAI in Beijing.",
+    "gold_skills": [
+      "entity_extractor"
+    ],
+    "expected_answer": "Entities include Alice, Bob, OpenAI, and Beijing.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: named entities, not keywords.",
+    "gold_sequence": [
+      "entity_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "extraction",
+      "entities"
+    ],
+    "source_inspiration": "ToolBench_qrels",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "regex_extractor",
+      "topic_classifier"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Entities"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_153",
+    "instruction": "Extract contact patterns from: kai@example.com and 2026-08-01.",
+    "gold_skills": [
+      "regex_extractor"
+    ],
+    "expected_answer": "Regex matches include kai@example.com and 2026-08-01.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: regex patterns, not entities or keywords.",
+    "gold_sequence": [
+      "regex_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "extraction",
+      "regex"
+    ],
+    "source_inspiration": "ToolBench_qrels",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "entity_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "kai@example.com",
+            "2026-08-01"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "kai@example.com",
+            "2026-08-01"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "kai@example.com",
+          "2026-08-01"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_154",
+    "instruction": "Extract todos from: We must rerun BM25; remember to save metrics.",
+    "gold_skills": [
+      "todo_extractor"
+    ],
+    "expected_answer": "Todos include rerun BM25 and save metrics.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: action-item extraction, not keyword extraction.",
+    "gold_sequence": [
+      "todo_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "extraction",
+      "todos"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "meeting_notes_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "rerun",
+            "save"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "rerun",
+            "save"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Todos"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_155",
+    "instruction": "Summarize this text: Agents retrieve skills, call tools, and ground final answers.",
+    "gold_skills": [
+      "summarizer"
+    ],
+    "expected_answer": "Summary of the agent pipeline.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: summary instead of title or outline.",
+    "gold_sequence": [
+      "summarizer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "generation",
+      "summarization"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "title_generator",
+      "outline_generator",
+      "question_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Agents retrieve skills"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_156",
+    "instruction": "Create a title for: agents retrieve skills before calling them.",
+    "gold_skills": [
+      "title_generator"
+    ],
+    "expected_answer": "Title about agents retrieving skills.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: title, not summary or outline.",
+    "gold_sequence": [
+      "title_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "generation",
+      "title"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "summarizer",
+      "outline_generator",
+      "question_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "agents",
+            "skills"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Title"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Title"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_157",
+    "instruction": "Build an outline about skill-calling evaluation.",
+    "gold_skills": [
+      "outline_generator"
+    ],
+    "expected_answer": "Outline with introduction, key points, evidence, and conclusion.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: outline structure, not summary.",
+    "gold_sequence": [
+      "outline_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "generation",
+      "outline"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "summarizer",
+      "title_generator",
+      "question_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "outline_generator",
+          "contains": [
+            "skill-calling evaluation"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "outline_generator",
+          "contains": [
+            "Outline"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Outline"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_158",
+    "instruction": "Write study questions about tool-use decisions.",
+    "gold_skills": [
+      "question_generator"
+    ],
+    "expected_answer": "Questions about tool-use decisions.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: question generation, not outline or title.",
+    "gold_sequence": [
+      "question_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "generation",
+      "questions"
+    ],
+    "source_inspiration": "MetaTool_single_tool",
+    "hard_negative_skills": [
+      "outline_generator",
+      "title_generator",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "tool-use decisions"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "Questions"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Questions"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_159",
+    "instruction": "Fix grammar: they is testing a agent.",
+    "gold_skills": [
+      "grammar_corrector"
+    ],
+    "expected_answer": "They are testing an agent.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: grammar correction, not general rewrite.",
+    "gold_sequence": [
+      "grammar_corrector"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "editing",
+      "grammar"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "text_rewriter",
+      "tone_converter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "they is",
+            "a agent"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "they are",
+            "an agent"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "they are",
+          "an agent"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_160",
+    "instruction": "Make this request formal: send logs today.",
+    "gold_skills": [
+      "tone_converter"
+    ],
+    "expected_answer": "Formal tone request.",
+    "task_type": "single_skill",
+    "notes": "Minimal pair: tone conversion, not grammar or rewrite.",
+    "gold_sequence": [
+      "tone_converter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "minimal_pair",
+      "editing",
+      "tone"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "grammar_corrector",
+      "text_rewriter",
+      "email_drafter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "formal",
+            "send logs"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "Formal tone"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Formal tone"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_161",
+    "instruction": "A report says 45 passed out of 180; compute the percentage.",
+    "gold_skills": [
+      "percentage_calculator"
+    ],
+    "expected_answer": "25%",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy percentage calculation with implicit part/whole mapping.",
+    "gold_sequence": [
+      "percentage_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "percentage",
+      "input_construction"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "calculator",
+      "ratio_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "45",
+            "180"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "25"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_162",
+    "instruction": "Convert 1250 g to kg.",
+    "gold_skills": [
+      "unit_converter"
+    ],
+    "expected_answer": "1.25 kg",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy unit conversion with value, source unit, and target unit.",
+    "gold_sequence": [
+      "unit_converter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "unit_conversion",
+      "input_construction"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "1250",
+            "g",
+            "kg"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "1.25",
+            "kg"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "1.25",
+          "kg"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_163",
+    "instruction": "Solve equation 5*x - 10 = 40.",
+    "gold_skills": [
+      "equation_solver"
+    ],
+    "expected_answer": "x=10",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy equation solving with linear expression.",
+    "gold_sequence": [
+      "equation_solver"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "equation",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "5*x",
+            "40"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "x=10"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "x=10"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_164",
+    "instruction": "For 4, 8, 12, 16, give mean and median.",
+    "gold_skills": [
+      "statistics_calculator"
+    ],
+    "expected_answer": "mean=10, median=10",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy statistics with multiple numbers.",
+    "gold_sequence": [
+      "statistics_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "statistics",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "number_sequence_analyzer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "4",
+            "8",
+            "12",
+            "16"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "mean=10",
+            "median=10"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "mean=10",
+          "median=10"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_165",
+    "instruction": "Find dates and emails in: contact lee@example.com by 2026-09-12.",
+    "gold_skills": [
+      "regex_extractor"
+    ],
+    "expected_answer": "lee@example.com and 2026-09-12",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy regex extraction with two pattern families.",
+    "gold_sequence": [
+      "regex_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "regex",
+      "input_construction"
+    ],
+    "source_inspiration": "ToolBench_qrels",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "entity_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "lee@example.com",
+            "2026-09-12"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "lee@example.com",
+            "2026-09-12"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "lee@example.com",
+          "2026-09-12"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_166",
+    "instruction": "Check JSON: {\"task\":\"eval\",\"ok\":true}",
+    "gold_skills": [
+      "json_validator"
+    ],
+    "expected_answer": "JSON valid",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy JSON validation with complete object.",
+    "gold_sequence": [
+      "json_validator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "json",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "table_formatter",
+      "csv_summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "task",
+            "ok"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "JSON valid"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "JSON valid"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_167",
+    "instruction": "Summarize CSV data:\nname,score\nA,2\nB,4",
+    "gold_skills": [
+      "csv_summarizer"
+    ],
+    "expected_answer": "rows=2, columns=2, score mean=3",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy CSV summarization where newlines are semantically important.",
+    "gold_sequence": [
+      "csv_summarizer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "csv",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "table_formatter",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "name,score",
+            "A,2",
+            "B,4"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "rows=2",
+            "columns=2",
+            "mean=3"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "rows=2",
+          "columns=2"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_168",
+    "instruction": "How many days are between 2026-01-15 and 2026-02-04?",
+    "gold_skills": [
+      "date_difference_calculator"
+    ],
+    "expected_answer": "20 days",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy date difference with two ISO dates.",
+    "gold_sequence": [
+      "date_difference_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "date",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "2026-01-15",
+            "2026-02-04"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "20 days"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "20 days"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_169",
+    "instruction": "From values 1, 4, 7, 10, 13 keep values between 4 and 10.",
+    "gold_skills": [
+      "range_filter"
+    ],
+    "expected_answer": "4, 7, 10",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy range filtering with inclusive bounds.",
+    "gold_sequence": [
+      "range_filter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "range_filter",
+      "input_construction"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "list_sorter",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "1",
+            "4",
+            "7",
+            "10",
+            "13"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "4",
+            "7",
+            "10"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "4",
+          "7",
+          "10"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_170",
+    "instruction": "Run this restricted Python code: numbers=[1,2,3]; sum(numbers)",
+    "gold_skills": [
+      "python_executor"
+    ],
+    "expected_answer": "6",
+    "task_type": "single_skill",
+    "notes": "Argument-heavy safe code execution with expression result.",
+    "gold_sequence": [
+      "python_executor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "argument_heavy",
+      "python_executor",
+      "safety"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "python_executor",
+          "contains": [
+            "numbers",
+            "sum"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "python_executor",
+          "contains": [
+            "6"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "6"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_171",
+    "instruction": "Turn this meeting note into action items and present them as a table: Alice must update retriever; Bob should verify metrics.",
+    "gold_skills": [
+      "todo_extractor",
+      "table_formatter"
+    ],
+    "expected_answer": "Action items in a table.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: extract todos and format them as a table.",
+    "gold_sequence": [
+      "todo_extractor",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "todo",
+      "table",
+      "input_dependency"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "meeting_notes_extractor",
+      "keyword_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "must update",
+            "should verify"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(Todos|update|verify|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "update",
+            "verify"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_172",
+    "instruction": "Give this paragraph a concise headline and list the key terms in that headline: Skill retrieval narrows tools before execution.",
+    "gold_skills": [
+      "title_generator",
+      "keyword_extractor"
+    ],
+    "expected_answer": "Title plus keywords.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: title generation followed by keyword extraction.",
+    "gold_sequence": [
+      "title_generator",
+      "keyword_extractor"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "title",
+      "keywords",
+      "input_dependency"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "summarizer",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Skill retrieval narrows tools"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "regex": [
+            "(Title|retrieval|tools|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Title"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_173",
+    "instruction": "Make this complaint polite and judge whether the rewritten version remains negative: I hate the slow benchmark runs.",
+    "gold_skills": [
+      "tone_converter",
+      "sentiment_analyzer"
+    ],
+    "expected_answer": "Polite rewrite and negative sentiment.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: tone conversion and sentiment on rewritten output.",
+    "gold_sequence": [
+      "tone_converter",
+      "sentiment_analyzer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "tone",
+      "sentiment",
+      "input_dependency"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "grammar_corrector",
+      "text_rewriter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "polite",
+            "hate"
+          ]
+        },
+        {
+          "skill": "sentiment_analyzer",
+          "regex": [
+            "(Formal tone|hate|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "Formal tone"
+          ]
+        },
+        {
+          "skill": "sentiment_analyzer",
+          "contains": [
+            "Sentiment"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "sentiment_analyzer"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_174",
+    "instruction": "Clean the grammar and estimate readability: they is testing a agent. It runs tools.",
+    "gold_skills": [
+      "grammar_corrector",
+      "readability_scorer"
+    ],
+    "expected_answer": "Grammar correction plus readability score.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: grammar correction and readability on corrected text.",
+    "gold_sequence": [
+      "grammar_corrector",
+      "readability_scorer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "grammar",
+      "readability",
+      "input_dependency"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "text_rewriter",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "they is",
+            "a agent"
+          ]
+        },
+        {
+          "skill": "readability_scorer",
+          "regex": [
+            "(Grammar corrected|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "they are",
+            "an agent"
+          ]
+        },
+        {
+          "skill": "readability_scorer",
+          "contains": [
+            "Readability"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Readability"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_175",
+    "instruction": "Identify entities and organize them as a table: Alice visited OpenAI in Beijing.",
+    "gold_skills": [
+      "entity_extractor",
+      "table_formatter"
+    ],
+    "expected_answer": "Entities organized as table.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: entity extraction and table formatting.",
+    "gold_sequence": [
+      "entity_extractor",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "entities",
+      "table",
+      "input_dependency"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(Entities|Alice|OpenAI|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_176",
+    "instruction": "Extract the dates and summarize what was found: email on 2026-08-01 and meeting on 2026-08-03.",
+    "gold_skills": [
+      "regex_extractor",
+      "summarizer"
+    ],
+    "expected_answer": "Date extraction summary.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: regex extraction followed by summary.",
+    "gold_sequence": [
+      "regex_extractor",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "regex",
+      "summary",
+      "input_dependency"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "date_difference_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "2026-08-01",
+            "2026-08-03"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(Regex matches|2026-08-01|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "2026-08-01",
+            "2026-08-03"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_177",
+    "instruction": "Calculate 14 * 6, then summarize the result in one sentence.",
+    "gold_skills": [
+      "calculator",
+      "summarizer"
+    ],
+    "expected_answer": "84 summarized in one sentence.",
+    "task_type": "multi_skill",
+    "notes": "Explicit then task kept as a control among implicit multi-skill cases.",
+    "gold_sequence": [
+      "calculator",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "calculation",
+      "summary",
+      "control_then"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "statistics_calculator",
+      "readability_scorer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "14",
+            "6"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(84|\\$PREVIOUS_OUTPUT)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "84"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_178",
+    "instruction": "Translate hello skill agent into Chinese, then extract keywords from the translation.",
+    "gold_skills": [
+      "translator_en_zh",
+      "keyword_extractor"
+    ],
+    "expected_answer": "Chinese translation plus keywords.",
+    "task_type": "multi_skill",
+    "notes": "Explicit then task focused on translation direction and dependent extraction.",
+    "gold_sequence": [
+      "translator_en_zh",
+      "keyword_extractor"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "translation_direction",
+      "keywords",
+      "control_then"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "translator_zh_en",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "translator_en_zh",
+          "contains": [
+            "hello",
+            "skill",
+            "agent"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|浣|skill|agent)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "translator_en_zh",
+          "regex": [
+            "(浣|鎶|agent|placeholder)"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_179",
+    "instruction": "Create a checklist and draft an email about running SkillBench experiments.",
+    "gold_skills": [
+      "checklist_generator",
+      "email_drafter"
+    ],
+    "expected_answer": "Checklist plus email draft.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: generate checklist and draft an email.",
+    "gold_sequence": [
+      "checklist_generator",
+      "email_drafter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "checklist",
+      "email"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "outline_generator",
+      "todo_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "running SkillBench experiments"
+          ]
+        },
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "running SkillBench experiments"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "Checklist"
+          ]
+        },
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Email draft"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Email draft"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_180",
+    "instruction": "Classify the topic and rewrite the text more cleanly: neural agents retrieve tools from a dataset.",
+    "gold_skills": [
+      "topic_classifier",
+      "text_rewriter"
+    ],
+    "expected_answer": "Machine-learning topic plus rewritten text.",
+    "task_type": "multi_skill",
+    "notes": "Implicit multi-skill: topic classification and clean rewrite.",
+    "gold_sequence": [
+      "topic_classifier",
+      "text_rewriter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "implicit_multi_skill",
+      "topic",
+      "rewrite"
+    ],
+    "source_inspiration": "MetaTool_multi_tool",
+    "hard_negative_skills": [
+      "intent_classifier",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "topic_classifier",
+          "contains": [
+            "neural agents",
+            "dataset"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "neural agents retrieve tools"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "topic_classifier",
+          "contains": [
+            "Topic"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "Rewritten"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Rewritten"
+        ]
+      },
+      "faithfulness": true
+    }
+  }
+]

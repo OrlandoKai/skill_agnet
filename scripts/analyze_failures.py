@@ -10,11 +10,15 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from eval.evaluate import (
     answer_content_correct,
+    argument_correct,
     called_skill_names,
+    final_answer_faithfulness_correct,
     invalid_plan,
     load_jsonl,
     multi_skill_under_call,
     need_tool_false_negative,
+    observation_correct,
+    parameter_strict_success,
     plan_repaired,
     retrieved_skill_names,
     step_retrieval_failure,
@@ -32,14 +36,26 @@ def classify_failure(row: dict) -> str | None:
     called = called_skill_names(row)
     task_type = row.get("task_type", "")
 
+    if isinstance(row.get("need_tool_decision"), dict) and need_tool_false_negative(row):
+        return "need_tool_false_negative"
+
+    if task_type == "missing_info" and called:
+        return "missing_info_overcall"
+
+    if task_type == "unsupported_tool" and called:
+        return "unsupported_tool_overcall"
+
+    if task_type == "missing_info" and not called and not answer_content_correct(row):
+        return "missing_info_no_clarification"
+
+    if task_type == "unsupported_tool" and not called and not answer_content_correct(row):
+        return "unsupported_tool_no_refusal"
+
     if invalid_plan(row):
         return "invalid_plan"
 
     if row.get("invalid_call", False):
         return "invalid_call"
-
-    if isinstance(row.get("need_tool_decision"), dict) and need_tool_false_negative(row):
-        return "need_tool_false_negative"
 
     if unnecessary_tool_call(row):
         return "no_tool_overcall"
@@ -67,12 +83,21 @@ def classify_failure(row: dict) -> str | None:
     if has_execution_error(row):
         return "execution_failure"
 
+    if gold and skill_sequence_correct(row) and argument_correct(row) is False:
+        return "argument_construction_failure"
+
+    if gold and skill_sequence_correct(row) and observation_correct(row) is False:
+        return "observation_correctness_failure"
+
+    if final_answer_faithfulness_correct(row) is False:
+        return "final_faithfulness_failure"
+
     if gold and skill_sequence_correct(row) and not answer_content_correct(row):
         if row.get("final_answer_source") == "rule_observation":
             return "input_construction_failure"
         return "final_grounding_failure"
 
-    if not answer_content_correct(row) or not strict_task_success(row):
+    if not answer_content_correct(row) or not strict_task_success(row) or not parameter_strict_success(row):
         return "final_answer_hallucination"
 
     return None
@@ -89,6 +114,7 @@ def has_execution_error(row: dict) -> bool:
 def failure_case(row: dict, failure_type: str) -> dict:
     return {
         "task_id": row.get("task_id", ""),
+        "task_type": row.get("task_type", ""),
         "instruction": row.get("instruction", ""),
         "gold_skills": row.get("gold_skills", []),
         "retrieved_skills": retrieved_skill_names(row),
@@ -102,6 +128,7 @@ def failure_case(row: dict, failure_type: str) -> dict:
         "called_skills": called_skill_names(row),
         "observations": row.get("observations", []),
         "final_answer": row.get("final_answer", ""),
+        "expected_checks": row.get("expected_checks", {}),
         "final_answer_source": row.get("final_answer_source", ""),
         "failure_type": failure_type,
         "raw_model_outputs": row.get("raw_model_outputs", []),
@@ -147,6 +174,10 @@ def main() -> None:
     print("--------------")
     for failure_type in [
         "need_tool_false_negative",
+        "missing_info_overcall",
+        "unsupported_tool_overcall",
+        "missing_info_no_clarification",
+        "unsupported_tool_no_refusal",
         "invalid_plan",
         "step_retrieval_failure",
         "planner_repair_failure",
@@ -157,6 +188,9 @@ def main() -> None:
         "wrong_skill_order",
         "invalid_call",
         "execution_failure",
+        "argument_construction_failure",
+        "observation_correctness_failure",
+        "final_faithfulness_failure",
         "input_construction_failure",
         "final_grounding_failure",
         "final_answer_hallucination",

@@ -1,0 +1,1162 @@
+{
+  "sources": {
+    "MetaTool": {
+      "files": {
+        "all_clean_data.csv": {
+          "rows": 20614,
+          "columns": [
+            "Query",
+            "Tool"
+          ],
+          "sample": [
+            {
+              "Query": "Can I find academic research papers on this topic?",
+              "Tool": "ResearchHelper"
+            },
+            {
+              "Query": "Can I find any peer-reviewed papers?",
+              "Tool": "ResearchHelper"
+            },
+            {
+              "Query": "Can I generate bibtex bibliographies?",
+              "Tool": "ResearchHelper"
+            }
+          ],
+          "Tool_top10": [
+            [
+              "FinanceTool",
+              1122
+            ],
+            [
+              "ProductSearch",
+              674
+            ],
+            [
+              "JobTool",
+              557
+            ],
+            [
+              "TripTool",
+              509
+            ],
+            [
+              "PDF&URLTool",
+              369
+            ],
+            [
+              "NewsTool",
+              361
+            ],
+            [
+              "ResearchFinder",
+              357
+            ],
+            [
+              "CourseTool",
+              317
+            ],
+            [
+              "WeatherTool",
+              316
+            ],
+            [
+              "TripAdviceTool",
+              308
+            ]
+          ]
+        },
+        "multi_tool_query_golden.json": {
+          "rows": 497,
+          "keys": [
+            "query",
+            "tool"
+          ],
+          "sample": [
+            {
+              "query": "I want to know the latest news about Tesla and how it has impacted the stock market.",
+              "tool": [
+                "FinanceTool",
+                "NewsTool"
+              ]
+            },
+            {
+              "query": "Please provide me with the current stock price of Apple and any recent news related to the company.",
+              "tool": [
+                "FinanceTool",
+                "NewsTool"
+              ]
+            },
+            {
+              "query": "Can you give me an overview of the top trending stocks and any recent news that might be affecting their performance?",
+              "tool": [
+                "FinanceTool",
+                "NewsTool"
+              ]
+            }
+          ]
+        },
+        "plugin_des.json": {
+          "items": 199,
+          "sample": [
+            [
+              "timeport",
+              "Begin an exciting journey through time, interact with unique characters, and learn history in this time-travel game!"
+            ],
+            [
+              "airqualityforeast",
+              "Planning something outdoors? Get the 2-day air quality forecast for any US zip code."
+            ],
+            [
+              "copilot",
+              "Searches every dealer, analyzes & ranks every car for you so you can buy with confidence."
+            ]
+          ]
+        },
+        "plugin_info.json": {
+          "items": 390,
+          "sample": [
+            {
+              "name_for_model": "vio_com",
+              "name_for_human": "Vio.com",
+              "description_for_model": "Search for hotels or other accommodations in any place. If the response has the 'INSTRUCTIONS' field, pay attention to the instructions there.",
+              "description_for_human": "A better deal on your next hotel, motel or accommodation booking."
+            },
+            {
+              "name_for_model": "timeport",
+              "name_for_human": "Timeport",
+              "description_for_model": "An entertaining and educational time-travel game where the player engages with different historical periods, each accurately depicted. Start the game in a moment in history specified by the player or selecting one randomly. Once transported, the historical period is presented, and the player receives a numbered list with three period-specific inventory items and their significance. Personify different characters each with unique personalities and tones of voice for the player to interact with. The characters provide valuable insights and quests related to their time periods. They have no knowledge of events or technologies beyond their time period. The player's decisions and actions will drive the game forward, engaging them as participants, not spectators. Do not describe the player's emotions. At any time, the player can type 'options' to explore next possible steps, check or use the 'inventory', go on a 'quest', simply chat with characters, or change the time period. Ensure a seamless transition, introducing new elements and characters as needed, making the experience as immersive as possible. Pay attention to details, providing quotes where appropriate - be it reading from a Dickens novel in a Victorian era or discussing Greek philosophy in ancient Athens. Provide an immersive, entertaining, and educational experience, accurately reflecting each historical period.",
+              "description_for_human": "Begin an exciting journey through time, interact with unique characters, and learn history in this time-travel game!"
+            },
+            {
+              "name_for_model": "Singapore_Places_Of_Interest",
+              "name_for_human": "SG Places Beta",
+              "description_for_model": "Provides information on attractions, F&B outlets, accommodation, tours, shops, and events in Singapore, to enhance the tourist experience of visitors to Singapore.",
+              "description_for_human": "Provides information on attractions, F&B outlets, accommodation, tours, shops, and events in Singapore."
+            }
+          ]
+        }
+      },
+      "takeaways": [
+        "Useful for tool-use awareness, similar-tool selection, and multi-tool query design.",
+        "Plugin/tool descriptions are reusable as inspiration for richer skill contracts."
+      ]
+    },
+    "BFCL": {
+      "files": {
+        "BFCL_v4_irrelevance.json": {
+          "rows": 240,
+          "keys": [
+            "function",
+            "id",
+            "question"
+          ],
+          "sample": [
+            {
+              "id": "irrelevance_0",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Calculate the area of a triangle given the base is 10 meters and height is 5 meters."
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "determine_body_mass_index",
+                  "description": "Calculate body mass index given weight and height.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "weight": {
+                        "type": "float",
+                        "description": "Weight of the individual in kilograms."
+                      },
+                      "height": {
+                        "type": "float",
+                        "description": "Height of the individual in meters."
+                      }
+                    },
+                    "required": [
+                      "weight",
+                      "height"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "irrelevance_1",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Solve the quadratic equation with coefficients a = 1, b = 2, and c = 3."
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "math.sum",
+                  "description": "Compute the sum of all numbers in a list.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "numbers": {
+                        "type": "array",
+                        "items": {
+                          "type": "float"
+                        },
+                        "description": "The list of numbers to be added up."
+                      },
+                      "decimal_places": {
+                        "type": "integer",
+                        "description": "The number of decimal places to round to. Default is 2."
+                      }
+                    },
+                    "required": [
+                      "numbers"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "BFCL_v4_multi_turn_miss_func.json": {
+          "rows": 200,
+          "keys": [
+            "excluded_function",
+            "id",
+            "initial_config",
+            "involved_classes",
+            "missed_function",
+            "path",
+            "question"
+          ],
+          "sample": [
+            {
+              "id": "multi_turn_miss_func_0",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Move 'final_report.pdf' within document directory to 'temp' directory in document. Make sure to create the directory"
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Perform a detailed search using grep to identify sections in the file pertaining to 'budget analysis'."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Upon identifying the requisite 'budget analysis' content, sort the 'final_report.pdf' by line for improved clarity and comprehension."
+                  }
+                ],
+                [],
+                [
+                  {
+                    "role": "user",
+                    "content": "Move 'previous_report.pdf' in document directory to temp as well and having final report also there, proceed to juxtapose it with 'previous_report.pdf' to detect any critical alterations."
+                  }
+                ]
+              ],
+              "initial_config": {
+                "GorillaFileSystem": {
+                  "root": {
+                    "workspace": {
+                      "type": "directory",
+                      "contents": {
+                        "document": {
+                          "type": "directory",
+                          "contents": {
+                            "final_report.pdf": {
+                              "type": "file",
+                              "content": "Year2024 This is the final report content including budget analysis and other sections."
+                            },
+                            "previous_report.pdf": {
+                              "type": "file",
+                              "content": "Year203 This is the previous report content with different budget analysis."
+                            }
+                          }
+                        },
+                        "archive": {
+                          "type": "directory",
+                          "contents": {}
+                        }
+                      }
+                    }
+                  }
+                },
+                "TwitterAPI": {
+                  "tweet_counter": 3,
+                  "tweets": {
+                    "0": {
+                      "id": 0,
+                      "username": "analyst_pro",
+                      "content": "Just finished analyzing the reports!",
+                      "tags": [
+                        "#analysis",
+                        "#reports"
+                      ],
+                      "mentions": []
+                    },
+                    "1": {
+                      "id": 1,
+                      "username": "analyst_pro",
+                      "content": "Budget analysis insights coming soon!",
+                      "tags": [
+                        "#budget",
+                        "#analysis",
+                        "#insights"
+                      ],
+                      "mentions": []
+                    },
+                    "2": {
+                      "id": 2,
+                      "username": "analyst_pro",
+                      "content": "Stay tuned for more updates!",
+                      "tags": [
+                        "#updates",
+                        "#staytuned"
+                      ],
+                      "mentions": []
+                    }
+                  },
+                  "username": "analyst_pro",
+                  "password": "Kj8#mP9$vL2"
+                }
+              },
+              "path": [
+                "GorillaFileSystem.find",
+                "GorillaFileSystem.mv",
+                "GorillaFileSystem.grep",
+                "GorillaFileSystem.sort",
+                "GorillaFileSystem.diff",
+                "TwitterAPI.post_tweet"
+              ],
+              "involved_classes": [
+                "TwitterAPI",
+                "GorillaFileSystem"
+              ],
+              "missed_function": {
+                "3": [
+                  "sort"
+                ]
+              },
+              "excluded_function": [
+                "cp"
+              ]
+            },
+            {
+              "id": "multi_turn_miss_func_1",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "I am alex. Check if the current directory is under my name and list all the visible and hidden contents in the current directory now, please."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Go to workspace directory and move one of the 'log.txt' files into a new directory 'archive'."
+                  }
+                ],
+                [],
+                [
+                  {
+                    "role": "user",
+                    "content": "Investigate within 'log.txt' for the occurrence of the keyword 'Error'."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Finally, show the last 20 lines the file."
+                  }
+                ]
+              ],
+              "initial_config": {
+                "GorillaFileSystem": {
+                  "root": {
+                    "alex": {
+                      "type": "directory",
+                      "contents": {
+                        "workspace": {
+                          "type": "directory",
+                          "contents": {
+                            "log.txt": {
+                              "type": "file",
+                              "content": "This is a log file. No errors found. Another line. Yet another line. Error: Something went wrong. Final line."
+                            },
+                            "archive": {
+                              "type": "directory",
+                              "contents": {}
+                            },
+                            ".hidden_file": {
+                              "type": "file",
+                              "content": "This is a hidden file."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "path": [
+                "GorillaFileSystem.ls",
+                "GorillaFileSystem.find",
+                "GorillaFileSystem.mv",
+                "GorillaFileSystem.grep",
+                "GorillaFileSystem.tail"
+              ],
+              "involved_classes": [
+                "GorillaFileSystem"
+              ],
+              "missed_function": {
+                "2": [
+                  "mv"
+                ]
+              },
+              "excluded_function": [
+                "cp"
+              ]
+            }
+          ]
+        },
+        "BFCL_v4_multi_turn_miss_param.json": {
+          "rows": 200,
+          "keys": [
+            "excluded_function",
+            "id",
+            "initial_config",
+            "involved_classes",
+            "path",
+            "question"
+          ],
+          "sample": [
+            {
+              "id": "multi_turn_miss_param_0",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Move 'final_report.pdf' within document directory to 'temp' directory in document. Make sure to create the directory"
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Perform a detailed search using grep to identify sections in the file pertaining to 'budget analysis'."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Upon identifying the requisite 'budget analysis' content, sort the 'final_report.pdf' by line for improved clarity and comprehension."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Move one of the file in document directory to temp as well and having final report also there, proceed to juxtapose it with 'previous_report.pdf' to detect any critical alterations."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "The specific file is previous_report.pdf."
+                  }
+                ]
+              ],
+              "initial_config": {
+                "GorillaFileSystem": {
+                  "root": {
+                    "workspace": {
+                      "type": "directory",
+                      "contents": {
+                        "document": {
+                          "type": "directory",
+                          "contents": {
+                            "final_report.pdf": {
+                              "type": "file",
+                              "content": "Year2024 This is the final report content including budget analysis and other sections."
+                            },
+                            "previous_report.pdf": {
+                              "type": "file",
+                              "content": "Year203 This is the previous report content with different budget analysis."
+                            },
+                            "report_final.pdf": {
+                              "type": "file",
+                              "content": "Year2024 This is another final report with summary and conclusions."
+                            }
+                          }
+                        },
+                        "archive": {
+                          "type": "directory",
+                          "contents": {}
+                        }
+                      }
+                    }
+                  }
+                },
+                "TwitterAPI": {
+                  "tweet_counter": 3,
+                  "tweets": {
+                    "0": {
+                      "id": 0,
+                      "username": "analyst_pro",
+                      "content": "Just finished analyzing the reports!",
+                      "tags": [
+                        "#analysis",
+                        "#reports"
+                      ],
+                      "mentions": []
+                    },
+                    "1": {
+                      "id": 1,
+                      "username": "analyst_pro",
+                      "content": "Budget analysis insights coming soon!",
+                      "tags": [
+                        "#budget",
+                        "#analysis",
+                        "#insights"
+                      ],
+                      "mentions": []
+                    },
+                    "2": {
+                      "id": 2,
+                      "username": "analyst_pro",
+                      "content": "Stay tuned for more updates!",
+                      "tags": [
+                        "#updates",
+                        "#staytuned"
+                      ],
+                      "mentions": []
+                    }
+                  },
+                  "username": "analyst_pro",
+                  "password": "Kj8#mP9$vL2"
+                }
+              },
+              "path": [
+                "GorillaFileSystem.find",
+                "GorillaFileSystem.mv",
+                "GorillaFileSystem.grep",
+                "GorillaFileSystem.sort",
+                "GorillaFileSystem.diff",
+                "TwitterAPI.post_tweet"
+              ],
+              "involved_classes": [
+                "TwitterAPI",
+                "GorillaFileSystem"
+              ],
+              "excluded_function": [
+                "cp"
+              ]
+            },
+            {
+              "id": "multi_turn_miss_param_1",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "I am alex. Check if the current directory is under my name and list all the visible and hidden contents in the current directory now, please."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Go to workspace directory and move one of the 'log.txt' files into a new directory 'archive'."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Investigate within 'log.txt' for the occurrence of the keyword 'Error'."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "Finally, show the last several lines the file."
+                  }
+                ],
+                [
+                  {
+                    "role": "user",
+                    "content": "To be exact, it should be last 20 lines."
+                  }
+                ]
+              ],
+              "initial_config": {
+                "GorillaFileSystem": {
+                  "root": {
+                    "alex": {
+                      "type": "directory",
+                      "contents": {
+                        "workspace": {
+                          "type": "directory",
+                          "contents": {
+                            "log.txt": {
+                              "type": "file",
+                              "content": "This is a log file. No errors found. Another line. Yet another line. Error: Something went wrong. Final line."
+                            },
+                            "archive": {
+                              "type": "directory",
+                              "contents": {}
+                            },
+                            ".hidden_file": {
+                              "type": "file",
+                              "content": "This is a hidden file."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "path": [
+                "GorillaFileSystem.ls",
+                "GorillaFileSystem.find",
+                "GorillaFileSystem.mv",
+                "GorillaFileSystem.grep",
+                "GorillaFileSystem.tail"
+              ],
+              "involved_classes": [
+                "GorillaFileSystem"
+              ],
+              "excluded_function": [
+                "cp"
+              ]
+            }
+          ]
+        },
+        "BFCL_v4_multiple.json": {
+          "rows": 200,
+          "keys": [
+            "function",
+            "id",
+            "question"
+          ],
+          "sample": [
+            {
+              "id": "multiple_0",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Can I find the dimensions and properties of a triangle, if I know its three sides are 5 units, 4 units and 3 units long?"
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "triangle_properties.get",
+                  "description": "Retrieve the dimensions, such as area and perimeter, of a triangle if lengths of three sides are given.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "side1": {
+                        "type": "integer",
+                        "description": "The length of first side of the triangle."
+                      },
+                      "side2": {
+                        "type": "integer",
+                        "description": "The length of second side of the triangle."
+                      },
+                      "side3": {
+                        "type": "integer",
+                        "description": "The length of third side of the triangle."
+                      },
+                      "get_area": {
+                        "type": "boolean",
+                        "description": "A flag to determine whether to calculate the area of triangle. Default is true.",
+                        "default": true,
+                        "optional": true
+                      },
+                      "get_perimeter": {
+                        "type": "boolean",
+                        "description": "A flag to determine whether to calculate the perimeter of triangle. Default is true.",
+                        "default": true,
+                        "optional": true
+                      },
+                      "get_angles": {
+                        "type": "boolean",
+                        "description": "A flag to determine whether to calculate the internal angles of triangle. Default is true.",
+                        "default": true,
+                        "optional": true
+                      }
+                    },
+                    "required": [
+                      "side1",
+                      "side2",
+                      "side3"
+                    ]
+                  }
+                },
+                {
+                  "name": "circle_properties.get",
+                  "description": "Retrieve the dimensions, such as area and circumference, of a circle if radius is given.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "radius": {
+                        "type": "float",
+                        "description": "The length of radius of the circle."
+                      },
+                      "get_area": {
+                        "type": "boolean",
+                        "description": "A flag to determine whether to calculate the area of circle. Default is true.",
+                        "default": true,
+                        "optional": true
+                      },
+                      "get_circumference": {
+                        "type": "boolean",
+                        "description": "A flag to determine whether to calculate the circumference of circle. Default is true.",
+                        "default": true,
+                        "optional": true
+                      }
+                    },
+                    "required": [
+                      "radius"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "multiple_1",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Calculate the area of a triangle, given the lengths of its three sides: 3, 4, and 5."
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "math.triangle_area_heron",
+                  "description": "Calculates the area of a triangle using Heron's formula, given the lengths of its three sides.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "side1": {
+                        "type": "integer",
+                        "description": "Length of the first side of the triangle."
+                      },
+                      "side2": {
+                        "type": "integer",
+                        "description": "Length of the second side of the triangle."
+                      },
+                      "side3": {
+                        "type": "integer",
+                        "description": "Length of the third side of the triangle."
+                      }
+                    },
+                    "required": [
+                      "side1",
+                      "side2",
+                      "side3"
+                    ]
+                  }
+                },
+                {
+                  "name": "math.circle_area",
+                  "description": "Calculates the area of a circle given its radius.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "radius": {
+                        "type": "float",
+                        "description": "The radius of the circle."
+                      }
+                    },
+                    "required": [
+                      "radius"
+                    ]
+                  }
+                },
+                {
+                  "name": "math.triangle_area_base_height",
+                  "description": "Calculates the area of a triangle using the formula (1/2)base*height.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "base": {
+                        "type": "float",
+                        "description": "The base length of the triangle."
+                      },
+                      "height": {
+                        "type": "float",
+                        "description": "The height of the triangle."
+                      }
+                    },
+                    "required": [
+                      "base",
+                      "height"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "BFCL_v4_simple_python.json": {
+          "rows": 400,
+          "keys": [
+            "function",
+            "id",
+            "question"
+          ],
+          "sample": [
+            {
+              "id": "simple_python_0",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Find the area of a triangle with a base of 10 units and height of 5 units."
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "calculate_triangle_area",
+                  "description": "Calculate the area of a triangle given its base and height.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "base": {
+                        "type": "integer",
+                        "description": "The base of the triangle."
+                      },
+                      "height": {
+                        "type": "integer",
+                        "description": "The height of the triangle."
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "The unit of measure (defaults to 'units' if not specified)"
+                      }
+                    },
+                    "required": [
+                      "base",
+                      "height"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "simple_python_1",
+              "question": [
+                [
+                  {
+                    "role": "user",
+                    "content": "Calculate the factorial of 5 using math functions."
+                  }
+                ]
+              ],
+              "function": [
+                {
+                  "name": "math.factorial",
+                  "description": "Calculate the factorial of a given number.",
+                  "parameters": {
+                    "type": "dict",
+                    "properties": {
+                      "number": {
+                        "type": "integer",
+                        "description": "The number for which factorial needs to be calculated."
+                      }
+                    },
+                    "required": [
+                      "number"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "category_mapping": {
+        "simple": "single-skill call with exact arguments",
+        "multiple": "multi-skill sequence or multiple independent calls",
+        "irrelevance": "no-tool or irrelevant-tool rejection",
+        "multi_turn_miss_param": "missing argument / ask clarification",
+        "multi_turn_miss_func": "missing skill / unsupported task abstention"
+      },
+      "takeaways": [
+        "BFCL-style categories should be adopted directly as SkillBench-Hard slices.",
+        "Irrelevance and missing parameter cases are stronger than generic no-tool chat."
+      ]
+    },
+    "API-Bank": {
+      "files": {
+        "all_apis.csv": {
+          "rows": 101,
+          "columns": [
+            "id",
+            "类型",
+            "应用场景",
+            "API名称",
+            "参数",
+            "路径",
+            "类名",
+            "input_parameters",
+            "expressions",
+            "api_info"
+          ],
+          "sample": [
+            {
+              "id": "1",
+              "类型": "对外影响 - 数据库操作",
+              "应用场景": "账户管理",
+              "API名称": "获取用户Token",
+              "参数": "用户名 (string)，密码 (string)",
+              "路径": "apis/get_user_token.py",
+              "类名": "GetUserToken",
+              "input_parameters": "(username: str, password: str)",
+              "expressions": "GetUserToken(username: str, password: str)",
+              "api_info": "description = \"Get user token API that takes two parameters - 'username' and 'password'. The 'username' parameter is used to identify the user and the 'password' parameter is used to authenticate the user's identity.\"\ninput_parameters = {\n    'username': {'type': 'str', 'description': 'The username of the user.'},\n    'password': {'type': 'str', 'description': 'The password of the user.'}\n}\noutput_parameters = {\n    'token': {'type': 'str', 'description': 'The token generated upon successful authentication.'}\n}"
+            },
+            {
+              "id": "2",
+              "类型": "对外影响 - 数据库操作 - 增",
+              "应用场景": "账户管理",
+              "API名称": "注册用户",
+              "参数": "用户名 (string)，密码 (string)，邮箱 (string)",
+              "路径": "apis/register_user.py",
+              "类名": "RegisterUser",
+              "input_parameters": "(username: str, password: str, email: str)",
+              "expressions": "RegisterUser(username: str, password: str, email: str)",
+              "api_info": "description = \"API to register a new user with their username, password, and email.\"\ninput_parameters = {\n    'username': {'type': 'str', 'description': 'The username of the new user.'},\n    'password': {'type': 'str', 'description': 'The password of the new user.'},\n    'email': {'type': 'str', 'description': 'The email of the new user.'},\n}\noutput_parameters = {\n    'status': {'type': 'str', 'description': 'success or failed'}\n}"
+            },
+            {
+              "id": "3",
+              "类型": "对外影响 - 数据库操作 - 删",
+              "应用场景": "账户管理",
+              "API名称": "注销账户",
+              "参数": "Token (string)",
+              "路径": "apis/delete_account.py",
+              "类名": "DeleteAccount",
+              "input_parameters": "(token: str)",
+              "expressions": "DeleteAccount(token: str)",
+              "api_info": "description = \"Delete account API that takes a token parameter which is the authentication token of the user making the deletion request.\"\ninput_parameters = {\n    'token': {'type': 'str', 'description': 'The authentication token of the user.'}\n}\noutput_parameters = {\n    'status': {'type': 'str', 'description': 'success or failed'}\n}"
+            }
+          ]
+        },
+        "Calculator-level-1-1.jsonl": {
+          "rows": 4,
+          "keys": [
+            "role",
+            "text"
+          ],
+          "sample": [
+            {
+              "role": "User",
+              "text": "Can you calculate (5+6)*3 for me?"
+            },
+            {
+              "role": "AI",
+              "text": "Sure, let me handle that."
+            }
+          ]
+        },
+        "Calculator-level-3-1.jsonl": {
+          "rows": 5,
+          "keys": [
+            "role",
+            "text"
+          ],
+          "sample": [
+            {
+              "role": "User",
+              "text": "Can you help me calculate 25*3+7/3?"
+            },
+            {
+              "role": "AI",
+              "text": "Sure, let me calculate that for you."
+            }
+          ]
+        },
+        "Calculator-QueryHistoryToday-level-2-1.jsonl": {
+          "rows": 8,
+          "keys": [
+            "role",
+            "text"
+          ],
+          "sample": [
+            {
+              "role": "User",
+              "text": "Can you help me calculate (5*6)/(2+3)?"
+            },
+            {
+              "role": "AI",
+              "text": "Sure, I can help you with that."
+            }
+          ]
+        },
+        "Translate-level-1-1.jsonl": {
+          "rows": 4,
+          "keys": [
+            "role",
+            "text"
+          ],
+          "sample": [
+            {
+              "role": "User",
+              "text": "Can you translate \"Hello, how are you?\" to French?"
+            },
+            {
+              "role": "AI",
+              "text": "Sure, I can do that."
+            }
+          ]
+        },
+        "Meeting Schedule.txt": {
+          "chars": 888,
+          "preview": "Scene: Meeting Schedule\n\nFirst Utterance: Can you please do a meeting booking for me?\n\nKey Info:\n\n\"JohnDoe\":{\n\"password\":\"pass123\",\n\"token\":\"a9s8d7f6g5h4j3k2l1\",\n\"email\":\"johndoe@example.com\"\n},\n\nMeeting Topic: Quarterly Sales Review\n\nStart Time: 2023-04-15 09:00\nEnd Time: 2023-04-15 11:00\nLocation: Conference Room 2\nAttendees: [\"JohnDoe\", \"AliceSmith\", \"BobJohnson\"]\n\nAPI Calls:\nGetUserToken(username=\"JohnDoe\", password=\"pass123\")\nAddMeeting(token=\"a9s8d7f6g5h4j3k2l1\", meeting_topic=\"Quarterly S"
+        }
+      },
+      "takeaways": [
+        "API-Bank's level-1/2/3 split maps cleanly to single skill, retrieve+call, and plan+call.",
+        "Dialogues include API call traces, useful for expected skill sequence and argument checks."
+      ]
+    },
+    "MTEB ToolBench retrieval": {
+      "files": {
+        "ToolBench-corpus.parquet": {
+          "rows": 13862,
+          "columns": [
+            "id",
+            "text",
+            "title"
+          ],
+          "sample": [
+            {
+              "id": "toolbench_tool_0",
+              "text": "{\"category_name\": \"Logistics\", \"required_parameters\": [], \"optional_parameters\": [], \"method\": \"GET\", \"name\": \"SQUAKE_Checkhealth\", \"description\": \" \"}",
+              "title": ""
+            },
+            {
+              "id": "toolbench_tool_1",
+              "text": "{\"category_name\": \"Logistics\", \"required_parameters\": [], \"optional_parameters\": [], \"method\": \"GET\", \"name\": \"SQUAKE_Projects\", \"description\": \" \"}",
+              "title": ""
+            },
+            {
+              "id": "toolbench_tool_2",
+              "text": "{\"category_name\": \"Logistics\", \"required_parameters\": [{\"name\": \"task_id\", \"type\": \"STRING\", \"description\": \"Task ID\", \"default\": \"\"}], \"optional_parameters\": [], \"method\": \"GET\", \"template_response\": {\"statusCode\": \"int\", \"message\": \"str\"}, \"name\": \"Transportistas_de_Argentina_tracking_correo_argentino_result_task_task_id\", \"description\": \"Result for one Task ID.\"}",
+              "title": ""
+            }
+          ]
+        },
+        "ToolBench-qrels.parquet": {
+          "rows": 2629,
+          "columns": [
+            "query-id",
+            "corpus-id",
+            "score"
+          ],
+          "sample": [
+            {
+              "query-id": "toolbench_query_808",
+              "corpus-id": "toolbench_tool_2857",
+              "score": 1
+            },
+            {
+              "query-id": "toolbench_query_808",
+              "corpus-id": "toolbench_tool_2858",
+              "score": 1
+            },
+            {
+              "query-id": "toolbench_query_82",
+              "corpus-id": "toolbench_tool_5545",
+              "score": 1
+            }
+          ]
+        },
+        "ToolBench-queries.parquet": {
+          "rows": 1100,
+          "columns": [
+            "id",
+            "text"
+          ],
+          "sample": [
+            {
+              "id": "toolbench_query_808",
+              "text": "I want to check the status of my recent order. Can you fetch the details of my order, including the order status and delivery date?"
+            },
+            {
+              "id": "toolbench_query_82",
+              "text": "I'm looking to buy a house in the Hampshire county area. Can you provide me with a list of zip codes in the county? Also, I'd like to know the location information for zip code 01003."
+            },
+            {
+              "id": "toolbench_query_222",
+              "text": "I'm an anime enthusiast and I'm looking to discover some recent anime quotes that are popular among fans. Can you provide me with the latest ten quotes and their associated anime names? Also, if available, I'd love to know the character who spoke each quote."
+            }
+          ]
+        }
+      },
+      "takeaways": [
+        "Useful as a lightweight retrieval reference: query, corpus/tool documents, and qrels.",
+        "Can guide skill_library description style and query-tool relevance labeling."
+      ]
+    }
+  },
+  "recommendation": {
+    "decision": "Keep current 120-task SkillBench-Mini as SkillBench-Dev seed, then expand to 240 Dev / 120 Hard / 80 Hidden.",
+    "why_not_replace": [
+      "The current 120 tasks preserve experiment continuity and already expose baseline-to-enhanced progress.",
+      "Replacing them would destroy comparability with existing Full/BM25/Embedding/Enhanced V2 results."
+    ],
+    "why_expand": [
+      "External benchmarks emphasize missing parameters, irrelevance/no-tool, multi-call planning, and argument correctness.",
+      "The current held-out set is useful but still partly template-like and too small for final claims."
+    ],
+    "recommended_splits": {
+      "SkillBench-Dev": {
+        "size": 240,
+        "source": "Current 120 tasks + 120 new development tasks.",
+        "use": "Prompt/rule development and ablation debugging.",
+        "distribution": {
+          "single_skill": 100,
+          "multi_skill": 70,
+          "no_tool": 40,
+          "missing_info_or_unsupported": 30
+        }
+      },
+      "SkillBench-Hard": {
+        "size": 120,
+        "source": "Fresh tasks adapted from external benchmark categories, not copied.",
+        "use": "Main reported benchmark.",
+        "distribution": {
+          "single_skill_minimal_pair": 30,
+          "argument_heavy_single_skill": 25,
+          "implicit_multi_skill": 30,
+          "hard_no_tool_irrelevance": 20,
+          "missing_info_or_unsupported": 15
+        }
+      },
+      "SkillBench-Hidden": {
+        "size": 80,
+        "source": "Final frozen test set written after method design.",
+        "use": "One-shot final generalization check.",
+        "distribution": {
+          "single_skill": 25,
+          "multi_skill": 25,
+          "no_tool": 15,
+          "missing_info_or_unsupported": 15
+        }
+      }
+    }
+  }
+}

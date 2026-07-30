@@ -28,6 +28,9 @@ STOPWORDS = {
 }
 
 
+ABSTAIN_TASK_TYPES = {"no_tool", "missing_info", "unsupported_tool"}
+
+
 def load_jsonl(path: str | Path) -> list[dict]:
     path = Path(path)
     rows = []
@@ -98,7 +101,7 @@ def step_retrieval_failure(row: dict) -> bool:
 def skill_selection_correct(row: dict) -> bool:
     gold = row.get("gold_skills", [])
     called = set(called_skill_names(row))
-    if row.get("task_type") == "no_tool" or not gold:
+    if row.get("task_type") in ABSTAIN_TASK_TYPES or not gold:
         return len(called) == 0
     return all(skill in called for skill in gold)
 
@@ -113,13 +116,13 @@ def predicted_need_tool(row: dict) -> bool:
 
 
 def need_tool_correct(row: dict) -> bool:
-    gold_needs_tool = bool(row.get("gold_skills", [])) and row.get("task_type") != "no_tool"
+    gold_needs_tool = bool(row.get("gold_skills", [])) and row.get("task_type") not in ABSTAIN_TASK_TYPES
     predicted_needs_tool = predicted_need_tool(row)
     return gold_needs_tool == predicted_needs_tool
 
 
 def need_tool_false_negative(row: dict) -> bool:
-    gold_needs_tool = bool(row.get("gold_skills", [])) and row.get("task_type") != "no_tool"
+    gold_needs_tool = bool(row.get("gold_skills", [])) and row.get("task_type") not in ABSTAIN_TASK_TYPES
     return gold_needs_tool and not predicted_need_tool(row)
 
 
@@ -129,8 +132,18 @@ def no_tool_correct(row: dict) -> bool | None:
     return not called_skill_names(row) and not bool(row.get("invalid_call", False))
 
 
+def abstain_correct(row: dict) -> bool | None:
+    if row.get("task_type") not in ABSTAIN_TASK_TYPES:
+        return None
+    return not called_skill_names(row) and not bool(row.get("invalid_call", False))
+
+
 def unnecessary_tool_call(row: dict) -> bool:
     return row.get("task_type") == "no_tool" and bool(called_skill_names(row))
+
+
+def abstain_tool_call(row: dict) -> bool:
+    return row.get("task_type") in ABSTAIN_TASK_TYPES and bool(called_skill_names(row))
 
 
 def invalid_plan(row: dict) -> bool:
@@ -157,7 +170,7 @@ def skill_sequence_correct(row: dict) -> bool:
     called = called_skill_names(row)
     task_type = row.get("task_type", "")
 
-    if task_type == "no_tool" or not gold:
+    if task_type in ABSTAIN_TASK_TYPES or not gold:
         return len(called) == 0
     if task_type == "single_skill":
         return all(skill in called for skill in gold)
@@ -169,7 +182,7 @@ def skill_sequence_correct(row: dict) -> bool:
 def exact_skill_sequence_correct(row: dict) -> bool:
     gold = row.get("gold_skills", [])
     called = called_skill_names(row)
-    if row.get("task_type") == "no_tool" or not gold:
+    if row.get("task_type") in ABSTAIN_TASK_TYPES or not gold:
         return len(called) == 0
     return called == gold
 
@@ -198,8 +211,8 @@ def task_success(row: dict) -> bool:
     if not final_answer:
         return False
 
-    if row.get("task_type") == "no_tool":
-        return True
+    if row.get("task_type") in ABSTAIN_TASK_TYPES:
+        return abstain_correct(row) is True and answer_content_correct(row)
 
     expected = str(row.get("expected_answer", "")).strip()
     if not expected:
@@ -223,7 +236,11 @@ def answer_content_correct(row: dict) -> bool:
     final_answer = str(row.get("final_answer", "")).strip()
     if not final_answer:
         return False
-    if row.get("task_type") == "no_tool":
+    if row.get("task_type") in ABSTAIN_TASK_TYPES:
+        checks = _expected_checks(row)
+        final_check = checks.get("final_answer", {})
+        if final_check:
+            return _text_matches_check(final_answer, final_check)
         return True
 
     expected = str(row.get("expected_answer", "")).strip()
@@ -247,9 +264,81 @@ def answer_content_correct(row: dict) -> bool:
 def strict_task_success(row: dict) -> bool:
     if row.get("invalid_call"):
         return False
-    if row.get("task_type") == "no_tool":
-        return no_tool_correct(row) is True and bool(str(row.get("final_answer", "")).strip())
+    if row.get("task_type") in ABSTAIN_TASK_TYPES:
+        return abstain_correct(row) is True and bool(str(row.get("final_answer", "")).strip()) and answer_content_correct(row)
     return skill_sequence_correct(row) and answer_content_correct(row)
+
+
+def argument_correct(row: dict) -> bool | None:
+    checks = _expected_checks(row).get("arguments", [])
+    if not checks:
+        return None
+    return all(_check_skill_text(row, check, "input") for check in checks)
+
+
+def observation_correct(row: dict) -> bool | None:
+    checks = _expected_checks(row).get("observations", [])
+    if not checks:
+        return None
+    return all(_check_skill_text(row, check, "output") for check in checks)
+
+
+def final_answer_faithfulness_correct(row: dict) -> bool | None:
+    checks = _expected_checks(row)
+    final_check = checks.get("final_answer", {})
+    needs_faithfulness = bool(checks.get("faithfulness", False))
+    if not final_check and not needs_faithfulness:
+        return None
+
+    final_answer = str(row.get("final_answer", ""))
+    if final_check and not _text_matches_check(final_answer, final_check):
+        return False
+
+    if not needs_faithfulness:
+        return True
+
+    observations = row.get("observations", [])
+    outputs = [str(item.get("output", "")) for item in observations if isinstance(item, dict)]
+    has_error = any(_is_error_text(output) for output in outputs)
+    final_lower = final_answer.lower()
+
+    if has_error:
+        return any(word in final_lower for word in ["error", "failed", "unable", "could not"])
+
+    if outputs and any(word in final_lower for word in ["unable", "failed", "could not"]):
+        return False
+
+    observation_checks = checks.get("observations", [])
+    if observation_checks:
+        expected_tokens = []
+        for check in observation_checks:
+            expected_tokens.extend(str(value) for value in check.get("contains", []))
+        if expected_tokens and not any(
+            _contains_normalized(final_answer, token) for token in expected_tokens
+        ):
+            return False
+
+    return True
+
+
+def parameter_strict_success(row: dict) -> bool:
+    checks = _expected_checks(row)
+    if not checks:
+        return strict_task_success(row)
+    if row.get("invalid_call"):
+        return False
+    if row.get("task_type") in ABSTAIN_TASK_TYPES:
+        return abstain_correct(row) is True and bool(str(row.get("final_answer", "")).strip()) and answer_content_correct(row)
+
+    argument_value = argument_correct(row)
+    observation_value = observation_correct(row)
+    faithfulness_value = final_answer_faithfulness_correct(row)
+    return (
+        exact_skill_sequence_correct(row)
+        and (argument_value is not False)
+        and (observation_value is not False)
+        and (faithfulness_value is not False)
+    )
 
 
 def extract_keywords(text: str) -> list[str]:
@@ -278,14 +367,32 @@ def compute_metrics(rows: list[dict]) -> dict:
     no_tool_values = [
         value for value in (no_tool_correct(row) for row in rows) if value is not None
     ]
+    abstain_values = [
+        value for value in (abstain_correct(row) for row in rows) if value is not None
+    ]
     unnecessary_values = [unnecessary_tool_call(row) for row in rows if row.get("task_type") == "no_tool"]
+    abstain_tool_call_values = [
+        abstain_tool_call(row) for row in rows if row.get("task_type") in ABSTAIN_TASK_TYPES
+    ]
     sequence_values = [skill_sequence_correct(row) for row in rows]
     exact_sequence_values = [exact_skill_sequence_correct(row) for row in rows]
+    argument_values = [
+        value for value in (argument_correct(row) for row in rows) if value is not None
+    ]
+    observation_values = [
+        value for value in (observation_correct(row) for row in rows) if value is not None
+    ]
+    faithfulness_values = [
+        value
+        for value in (final_answer_faithfulness_correct(row) for row in rows)
+        if value is not None
+    ]
     multi_rows = [row for row in rows if row.get("task_type") == "multi_skill"]
     under_call_values = [multi_skill_under_call(row) for row in multi_rows]
     wrong_order_values = [wrong_skill_order(row) for row in multi_rows]
     success_values = [task_success(row) for row in rows]
     strict_success_values = [strict_task_success(row) for row in rows]
+    parameter_strict_values = [parameter_strict_success(row) for row in rows]
     invalid_values = [bool(row.get("invalid_call", False)) for row in rows]
     step_values = [len(called_skill_names(row)) for row in rows]
     plan_repair_values = [plan_repaired(row) for row in rows if "plan_repaired" in row]
@@ -299,13 +406,19 @@ def compute_metrics(rows: list[dict]) -> dict:
         "skill_selection_acc": _mean(selection_values),
         "need_tool_acc": _mean(need_tool_values),
         "no_tool_acc": _mean(no_tool_values),
+        "abstain_acc": _mean(abstain_values),
         "unnecessary_tool_call_rate": _mean(unnecessary_values),
+        "abstain_tool_call_rate": _mean(abstain_tool_call_values),
         "skill_sequence_acc": _mean(sequence_values),
         "exact_skill_sequence_acc": _mean(exact_sequence_values),
+        "argument_acc": _mean(argument_values),
+        "observation_acc": _mean(observation_values),
+        "final_answer_faithfulness_acc": _mean(faithfulness_values),
         "under_call_rate": _mean(under_call_values),
         "wrong_order_rate": _mean(wrong_order_values),
         "task_success_rate": _mean(success_values),
         "strict_task_success_rate": _mean(strict_success_values),
+        "parameter_strict_success_rate": _mean(parameter_strict_values),
         "invalid_call_rate": _mean(invalid_values),
         "avg_steps": _mean(step_values),
         "plan_repair_rate": _mean(plan_repair_values),
@@ -397,6 +510,69 @@ def _is_ordered_subsequence(expected: list[str], actual: list[str]) -> bool:
         if position < len(expected) and skill == expected[position]:
             position += 1
     return position == len(expected)
+
+
+def _expected_checks(row: dict) -> dict:
+    checks = row.get("expected_checks", {})
+    return checks if isinstance(checks, dict) else {}
+
+
+def _check_skill_text(row: dict, check: dict, field: str) -> bool:
+    if not isinstance(check, dict):
+        return False
+    skill_name = str(check.get("skill", "")).strip()
+    values = _candidate_skill_texts(row, skill_name, field)
+    if not values:
+        return False
+    return any(_text_matches_check(value, check) for value in values)
+
+
+def _candidate_skill_texts(row: dict, skill_name: str, field: str) -> list[str]:
+    values = []
+    for observation in row.get("observations", []):
+        if not isinstance(observation, dict):
+            continue
+        if skill_name and observation.get("skill") != skill_name:
+            continue
+        values.append(str(observation.get(field, "")))
+
+    if field == "input":
+        for step in row.get("planned_steps", []):
+            if not isinstance(step, dict):
+                continue
+            if skill_name and step.get("skill") != skill_name:
+                continue
+            values.append(str(step.get("input", "")))
+
+    return [value for value in values if value.strip()]
+
+
+def _text_matches_check(text: str, check: dict) -> bool:
+    for needle in check.get("contains", []):
+        if not _contains_normalized(text, str(needle)):
+            return False
+    for needle in check.get("not_contains", []):
+        if _contains_normalized(text, str(needle)):
+            return False
+    for pattern in check.get("regex", []):
+        if not re.search(str(pattern), str(text), flags=re.IGNORECASE):
+            return False
+    return True
+
+
+def _contains_normalized(text: str, needle: str) -> bool:
+    text_norm = _normalize_for_check(text)
+    needle_norm = _normalize_for_check(needle)
+    return needle_norm in text_norm
+
+
+def _normalize_for_check(text: str) -> str:
+    return re.sub(r"\s+", " ", str(text).lower()).strip()
+
+
+def _is_error_text(text: str) -> bool:
+    lowered = str(text).lower()
+    return lowered.startswith("error:") or "unsupported" in lowered or "failed" in lowered
 
 
 if __name__ == "__main__":

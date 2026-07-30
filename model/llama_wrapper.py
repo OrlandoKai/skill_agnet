@@ -1,5 +1,6 @@
 import json
 import re
+import inspect
 from pathlib import Path
 
 from config import MODEL_PATH, N_CTX, N_GPU_LAYERS
@@ -45,12 +46,27 @@ class LocalLlamaModel:
         prompt: str,
         max_tokens: int = 512,
         temperature: float = 0.0,
+        stop: list[str] | None = None,
+        top_p: float | None = None,
+        top_k: int | None = None,
+        repeat_penalty: float | None = None,
+        repeat_last_n: int | None = None,
     ) -> str:
-        response = self.llm(
-            prompt,
-            max_tokens=max_tokens,
-            temperature=temperature,
-        )
+        params = {
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stop": stop,
+        }
+        if top_p is not None:
+            params["top_p"] = top_p
+        if top_k is not None:
+            params["top_k"] = top_k
+        if repeat_penalty is not None:
+            params["repeat_penalty"] = repeat_penalty
+        if repeat_last_n is not None:
+            params["repeat_last_n"] = repeat_last_n
+
+        response = self.llm(prompt, **self._supported_kwargs(self.llm.__call__, params))
         choices = response.get("choices", [])
         if not choices:
             return ""
@@ -61,6 +77,56 @@ class LocalLlamaModel:
         if "message" in first and isinstance(first["message"], dict):
             return str(first["message"].get("content", "")).strip()
         return str(first).strip()
+
+    def generate_chat(
+        self,
+        messages: list[dict],
+        max_tokens: int = 512,
+        temperature: float = 0.0,
+        stop: list[str] | None = None,
+        top_p: float | None = None,
+        top_k: int | None = None,
+        repeat_penalty: float | None = None,
+        repeat_last_n: int | None = None,
+    ) -> str:
+        params = {
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stop": stop,
+        }
+        if top_p is not None:
+            params["top_p"] = top_p
+        if top_k is not None:
+            params["top_k"] = top_k
+        if repeat_penalty is not None:
+            params["repeat_penalty"] = repeat_penalty
+        if repeat_last_n is not None:
+            params["repeat_last_n"] = repeat_last_n
+
+        response = self.llm.create_chat_completion(
+            **self._supported_kwargs(self.llm.create_chat_completion, params)
+        )
+        choices = response.get("choices", [])
+        if not choices:
+            return ""
+
+        first = choices[0]
+        message = first.get("message")
+        if isinstance(message, dict):
+            return str(message.get("content", "")).strip()
+        if "text" in first:
+            return str(first["text"]).strip()
+        return str(first).strip()
+
+    @staticmethod
+    def _supported_kwargs(callable_obj, params: dict) -> dict:
+        filtered = {key: value for key, value in params.items() if value is not None}
+        try:
+            supported = set(inspect.signature(callable_obj).parameters)
+        except (TypeError, ValueError):
+            return filtered
+        return {key: value for key, value in filtered.items() if key in supported}
 
     @staticmethod
     def extract_json_from_text(text: str) -> dict | None:

@@ -14,7 +14,10 @@ results/*.json
 results/*.jsonl
 results/*.csv
 results/chat_sessions/
+results/chat_images/
 !results/.gitkeep
+
+data/external_references/**/*.parquet
 
 *.log
 *.tmp

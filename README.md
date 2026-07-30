@@ -68,6 +68,14 @@ D:\llm\models\llama2-7b-chat-q4_k_m-self.gguf
 
 Edit `config.py` if the model moves or if you want to change context length or GPU layers.
 
+The UI and CLI can also switch models at runtime. By default, the UI scans:
+
+```text
+D:\llm\models
+```
+
+Complete GGUF model files are shown in the `Model` selector. GGUF files that look like LoRA or adapter files are hidden from the default dropdown. You can still use a custom GGUF path manually.
+
 ## Recommended Python
 
 Use the project virtual environment:
@@ -89,6 +97,25 @@ python scripts/test_llama.py
 ```
 
 Expected behavior: the script loads the local GGUF model and prints a short model response.
+
+To test Qwen3:
+
+```bash
+python scripts/test_llama.py --model_path D:\llm\models\Qwen3-8B-Q4_K_M.gguf
+```
+
+To test local Qwen2.5-VL image question answering:
+
+```bash
+python scripts/test_vision.py --image path\to\image.png --prompt "请描述这张图片"
+```
+
+The default vision model pair is:
+
+```text
+D:\llm\models\qwen2.5-vl-7b\Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf
+D:\llm\models\qwen2.5-vl-7b\Qwen2.5-VL-7B-Instruct-vision.gguf
+```
 
 ## Test Skills
 
@@ -182,6 +209,47 @@ python run.py --agent enhanced_v2 --retriever bm25 --top_k 5 --max_steps 2 --max
 python run.py --agent enhanced_v2 --retriever embedding --top_k 5 --max_steps 2 --max_tasks 120 --output results/run_enhanced_v2_embedding_120.jsonl
 ```
 
+Run with Qwen3 instead of the default Llama2 model:
+
+```bash
+python run.py --agent enhanced_v2 --retriever bm25 --model_path D:\llm\models\Qwen3-8B-Q4_K_M.gguf --task "Calculate 12 * (3 + 4)"
+```
+
+## SkillBench-Heldout and Ablations
+
+`data/skillbench_heldout.json` is an 80-task held-out benchmark for checking whether Enhanced V2 generalizes beyond the original 120 tasks. It keeps the same 40 skills but changes task wording, adds harder no-tool prompts, implicit multi-step requests, similar-skill distractors, and `expected_checks` for parameter-level evaluation.
+
+Inspect the held-out benchmark:
+
+```bash
+python scripts/inspect_benchmark.py --benchmark data\skillbench_heldout.json --expected_single 40 --expected_multi 25 --expected_no_tool 15
+```
+
+Run the held-out main comparison:
+
+```bash
+python run.py --agent enhanced_v2 --retriever full --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_full_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever bm25 --top_k 5 --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever embedding --top_k 5 --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_embedding_heldout80.jsonl
+```
+
+Run BM25 ablations:
+
+```bash
+python run.py --agent enhanced_v2 --retriever bm25 --ablation no_need_tool_gate --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_no_need_tool_gate_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever bm25 --ablation no_step_retrieval --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_no_step_retrieval_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever bm25 --ablation no_backfill --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_no_backfill_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever bm25 --ablation no_input_builder --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_no_input_builder_heldout80.jsonl
+python run.py --agent enhanced_v2 --retriever bm25 --ablation no_rule_final_answer --benchmark data\skillbench_heldout.json --max_tasks 80 --output results\run_enhanced_v2_bm25_no_rule_final_answer_heldout80.jsonl
+```
+
+Compare held-out runs:
+
+```bash
+python scripts\compare_runs.py --inputs results\run_enhanced_v2_full_heldout80.jsonl results\run_enhanced_v2_bm25_heldout80.jsonl results\run_enhanced_v2_embedding_heldout80.jsonl --output results\compare_heldout80_main.csv
+python scripts\compare_runs.py --inputs results\run_enhanced_v2_bm25_heldout80.jsonl results\run_enhanced_v2_bm25_no_need_tool_gate_heldout80.jsonl results\run_enhanced_v2_bm25_no_step_retrieval_heldout80.jsonl results\run_enhanced_v2_bm25_no_backfill_heldout80.jsonl results\run_enhanced_v2_bm25_no_input_builder_heldout80.jsonl results\run_enhanced_v2_bm25_no_rule_final_answer_heldout80.jsonl --output results\compare_heldout80_ablation.csv
+```
+
 ## Streamlit UI
 
 Run the local interactive workbench from the project root:
@@ -190,9 +258,17 @@ Run the local interactive workbench from the project root:
 .\.venv\Scripts\streamlit.exe run app.py
 ```
 
+If `streamlit.exe` is not found, use:
+
+```bash
+.\.venv\Scripts\python.exe -m streamlit run app.py --server.fileWatcherType none
+```
+
 The UI includes seven pages: `总览`, `Benchmark`, `检索器实验`, `Agent 运行`, `评估指标`, `失败分析`, and `自由问答`.
 
-The `自由问答` page supports direct local Llama2 chat and Skill Agent mode. Chat sessions are saved automatically under `results/chat_sessions/`; the chat title uses the first user prompt and is truncated when it is too long.
+The `自由问答` page supports direct local model chat and Skill Agent mode. Use the `Model` selector to switch between Llama2, Qwen3, or a custom GGUF path. In `直接问模型` mode, you can paste, drag, or select one image in the chat input; when an image is attached, the UI automatically uses the local Qwen2.5-VL model pair. Skill Agent mode currently supports text only.
+
+Chat sessions are saved automatically under `results/chat_sessions/`; pasted images are saved under `results/chat_images/`. The chat title uses the first user prompt and is truncated when it is too long.
 
 ## Outputs
 
@@ -201,6 +277,7 @@ The `自由问答` page supports direct local Llama2 chat and Skill Agent mode. 
 - `results/compare_results.csv`: method comparison table.
 - `results/failure_cases_*.json`: categorized failed cases.
 - `results/chat_sessions/*.json`: saved UI chat sessions.
+- `results/chat_images/`: saved UI chat images.
 
 ## SkillBench-Mini v3
 
