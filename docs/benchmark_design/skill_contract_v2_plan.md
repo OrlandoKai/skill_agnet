@@ -57,15 +57,41 @@ All three V2 files preserve the existing task schema and add:
 The benchmark inspector verifies all three files with `--require_expected_checks`.
 Each split covers all 40 registered skills.
 
-Remaining contract-side work:
+Contract-side completion status:
 
 1. Generate `data/skill_library_v2.json` for the current 40 skills. **Done.**
 2. Add `scripts/inspect_skill_contracts.py`. **Done.**
 3. Fix the first set of high-risk rule skills before treating Hard/Hidden
-   scores as final. **Partly done:** `unit_converter`, `percentage_calculator`,
-   `csv_summarizer`, `language_detector`, and `table_formatter` were patched.
+   scores as final. **Done for Phase 1:** `unit_converter`,
+   `percentage_calculator`, `csv_summarizer`, `language_detector`,
+   `table_formatter`, and `range_filter` were patched.
 4. Connect V2 contracts to retrieval text and Agent candidate prompts.
+   **Done in agent-facing form:** `EnhancedSkillAgentV3` and
+   `EnhancedSkillAgentV4` load `data/skill_library_v2.json` and use its
+   trigger phrases as extra contract hints while keeping the legacy retriever
+   path stable for comparability.
 5. Run the three planned experiment/improvement loops and record each version.
+   **Done:** loop records are stored in `docs/iteration_records/`.
+
+Completed loop records:
+
+```text
+docs/iteration_records/2026-07-31_benchmark_v2_completion/
+docs/iteration_records/2026-07-31_loop1_enhanced_v2_diagnosis/
+docs/iteration_records/2026-07-31_loop2_enhanced_v3/
+docs/iteration_records/2026-07-31_loop3_enhanced_v4/
+```
+
+Final BM25 Dev/Hard comparison after the three loops:
+
+| Split | Agent | Recall | Selection | Need-tool | Abstain | Under-call | Strict Success | Parameter Strict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Dev 240 | Enhanced V2 | 98.46% | 76.67% | 90.83% | 53.33% | 44.00% | 75.83% | 75.83% |
+| Dev 240 | Enhanced V3 | 98.72% | 85.42% | 96.25% | 84.44% | 21.33% | 84.58% | 77.08% |
+| Dev 240 | Enhanced V4 | 99.23% | 90.83% | 96.67% | 84.44% | 10.67% | 90.00% | 80.83% |
+| Hard 120 | Enhanced V2 | 94.44% | 49.17% | 81.67% | 33.33% | 100.00% | 47.50% | 46.67% |
+| Hard 120 | Enhanced V3 | 91.11% | 81.67% | 93.33% | 100.00% | 37.50% | 80.00% | 64.17% |
+| Hard 120 | Enhanced V4 | 100.00% | 96.67% | 100.00% | 100.00% | 5.00% | 95.00% | 67.50% |
 
 ## Core Decision
 
