@@ -148,5 +148,455 @@
       }
     ],
     "keywords": ["python", "code", "execute", "program", "snippet", "compute"]
+  },
+  {
+    "name": "percentage_calculator",
+    "description": "Compute percentage-of, percentage change, discounts, increases, and decreases. Use this for percent reasoning, not general arithmetic.",
+    "input_schema": {
+      "type": "string",
+      "description": "A percentage request such as '20% of 150' or '80 increased by 25%'."
+    },
+    "examples": [
+      {
+        "input": "80 increased by 25%",
+        "output": "Percentage: 80 increased by 25% = 100"
+      }
+    ],
+    "keywords": ["percentage", "percent", "%", "discount", "increase", "decrease", "rate", "proportion"]
+  },
+  {
+    "name": "statistics_calculator",
+    "description": "Calculate descriptive statistics such as mean, median, min, max, count, and sum from a list of numbers. Use this for statistics, not single arithmetic expressions.",
+    "input_schema": {
+      "type": "string",
+      "description": "A request containing numbers, such as 'mean and median of 2, 4, 8'."
+    },
+    "examples": [
+      {
+        "input": "mean and median of 2, 4, 8, 10",
+        "output": "Statistics: mean=6, median=6, count=4"
+      }
+    ],
+    "keywords": ["statistics", "mean", "median", "average", "min", "max", "count", "sum"]
+  },
+  {
+    "name": "date_difference_calculator",
+    "description": "Calculate the number of days between two dates in YYYY-MM-DD format. Use this for date intervals, not numeric arithmetic.",
+    "input_schema": {
+      "type": "string",
+      "description": "Two dates such as '2026-07-01 to 2026-07-15'."
+    },
+    "examples": [
+      {
+        "input": "days between 2026-07-01 and 2026-07-15",
+        "output": "Date difference: 14 days"
+      }
+    ],
+    "keywords": ["date", "days", "between", "duration", "calendar", "interval", "YYYY-MM-DD"]
+  },
+  {
+    "name": "regex_extractor",
+    "description": "Extract structured patterns such as emails, dates, phone numbers, and URLs. Use this for exact pattern extraction, not semantic keywords.",
+    "input_schema": {
+      "type": "string",
+      "description": "Text containing emails, dates, phone numbers, or URLs."
+    },
+    "examples": [
+      {
+        "input": "Email alice@example.com before 2026-07-15.",
+        "output": "Regex matches: emails=alice@example.com; dates=2026-07-15"
+      }
+    ],
+    "keywords": ["regex", "pattern", "email", "date", "phone", "url", "extract"]
+  },
+  {
+    "name": "entity_extractor",
+    "description": "Extract named entities such as people, organizations, and locations. Use this for named entities, not frequent keywords.",
+    "input_schema": {
+      "type": "string",
+      "description": "Text mentioning people, organizations, or locations."
+    },
+    "examples": [
+      {
+        "input": "Alice visited OpenAI in San Francisco.",
+        "output": "Entities: person=Alice; organization=OpenAI"
+      }
+    ],
+    "keywords": ["entity", "named entity", "person", "organization", "location", "NER", "extract"]
+  },
+  {
+    "name": "topic_classifier",
+    "description": "Classify the broad topic of a text, such as machine learning, finance, health, education, or software. Use this for topic labels, not keyword extraction.",
+    "input_schema": {
+      "type": "string",
+      "description": "Text to classify by broad topic."
+    },
+    "examples": [
+      {
+        "input": "The model trains on a retrieval dataset.",
+        "output": "Topic: machine_learning"
+      }
+    ],
+    "keywords": ["topic", "classify", "category", "domain", "machine learning", "finance", "health"]
+  },
+  {
+    "name": "intent_classifier",
+    "description": "Classify the user's intent, such as translation request, calculation request, summarization request, extraction request, editing request, or general question.",
+    "input_schema": {
+      "type": "string",
+      "description": "A user request to classify by intent."
+    },
+    "examples": [
+      {
+        "input": "Please summarize this paragraph.",
+        "output": "Intent: summarization_request"
+      }
+    ],
+    "keywords": ["intent", "classify", "request type", "user goal", "command", "task type"]
+  },
+  {
+    "name": "grammar_corrector",
+    "description": "Fix simple grammar mistakes while preserving the sentence meaning. Use this for grammar correction, not broad rewriting or tone conversion.",
+    "input_schema": {
+      "type": "string",
+      "description": "A sentence with grammar errors."
+    },
+    "examples": [
+      {
+        "input": "she go to school",
+        "output": "Grammar corrected: She goes to school."
+      }
+    ],
+    "keywords": ["grammar", "correct", "fix", "mistake", "sentence", "proofread"]
+  },
+  {
+    "name": "tone_converter",
+    "description": "Convert text into a requested tone such as formal, polite, or friendly. Use this for style and tone, not grammar correction.",
+    "input_schema": {
+      "type": "string",
+      "description": "Text plus a target tone such as formal or friendly."
+    },
+    "examples": [
+      {
+        "input": "make it formal: send me the file",
+        "output": "Formal tone: Please note that send me the file."
+      }
+    ],
+    "keywords": ["tone", "formal", "friendly", "polite", "style", "voice", "rewrite"]
+  },
+  {
+    "name": "outline_generator",
+    "description": "Generate a simple outline with ordered sections for a topic. Use this for outlines, not summaries.",
+    "input_schema": {
+      "type": "string",
+      "description": "A topic to outline."
+    },
+    "examples": [
+      {
+        "input": "outline for skill retrieval experiments",
+        "output": "Outline: 1. Introduction; 2. Key points; 3. Method; 4. Conclusion."
+      }
+    ],
+    "keywords": ["outline", "plan", "sections", "structure", "agenda", "draft"]
+  },
+  {
+    "name": "citation_formatter",
+    "description": "Format bibliographic citation information such as author, year, and title. Use this for citations, not paper question answering.",
+    "input_schema": {
+      "type": "string",
+      "description": "Citation metadata including author, year, and title."
+    },
+    "examples": [
+      {
+        "input": "author: Smith year: 2024 title: Skill Retrieval",
+        "output": "Citation: Smith (2024). Skill Retrieval."
+      }
+    ],
+    "keywords": ["citation", "reference", "bibliography", "author", "year", "title", "format"]
+  },
+  {
+    "name": "table_formatter",
+    "description": "Format key-value text or comma-separated items as a Markdown table. Use this for table formatting, not summarization.",
+    "input_schema": {
+      "type": "string",
+      "description": "Key-value text such as 'name: BM25; score: 0.8'."
+    },
+    "examples": [
+      {
+        "input": "name: BM25; score: 0.8",
+        "output": "| field | value |\n| --- | --- |\n| name | BM25 |\n| score | 0.8 |"
+      }
+    ],
+    "keywords": ["table", "markdown table", "format", "rows", "columns", "key value"]
+  },
+  {
+    "name": "ratio_calculator",
+    "description": "Simplify ratios and compute decimal ratio values. Use this for ratio expressions such as 12:18, not general arithmetic or percentages.",
+    "input_schema": {
+      "type": "string",
+      "description": "A ratio request such as 'simplify ratio 12:18' or 'ratio of 8 to 20'."
+    },
+    "examples": [
+      {
+        "input": "simplify ratio 12:18",
+        "output": "Ratio: 12:18 = 2:3; decimal=0.666667"
+      }
+    ],
+    "keywords": ["ratio", "proportion", "simplify ratio", "colon", "decimal ratio", "compare quantities"]
+  },
+  {
+    "name": "equation_solver",
+    "description": "Solve simple one-variable linear equations for x. Use this for equations with an equals sign, not plain arithmetic expressions.",
+    "input_schema": {
+      "type": "string",
+      "description": "A linear equation such as '2*x + 3 = 11'."
+    },
+    "examples": [
+      {
+        "input": "solve 2*x + 3 = 11",
+        "output": "Equation solution: x=4"
+      }
+    ],
+    "keywords": ["equation", "solve", "linear", "x", "unknown", "equals", "algebra"]
+  },
+  {
+    "name": "number_sequence_analyzer",
+    "description": "Analyze numeric sequences, detect arithmetic or geometric patterns, and predict the next value. Use this for sequences, not descriptive statistics.",
+    "input_schema": {
+      "type": "string",
+      "description": "A numeric sequence such as '2, 4, 6, 8'."
+    },
+    "examples": [
+      {
+        "input": "sequence 2, 4, 6, 8",
+        "output": "Sequence: arithmetic difference=2; next=10"
+      }
+    ],
+    "keywords": ["sequence", "next number", "pattern", "arithmetic sequence", "geometric sequence", "series"]
+  },
+  {
+    "name": "range_filter",
+    "description": "Filter a list of numbers by a numeric range or threshold. Use this for selecting values, not sorting or statistics.",
+    "input_schema": {
+      "type": "string",
+      "description": "Numbers plus a range, such as 'filter 1, 5, 9 between 2 and 8'."
+    },
+    "examples": [
+      {
+        "input": "filter 1, 5, 9, 12 between 3 and 10",
+        "output": "Filtered values: 5, 9"
+      }
+    ],
+    "keywords": ["filter", "range", "between", "threshold", "above", "below", "select numbers"]
+  },
+  {
+    "name": "list_sorter",
+    "description": "Sort comma-separated numbers or words in ascending or descending order. Use this for ordering lists, not deduplication.",
+    "input_schema": {
+      "type": "string",
+      "description": "A list such as 'sort 3, 1, 2 descending'."
+    },
+    "examples": [
+      {
+        "input": "sort 3, 1, 2 ascending",
+        "output": "Sorted list: 1, 2, 3"
+      }
+    ],
+    "keywords": ["sort", "order", "ascending", "descending", "rank", "list", "arrange"]
+  },
+  {
+    "name": "deduplicator",
+    "description": "Remove duplicate items from a list while preserving first occurrence order. Use this for uniqueness, not sorting.",
+    "input_schema": {
+      "type": "string",
+      "description": "A list with repeated items, such as 'apple, banana, apple'."
+    },
+    "examples": [
+      {
+        "input": "deduplicate apple, banana, apple",
+        "output": "Deduplicated items: apple, banana"
+      }
+    ],
+    "keywords": ["deduplicate", "remove duplicates", "unique", "distinct", "repeat", "list cleanup"]
+  },
+  {
+    "name": "json_validator",
+    "description": "Check whether a JSON string is syntactically valid and report the parsed type. Use this for JSON validation, not table formatting.",
+    "input_schema": {
+      "type": "string",
+      "description": "A JSON object or array string."
+    },
+    "examples": [
+      {
+        "input": "{\"task\": \"retrieve\", \"top_k\": 5}",
+        "output": "JSON valid: type=dict"
+      }
+    ],
+    "keywords": ["json", "validate", "syntax", "parse", "schema", "object", "array"]
+  },
+  {
+    "name": "csv_summarizer",
+    "description": "Summarize CSV text by row count, column count, and simple numeric aggregates. Use this for CSV data, not Markdown tables.",
+    "input_schema": {
+      "type": "string",
+      "description": "CSV text with a header row."
+    },
+    "examples": [
+      {
+        "input": "name,score\nbm25,0.8\nfull,0.6",
+        "output": "CSV summary: rows=2, columns=2; score:sum=1.4,mean=0.7"
+      }
+    ],
+    "keywords": ["csv", "comma separated", "rows", "columns", "aggregate", "spreadsheet", "summarize data"]
+  },
+  {
+    "name": "language_detector",
+    "description": "Detect whether text is mainly English, Chinese, numeric, or unknown. Use this for language identification, not translation.",
+    "input_schema": {
+      "type": "string",
+      "description": "Text whose language should be identified."
+    },
+    "examples": [
+      {
+        "input": "hello skill agent",
+        "output": "Language: English"
+      }
+    ],
+    "keywords": ["language", "detect", "English", "Chinese", "identify language", "script"]
+  },
+  {
+    "name": "readability_scorer",
+    "description": "Estimate simple English readability using sentence length and word length. Use this for readability, not sentiment or grammar correction.",
+    "input_schema": {
+      "type": "string",
+      "description": "English text to score for readability."
+    },
+    "examples": [
+      {
+        "input": "This sentence is short. It is easy to read.",
+        "output": "Readability: easy"
+      }
+    ],
+    "keywords": ["readability", "reading level", "easy", "hard", "sentence length", "complexity"]
+  },
+  {
+    "name": "title_generator",
+    "description": "Generate a concise title from a passage or topic. Use this for titles, not summaries or outlines.",
+    "input_schema": {
+      "type": "string",
+      "description": "A topic or passage to title."
+    },
+    "examples": [
+      {
+        "input": "Skill retrieval improves agent tool use.",
+        "output": "Title: Skill Retrieval Improves Agent Tool Use"
+      }
+    ],
+    "keywords": ["title", "headline", "name", "caption", "generate title", "short label"]
+  },
+  {
+    "name": "question_generator",
+    "description": "Generate simple study or discussion questions from a topic. Use this for questions, not answering questions.",
+    "input_schema": {
+      "type": "string",
+      "description": "A topic or passage to turn into questions."
+    },
+    "examples": [
+      {
+        "input": "skill retrieval evaluation",
+        "output": "Questions: 1. What is the main idea..."
+      }
+    ],
+    "keywords": ["question", "generate questions", "quiz", "discussion", "study questions", "ask"]
+  },
+  {
+    "name": "checklist_generator",
+    "description": "Generate a short checklist for completing a task. Use this for actionable checklists, not outlines.",
+    "input_schema": {
+      "type": "string",
+      "description": "A task or topic to convert into a checklist."
+    },
+    "examples": [
+      {
+        "input": "checklist for running a benchmark",
+        "output": "Checklist: [ ] Define running a benchmark; [ ] Prepare inputs..."
+      }
+    ],
+    "keywords": ["checklist", "to check", "steps", "action list", "verify", "workflow"]
+  },
+  {
+    "name": "pros_cons_analyzer",
+    "description": "Produce a balanced pros and cons note for an option or decision. Use this for tradeoff analysis, not sentiment classification.",
+    "input_schema": {
+      "type": "string",
+      "description": "An option or decision to analyze."
+    },
+    "examples": [
+      {
+        "input": "using BM25 as a baseline",
+        "output": "Pros/Cons: Pros - using BM25 as a baseline..."
+      }
+    ],
+    "keywords": ["pros", "cons", "tradeoff", "advantages", "disadvantages", "decision", "analysis"]
+  },
+  {
+    "name": "argument_mapper",
+    "description": "Extract a simple claim, evidence, and support relation from argumentative text. Use this for reasoning structure, not sentiment.",
+    "input_schema": {
+      "type": "string",
+      "description": "Argument text containing a claim and optional evidence."
+    },
+    "examples": [
+      {
+        "input": "claim: BM25 is useful because it is simple",
+        "output": "Argument map: claim=BM25 is useful; evidence=it is simple; relation=supports"
+      }
+    ],
+    "keywords": ["argument", "claim", "evidence", "reasoning", "support", "premise", "map"]
+  },
+  {
+    "name": "email_drafter",
+    "description": "Draft a short email from a request, recipient, and topic. Use this for email composition, not tone conversion alone.",
+    "input_schema": {
+      "type": "string",
+      "description": "An email request such as 'draft email to Lee about meeting'."
+    },
+    "examples": [
+      {
+        "input": "draft email to Lee about the benchmark meeting",
+        "output": "Email draft: Dear Lee, I am writing about..."
+      }
+    ],
+    "keywords": ["email", "draft", "compose", "recipient", "subject", "message", "mail"]
+  },
+  {
+    "name": "todo_extractor",
+    "description": "Extract action items and todos from notes. Use this for tasks and action items, not named entities.",
+    "input_schema": {
+      "type": "string",
+      "description": "Notes that include todo, must, should, or action item phrases."
+    },
+    "examples": [
+      {
+        "input": "We need to run BM25. Todo: analyze failures.",
+        "output": "Todos: run BM25; analyze failures"
+      }
+    ],
+    "keywords": ["todo", "action item", "task", "need to", "must", "should", "extract actions"]
+  },
+  {
+    "name": "meeting_notes_extractor",
+    "description": "Extract decisions, action items, and dates from meeting notes. Use this for meeting minutes, not general summarization.",
+    "input_schema": {
+      "type": "string",
+      "description": "Meeting notes with decisions, actions, owners, or dates."
+    },
+    "examples": [
+      {
+        "input": "Decision: use BM25. Action: run benchmark by 2026-07-15.",
+        "output": "Meeting notes: decisions=use BM25; actions=run benchmark by 2026-07-15; dates=2026-07-15"
+      }
+    ],
+    "keywords": ["meeting", "notes", "minutes", "decision", "action", "owner", "date", "follow up"]
   }
 ]

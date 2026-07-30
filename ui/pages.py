@@ -1,4 +1,5 @@
 import json
+import re
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
@@ -10,7 +11,13 @@ from config import RESULTS_DIR
 from eval.evaluate import compute_metrics, load_jsonl, save_metrics_csv
 from eval.skillbench_eval import evaluate_skillbench_result
 from scripts.analyze_failures import classify_failure, failure_case
-from ui.chat_store import append_message, create_session, load_session, save_session
+from ui.chat_store import (
+    append_message,
+    build_recent_history,
+    create_session,
+    load_session,
+    save_session,
+)
 from ui.common import (
     compact_skill_rows,
     dataframe_from_records,
@@ -166,32 +173,48 @@ def agent_run_page() -> None:
     st.title("Agent 运行")
     st.caption("运行 task -> retrieval -> skill calling -> observation -> final answer")
 
-    method, top_k, max_steps = _agent_controls(prefix="agent_page")
-    single_task = st.text_area("单条任务调试", value="Calculate 12 * (3 + 4)", height=90)
-    if st.button("运行单条任务", type="primary"):
-        task = _ad_hoc_task(single_task)
-        with st.spinner("正在调用本地模型和 Skill Agent..."):
-            agent = build_agent(method, int(top_k), int(max_steps))
-            result = agent.run_task(task)
-            result["evaluation"] = evaluate_skillbench_result(result)
-            st.session_state["agent_single_result"] = result
+    method, top_k, max_steps, agent_mode = _agent_controls(prefix="agent_page")
+    single_tab, batch_tab = st.tabs(["单条调试", "Benchmark 批量运行"])
 
-    result = st.session_state.get("agent_single_result")
-    if result:
-        _render_agent_result(result)
+    with single_tab:
+        single_task = st.text_area("单条任务调试", value="Calculate 12 * (3 + 4)", height=90)
+        if st.button("运行单条任务", type="primary"):
+            task = _ad_hoc_task(single_task)
+            with st.spinner("正在调用本地模型和 Skill Agent..."):
+                agent = build_agent(method, int(top_k), int(max_steps), agent_mode)
+                result = agent.run_task(task)
+                result["evaluation"] = evaluate_skillbench_result(result)
+                st.session_state["agent_single_result"] = result
 
-    st.divider()
-    st.subheader("Benchmark 批量运行")
-    tasks = load_benchmark()
-    batch_cols = st.columns([0.22, 0.38, 0.2, 0.2])
-    max_tasks = batch_cols[0].number_input("最大任务数", min_value=1, max_value=len(tasks), value=min(5, len(tasks)))
-    default_output = RESULTS_DIR / f"ui_run_{method}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
-    output_path = batch_cols[1].text_input("输出 JSONL", value=str(default_output))
-    run_batch = batch_cols[2].button("开始运行", width="stretch")
-    batch_cols[3].caption("建议不要并发运行多个 Llama 任务。")
+        result = st.session_state.get("agent_single_result")
+        if result:
+            _render_agent_result(result)
 
-    if run_batch:
-        _run_benchmark_in_ui(tasks[: int(max_tasks)], method, int(top_k), int(max_steps), Path(output_path))
+    with batch_tab:
+        st.subheader("Benchmark 批量运行")
+        st.caption("用于顺序运行 SkillBench-Mini。建议不要并发启动多个 Llama 任务。")
+        tasks = load_benchmark()
+        batch_cols = st.columns([0.22, 0.38, 0.2, 0.2])
+        max_tasks = batch_cols[0].number_input(
+            "最大任务数",
+            min_value=1,
+            max_value=len(tasks),
+            value=min(5, len(tasks)),
+        )
+        default_output = RESULTS_DIR / f"ui_run_{method}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
+        output_path = batch_cols[1].text_input("输出 JSONL", value=str(default_output))
+        run_batch = batch_cols[2].button("开始运行", width="stretch")
+        batch_cols[3].metric("Benchmark 总数", len(tasks))
+
+        if run_batch:
+            _run_benchmark_in_ui(
+                tasks[: int(max_tasks)],
+                method,
+                int(top_k),
+                int(max_steps),
+                Path(output_path),
+                agent_mode,
+            )
 
 
 def evaluation_page() -> None:
@@ -250,12 +273,20 @@ def failure_page() -> None:
             cases.append(failure_case(row, failure_type))
 
     failure_types = [
+        "need_tool_false_negative",
+        "invalid_plan",
+        "step_retrieval_failure",
+        "planner_repair_failure",
         "retrieval_failure",
-        "selection_failure",
+        "skill_selection_failure",
+        "no_tool_overcall",
+        "multi_skill_under_call",
+        "wrong_skill_order",
         "invalid_call",
         "execution_failure",
-        "final_answer_failure",
-        "unnecessary_tool_call",
+        "input_construction_failure",
+        "final_grounding_failure",
+        "final_answer_hallucination",
     ]
     cols = st.columns(3)
     for index, failure_type in enumerate(failure_types):
@@ -295,7 +326,7 @@ def free_chat_page(session_id: str | None) -> None:
         session = load_session(session_id) or create_session()
         st.session_state["active_chat_id"] = session["id"]
 
-    top_cols = st.columns([0.28, 0.18, 0.16, 0.16, 0.22])
+    top_cols = st.columns([0.24, 0.16, 0.16, 0.14, 0.14, 0.16])
     mode = top_cols[0].segmented_control(
         "模式",
         ["直接问模型", "使用 Skill Agent"],
@@ -310,10 +341,16 @@ def free_chat_page(session_id: str | None) -> None:
     )
     top_k = top_cols[2].number_input("Top-K", min_value=1, max_value=10, value=5)
     max_steps = top_cols[3].number_input("Max Steps", min_value=1, max_value=4, value=2)
-    top_cols[4].markdown('<span class="status-pill">当前对话已自动保存</span>', unsafe_allow_html=True)
+    agent_mode_label = top_cols[4].selectbox(
+        "Agent",
+        ["Baseline", "Enhanced", "Enhanced V2"],
+        index=_agent_mode_index(session.get("agent_mode", "baseline")),
+    )
+    top_cols[5].markdown('<span class="status-pill">当前对话已自动保存</span>', unsafe_allow_html=True)
 
     session["mode"] = mode
     session["retriever"] = method_from_label(retriever_label)
+    session["agent_mode"] = _agent_mode_from_label(agent_mode_label)
     save_session(session)
 
     chat_col, debug_col = st.columns([0.66, 0.34])
@@ -339,6 +376,7 @@ def free_chat_page(session_id: str | None) -> None:
                 retriever_name=method_from_label(retriever_label),
                 top_k=int(top_k),
                 max_steps=int(max_steps),
+                agent_mode=session["agent_mode"],
             )
             st.rerun()
 
@@ -355,25 +393,99 @@ def _handle_free_chat_submit(
     retriever_name: str,
     top_k: int,
     max_steps: int,
+    agent_mode: str,
 ) -> None:
+    history_text = build_recent_history(session)
     append_message(session, "user", prompt)
     if mode == "直接问模型":
         with st.spinner("正在调用本地 Llama2..."):
-            answer = get_model().generate(f"[INST]\n{prompt}\n[/INST]", max_tokens=512, temperature=0.0)
+            model_prompt = _build_direct_chat_prompt(prompt, history_text)
+            raw_answer = get_model().generate(model_prompt, max_tokens=512, temperature=0.0)
+            answer = _naturalize_memory_answer(raw_answer)
         debug = {
             "retrieved_skills": [],
             "called_skills": [],
             "observations": [],
-            "raw_model_outputs": [answer],
+            "memory_context": history_text,
+            "raw_model_outputs": [raw_answer],
         }
     else:
         with st.spinner("正在运行 Skill Agent..."):
-            agent = build_agent(retriever_name, top_k, max_steps)
-            result = agent.run_task(_ad_hoc_task(prompt))
-        answer = result.get("final_answer", "")
+            agent = build_agent(retriever_name, top_k, max_steps, agent_mode)
+            agent_instruction = _build_agent_chat_instruction(prompt, history_text)
+            result = agent.run_task(_ad_hoc_task(agent_instruction))
+        answer = _naturalize_memory_answer(result.get("final_answer", ""))
+        result["final_answer"] = answer
         debug = result
+        debug["memory_context"] = history_text
     append_message(session, "assistant", answer or "(空响应)", debug=debug)
     save_session(session)
+
+
+def _build_direct_chat_prompt(prompt: str, history_text: str) -> str:
+    return f"""[INST]
+You are a helpful assistant.
+Answer naturally and directly.
+The reference notes below are private. Use them only to resolve pronouns or follow-up questions.
+Do not explain where the answer came from.
+If the notes are not needed, ignore them silently.
+
+Private reference notes:
+{history_text}
+
+Current user question:
+{prompt}
+[/INST]"""
+
+
+def _build_agent_chat_instruction(prompt: str, history_text: str) -> str:
+    return f"""Private reference notes for resolving follow-up references:
+{history_text}
+
+Current user request:
+{prompt}
+
+Use these notes only if they help resolve references like "刚才", "上一个结果", "继续", "它", or "that result".
+Do not explain where the final answer came from."""
+
+
+def _naturalize_memory_answer(answer: str) -> str:
+    cleaned = str(answer).strip()
+    if not cleaned:
+        return cleaned
+
+    leading_patterns = [
+        r"^[^\w\u4e00-\u9fff]+(?=(?:based on|from the|根据|it seems|it looks|i understand|well|so))",
+        r"^(?:ah[,! ]*great!?|great!?|sure!?|okay!?|ok[,!]?|好的[，,！!]?)\s*(?:😊|🤖|🙂|😀)?\s*",
+        r"^(?:based on (?:your|the|our) conversation history|from the conversation history|based on (?:the )?(?:private )?(?:reference )?context|based on memory)[,，]?\s*",
+        r"^(?:根据(?:对话历史|我们的对话|上下文|记忆)[，,]?)\s*",
+        r"^(?:it seems like|it looks like|i understand that)\s+you(?:'re| are)?\s+(?:asking|wondering)[^.?!。！？]*[.?!。！？]\s*",
+        r"^(?:看起来|我理解)?你(?:是)?(?:在)?问(?:的是)?[^。！？]*[。！？]\s*",
+        r"^(?:well|so)[,，]\s*",
+    ]
+
+    changed = True
+    while changed:
+        changed = False
+        for pattern in leading_patterns:
+            new_cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).lstrip()
+            if new_cleaned != cleaned:
+                cleaned = new_cleaned
+                changed = True
+
+    trailing_patterns = [
+        r"\s+You introduced yourself earlier in (?:the|our) conversation\.",
+        r"\s+You mentioned (?:earlier|before) that [^.?!。！？]+[.?!。！？]",
+        r"\s+Is there anything else you'd like(?: to chat about| to ask)?[^\n]*$",
+        r"\s+I'm here to help(?: with any questions you may have)?[^\n]*$",
+        r"\s+Feel free to ask(?: me)? anything[^\n]*$",
+    ]
+    for pattern in trailing_patterns:
+        cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE).strip()
+
+    if cleaned:
+        cleaned = cleaned[0].upper() + cleaned[1:] if cleaned[:1].isascii() else cleaned
+    return cleaned or str(answer).strip()
 
 
 def _latest_debug(session: dict) -> dict:
@@ -393,10 +505,33 @@ def _render_debug_panel(debug: dict) -> None:
         st.dataframe(pd.DataFrame(compact_skill_rows(retrieved)), width="stretch", hide_index=True)
     else:
         st.caption("无")
+    if "subtasks" in debug:
+        st.write("**subtasks**")
+        st.json(debug.get("subtasks", []))
+    if "retrieved_by_step" in debug:
+        st.write("**retrieved by step**")
+        st.json(debug.get("retrieved_by_step", []))
     st.write("**called skills**")
     st.write(", ".join(debug.get("called_skills", [])) or "无")
+    if "need_tool_decision" in debug:
+        st.write("**need tool decision**")
+        st.json(debug.get("need_tool_decision", {}))
+    if "planned_steps" in debug:
+        st.write("**planned steps**")
+        st.json(debug.get("planned_steps", []))
+    if "plan_valid" in debug:
+        st.write("**plan valid**")
+        st.write(str(debug.get("plan_valid")))
+    if "plan_repaired" in debug:
+        st.write("**plan repaired**")
+        st.write(str(debug.get("plan_repaired")))
+    if "final_answer_source" in debug:
+        st.write("**final answer source**")
+        st.write(str(debug.get("final_answer_source")))
     st.write("**observations**")
     st.json(debug.get("observations", []))
+    st.write("**memory context**")
+    st.text(debug.get("memory_context", "None"))
     st.write("**raw model output**")
     st.json(debug.get("raw_model_outputs", []))
 
@@ -424,8 +559,8 @@ def _render_retrieval_result(
         st.write("Hit" if hit else "Miss")
 
 
-def _agent_controls(prefix: str) -> tuple[str, int, int]:
-    cols = st.columns([0.3, 0.18, 0.18, 0.34])
+def _agent_controls(prefix: str) -> tuple[str, int, int, str]:
+    cols = st.columns([0.26, 0.16, 0.16, 0.18, 0.24])
     method_label = cols[0].segmented_control(
         "Retriever",
         ["Full", "BM25", "Embedding"],
@@ -434,8 +569,31 @@ def _agent_controls(prefix: str) -> tuple[str, int, int]:
     )
     top_k = cols[1].number_input("Top-K", min_value=1, max_value=10, value=5, key=f"{prefix}_topk")
     max_steps = cols[2].number_input("Max Steps", min_value=1, max_value=4, value=2, key=f"{prefix}_steps")
-    cols[3].markdown('<span class="status-pill">本地模型按需加载</span>', unsafe_allow_html=True)
-    return method_from_label(method_label), int(top_k), int(max_steps)
+    agent_mode_label = cols[3].selectbox(
+        "Agent",
+        ["Baseline", "Enhanced", "Enhanced V2"],
+        index=0,
+        key=f"{prefix}_agent_mode",
+    )
+    cols[4].markdown('<span class="status-pill">本地模型按需加载</span>', unsafe_allow_html=True)
+    agent_mode = _agent_mode_from_label(agent_mode_label)
+    return method_from_label(method_label), int(top_k), int(max_steps), agent_mode
+
+
+def _agent_mode_from_label(label: str) -> str:
+    return {
+        "Baseline": "baseline",
+        "Enhanced": "enhanced",
+        "Enhanced V2": "enhanced_v2",
+    }.get(label, "baseline")
+
+
+def _agent_mode_index(agent_mode: str) -> int:
+    return {
+        "baseline": 0,
+        "enhanced": 1,
+        "enhanced_v2": 2,
+    }.get(agent_mode, 0)
 
 
 def _render_agent_result(result: dict) -> None:
@@ -452,8 +610,15 @@ def _render_agent_result(result: dict) -> None:
     st.json(
         {
             "retrieved_skills": result.get("retrieved_skills", []),
+            "subtasks": result.get("subtasks", []),
+            "retrieved_by_step": result.get("retrieved_by_step", []),
+            "need_tool_decision": result.get("need_tool_decision", {}),
+            "planned_steps": result.get("planned_steps", []),
+            "plan_valid": result.get("plan_valid", None),
+            "plan_repaired": result.get("plan_repaired", None),
             "called_skills": result.get("called_skills", []),
             "observations": result.get("observations", []),
+            "final_answer_source": result.get("final_answer_source", ""),
             "raw_model_outputs": result.get("raw_model_outputs", []),
             "evaluation": result.get("evaluation", {}),
         }
@@ -466,12 +631,13 @@ def _run_benchmark_in_ui(
     top_k: int,
     max_steps: int,
     output_path: Path,
+    agent_mode: str,
 ) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     progress = st.progress(0)
     status = st.empty()
     results = []
-    agent = build_agent(method, top_k, max_steps)
+    agent = build_agent(method, top_k, max_steps, agent_mode)
 
     with output_path.open("w", encoding="utf-8") as file:
         for index, task in enumerate(tasks, start=1):

@@ -87,3 +87,66 @@ def append_message(session: dict, role: str, content: str, debug: dict | None = 
     if role == "user" and session.get("title") == "新对话":
         session["title"] = truncate_title(content)
 
+
+def build_recent_history(session: dict, max_turns: int = 6, max_chars: int = 3000) -> str:
+    messages = session.get("messages", [])
+    max_messages = max(0, max_turns) * 2
+    if max_messages:
+        messages = messages[-max_messages:]
+
+    rendered = []
+    for message in messages:
+        role = message.get("role", "")
+        if role == "user":
+            label = "User"
+        elif role == "assistant":
+            label = "Assistant"
+        else:
+            continue
+
+        content = _clean_history_content(str(message.get("content", "")), role)
+        content = " ".join(content.split())
+        if content:
+            rendered.append(f"{label}: {content}")
+
+    if not rendered:
+        return "None"
+
+    selected = []
+    total_chars = 0
+    for line in reversed(rendered):
+        line_size = len(line) + 1
+        if selected and total_chars + line_size > max_chars:
+            break
+        if not selected and line_size > max_chars:
+            line = line[-max_chars:]
+            line_size = len(line)
+        selected.append(line)
+        total_chars += line_size
+
+    return "\n".join(reversed(selected))
+
+
+def _clean_history_content(content: str, role: str) -> str:
+    if role != "assistant":
+        return content
+
+    prefixes = [
+        "Based on your conversation history,",
+        "Based on the conversation history,",
+        "From the conversation history,",
+        "Based on our conversation,",
+        "根据对话历史，",
+        "根据对话历史,",
+        "根据我们的对话，",
+        "根据我们的对话,",
+    ]
+    cleaned = content.strip()
+    changed = True
+    while changed:
+        changed = False
+        for prefix in prefixes:
+            if cleaned.lower().startswith(prefix.lower()):
+                cleaned = cleaned[len(prefix):].lstrip()
+                changed = True
+    return cleaned

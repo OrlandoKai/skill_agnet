@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from agents.enhanced_agent import EnhancedSkillAgent
+from agents.enhanced_agent_v2 import EnhancedSkillAgentV2
 from agents.react_agent import MinimalSkillAgent
 from config import DEFAULT_TOP_K, RESULTS_DIR
 from eval.skillbench_eval import evaluate_skillbench_result
@@ -30,12 +32,18 @@ def parse_args() -> argparse.Namespace:
         default="bm25",
         help="Skill retriever baseline.",
     )
+    parser.add_argument(
+        "--agent",
+        choices=["baseline", "enhanced", "enhanced_v2"],
+        default="baseline",
+        help="Agent policy. baseline preserves the original MinimalSkillAgent.",
+    )
     parser.add_argument("--top_k", "--top-k", dest="top_k", type=int, default=DEFAULT_TOP_K)
     parser.add_argument("--max_steps", "--max-steps", dest="max_steps", type=int, default=2)
     parser.add_argument("--max_tasks", "--max-tasks", dest="max_tasks", type=int, default=10)
     parser.add_argument(
         "--output",
-        help="Output JSONL path. Defaults to results/run_<retriever>_<timestamp>.jsonl.",
+        help="Output JSONL path. Defaults to results/run_<agent>_<retriever>_<timestamp>.jsonl.",
     )
     return parser.parse_args()
 
@@ -69,10 +77,35 @@ def load_tasks(args: argparse.Namespace) -> list[dict]:
     return tasks
 
 
-def default_output_path(retriever_name: str) -> Path:
+def default_output_path(agent_name: str, retriever_name: str) -> Path:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    return RESULTS_DIR / f"run_{retriever_name}_{timestamp}.jsonl"
+    return RESULTS_DIR / f"run_{agent_name}_{retriever_name}_{timestamp}.jsonl"
+
+
+def build_agent(agent_name: str, model, retriever, max_steps: int, top_k: int):
+    if agent_name == "baseline":
+        return MinimalSkillAgent(
+            model=model,
+            retriever=retriever,
+            max_steps=max_steps,
+            top_k=top_k,
+        )
+    if agent_name == "enhanced":
+        return EnhancedSkillAgent(
+            model=model,
+            retriever=retriever,
+            max_steps=max_steps,
+            top_k=top_k,
+        )
+    if agent_name == "enhanced_v2":
+        return EnhancedSkillAgentV2(
+            model=model,
+            retriever=retriever,
+            max_steps=max_steps,
+            top_k=top_k,
+        )
+    raise ValueError(f"Unknown agent: {agent_name}")
 
 
 def error_result(task: dict, exc: Exception) -> dict:
@@ -94,18 +127,13 @@ def error_result(task: dict, exc: Exception) -> dict:
 
 def main() -> None:
     args = parse_args()
-    output_path = Path(args.output) if args.output else default_output_path(args.retriever)
+    output_path = Path(args.output) if args.output else default_output_path(args.agent, args.retriever)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     tasks = load_tasks(args)
     model = LocalLlamaModel()
     retriever = build_retriever(args.retriever)
-    agent = MinimalSkillAgent(
-        model=model,
-        retriever=retriever,
-        max_steps=args.max_steps,
-        top_k=args.top_k,
-    )
+    agent = build_agent(args.agent, model, retriever, args.max_steps, args.top_k)
 
     completed = 0
     with output_path.open("w", encoding="utf-8") as file:

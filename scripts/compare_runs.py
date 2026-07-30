@@ -20,6 +20,8 @@ def method_name(path: str | Path) -> str:
     for suffix in ("_baseline",):
         if stem.endswith(suffix):
             stem = stem[: -len(suffix)]
+    if stem.endswith("_120"):
+        stem = stem[:-4]
     return stem
 
 
@@ -47,15 +49,28 @@ def main() -> None:
         "method",
         "num_tasks",
         "skill_recall",
+        "step_retrieval_recall",
         "skill_selection_acc",
+        "need_tool_acc",
+        "no_tool_acc",
+        "unnecessary_tool_call_rate",
+        "skill_sequence_acc",
+        "under_call_rate",
         "task_success_rate",
+        "strict_task_success_rate",
         "invalid_call_rate",
         "avg_steps",
+        "plan_repair_rate",
+        "input_repair_rate",
+        "final_answer_rule_observation_rate",
     ]
     with output_path.open("w", encoding="utf-8", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows(
+            {field: row.get(field, "") for field in fieldnames}
+            for row in rows
+        )
 
     print_comparison(rows, fieldnames)
     print(f"\nSaved comparison CSV: {output_path}")

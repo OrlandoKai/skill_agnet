@@ -35,7 +35,16 @@ def print_result(label: str, task: dict, retrieved: list[dict]) -> None:
 
 
 def main() -> None:
-    tasks = load_benchmark()[:10]
+    benchmark = load_benchmark()
+    tasks = benchmark[:10]
+    hard_tasks = [
+        task for task in benchmark
+        if 31 <= int(task["task_id"].split("_")[1]) <= 55
+    ][:12]
+    expanded_hard_tasks = [
+        task for task in benchmark
+        if int(task["task_id"].split("_")[1]) >= 61 and task["task_type"] != "no_tool"
+    ][:20]
     retrievers = [
         ("Full Prompt", FullPromptRetriever()),
         ("BM25 top-5", BM25SkillRetriever()),
@@ -46,13 +55,26 @@ def main() -> None:
     except Exception as exc:
         print(f"[Embedding retriever unavailable] {exc}")
 
+    print("\nBasic subset")
     for task in tasks:
-        print("=" * 80)
-        print(f"{task['task_id']}: {task['instruction']}")
-        print(f"gold_skills: {task['gold_skills']}")
-        for label, retriever in retrievers:
-            top_k = 5 if label != "Full Prompt" else 999
-            print_result(label, task, retriever.retrieve(task["instruction"], top_k=top_k))
+        print_task_results(task, retrievers)
+
+    print("\nHard semantic subset")
+    for task in hard_tasks:
+        print_task_results(task, retrievers)
+
+    print("\nExpanded hard semantic subset")
+    for task in expanded_hard_tasks:
+        print_task_results(task, retrievers)
+
+
+def print_task_results(task: dict, retrievers: list[tuple[str, object]]) -> None:
+    print("=" * 80)
+    print(f"{task['task_id']}: {task['instruction']}")
+    print(f"gold_skills: {task['gold_skills']}")
+    for label, retriever in retrievers:
+        top_k = 5 if label != "Full Prompt" else 999
+        print_result(label, task, retriever.retrieve(task["instruction"], top_k=top_k))
 
 
 if __name__ == "__main__":

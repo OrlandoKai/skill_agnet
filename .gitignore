@@ -12,6 +12,7 @@ env/
 
 results/*.json
 results/*.jsonl
+results/*.csv
 results/chat_sessions/
 !results/.gitkeep
 

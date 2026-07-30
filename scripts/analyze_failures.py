@@ -9,12 +9,21 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from eval.evaluate import (
+    answer_content_correct,
     called_skill_names,
+    invalid_plan,
     load_jsonl,
+    multi_skill_under_call,
+    need_tool_false_negative,
+    plan_repaired,
     retrieved_skill_names,
+    step_retrieval_failure,
     skill_recall_for_row,
+    skill_sequence_correct,
     skill_selection_correct,
-    task_success,
+    strict_task_success,
+    unnecessary_tool_call,
+    wrong_skill_order,
 )
 
 
@@ -23,23 +32,48 @@ def classify_failure(row: dict) -> str | None:
     called = called_skill_names(row)
     task_type = row.get("task_type", "")
 
+    if invalid_plan(row):
+        return "invalid_plan"
+
     if row.get("invalid_call", False):
         return "invalid_call"
 
-    if task_type == "no_tool" and called:
-        return "unnecessary_tool_call"
+    if isinstance(row.get("need_tool_decision"), dict) and need_tool_false_negative(row):
+        return "need_tool_false_negative"
+
+    if unnecessary_tool_call(row):
+        return "no_tool_overcall"
+
+    if row.get("retrieved_by_step") and step_retrieval_failure(row):
+        return "step_retrieval_failure"
 
     if gold and skill_recall_for_row(row) != 1.0:
         return "retrieval_failure"
 
+    if plan_repaired(row) and gold and not skill_sequence_correct(row):
+        return "planner_repair_failure"
+
     if gold and not skill_selection_correct(row):
-        return "selection_failure"
+        if multi_skill_under_call(row):
+            return "multi_skill_under_call"
+        return "skill_selection_failure"
+
+    if wrong_skill_order(row):
+        return "wrong_skill_order"
+
+    if gold and not skill_sequence_correct(row):
+        return "skill_selection_failure"
 
     if has_execution_error(row):
         return "execution_failure"
 
-    if not task_success(row):
-        return "final_answer_failure"
+    if gold and skill_sequence_correct(row) and not answer_content_correct(row):
+        if row.get("final_answer_source") == "rule_observation":
+            return "input_construction_failure"
+        return "final_grounding_failure"
+
+    if not answer_content_correct(row) or not strict_task_success(row):
+        return "final_answer_hallucination"
 
     return None
 
@@ -58,9 +92,17 @@ def failure_case(row: dict, failure_type: str) -> dict:
         "instruction": row.get("instruction", ""),
         "gold_skills": row.get("gold_skills", []),
         "retrieved_skills": retrieved_skill_names(row),
+        "subtasks": row.get("subtasks", []),
+        "retrieved_by_step": row.get("retrieved_by_step", []),
+        "need_tool_decision": row.get("need_tool_decision", {}),
+        "planned_skills": row.get("planned_skills", []),
+        "planned_steps": row.get("planned_steps", []),
+        "plan_valid": row.get("plan_valid", None),
+        "plan_repaired": row.get("plan_repaired", None),
         "called_skills": called_skill_names(row),
         "observations": row.get("observations", []),
         "final_answer": row.get("final_answer", ""),
+        "final_answer_source": row.get("final_answer_source", ""),
         "failure_type": failure_type,
         "raw_model_outputs": row.get("raw_model_outputs", []),
     }
@@ -104,12 +146,20 @@ def main() -> None:
     print("Failure counts")
     print("--------------")
     for failure_type in [
+        "need_tool_false_negative",
+        "invalid_plan",
+        "step_retrieval_failure",
+        "planner_repair_failure",
         "retrieval_failure",
-        "selection_failure",
+        "skill_selection_failure",
+        "no_tool_overcall",
+        "multi_skill_under_call",
+        "wrong_skill_order",
         "invalid_call",
         "execution_failure",
-        "final_answer_failure",
-        "unnecessary_tool_call",
+        "input_construction_failure",
+        "final_grounding_failure",
+        "final_answer_hallucination",
     ]:
         print(f"{failure_type}: {counts.get(failure_type, 0)}")
     print(f"\nTotal failures: {len(cases)} / {len(rows)}")

@@ -7,6 +7,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_PATH = PROJECT_ROOT / "data" / "skillbench_mini.json"
 SKILL_LIBRARY_PATH = PROJECT_ROOT / "data" / "skill_library.json"
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from skills.skill_registry import list_skills
 
 REQUIRED_FIELDS = {
     "task_id",
@@ -16,7 +19,8 @@ REQUIRED_FIELDS = {
     "task_type",
     "notes",
 }
-EXPECTED_COUNTS = {"single_skill": 15, "multi_skill": 10, "no_tool": 5}
+EXPECTED_COUNTS = {"single_skill": 60, "multi_skill": 40, "no_tool": 20}
+EXPECTED_SKILL_COUNT = 40
 VALID_TASK_TYPES = set(EXPECTED_COUNTS)
 
 
@@ -29,9 +33,20 @@ def main() -> None:
     benchmark = load_json(BENCHMARK_PATH)
     skills = load_json(SKILL_LIBRARY_PATH)
     skill_names = {skill["name"] for skill in skills}
+    registry_names = set(list_skills())
 
     if not isinstance(benchmark, list):
         raise SystemExit("Benchmark must be a JSON list.")
+    if len(skill_names) != EXPECTED_SKILL_COUNT:
+        errors.append(
+            f"Expected {EXPECTED_SKILL_COUNT} skills in skill_library.json, found {len(skill_names)}"
+        )
+    if skill_names != registry_names:
+        errors.append(
+            "skill_library.json and skill_registry.py are out of sync: "
+            f"library_only={sorted(skill_names - registry_names)}, "
+            f"registry_only={sorted(registry_names - skill_names)}"
+        )
 
     task_ids = [item.get("task_id") for item in benchmark if isinstance(item, dict)]
     duplicates = sorted(task_id for task_id, count in Counter(task_ids).items() if count > 1)
@@ -75,6 +90,7 @@ def main() -> None:
     print(f"benchmark_path: {BENCHMARK_PATH}")
     print(f"total_tasks: {len(benchmark)}")
     print(f"counts: {dict(counts)}")
+    print(f"skill_count: {len(skill_names)}")
     print(f"available_skills: {sorted(skill_names)}")
 
     if errors:

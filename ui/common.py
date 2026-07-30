@@ -4,6 +4,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from agents.enhanced_agent import EnhancedSkillAgent
+from agents.enhanced_agent_v2 import EnhancedSkillAgentV2
 from agents.react_agent import MinimalSkillAgent
 from config import MODEL_PATH, RESULTS_DIR
 from model.llama_wrapper import LocalLlamaModel
@@ -163,8 +165,18 @@ def get_retriever(name: str):
     raise ValueError(f"Unknown retriever: {name}")
 
 
-def build_agent(retriever_name: str, top_k: int, max_steps: int) -> MinimalSkillAgent:
-    return MinimalSkillAgent(
+def build_agent(
+    retriever_name: str,
+    top_k: int,
+    max_steps: int,
+    agent_mode: str = "baseline",
+) -> MinimalSkillAgent | EnhancedSkillAgent | EnhancedSkillAgentV2:
+    agent_cls = {
+        "baseline": MinimalSkillAgent,
+        "enhanced": EnhancedSkillAgent,
+        "enhanced_v2": EnhancedSkillAgentV2,
+    }.get(agent_mode, MinimalSkillAgent)
+    return agent_cls(
         model=get_model(),
         retriever=get_retriever(retriever_name),
         max_steps=max_steps,
