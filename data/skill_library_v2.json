@@ -1,0 +1,5650 @@
+[
+  {
+    "name": "calculator",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Evaluate safe arithmetic expressions, including basic math functions.",
+    "capability_scope": {
+      "can_do": [
+        "Evaluate safe arithmetic expressions, including basic math functions.",
+        "Compute (9 + 6) * 3.",
+        "{'input': '12 * (3 + 4)', 'output': '84'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "arithmetic_expression"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "arithmetic_expression",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "9",
+          "6",
+          "3"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "",
+      "success_contains": [
+        "45"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "calculator",
+        "math",
+        "calculate",
+        "arithmetic",
+        "expression",
+        "compute",
+        "{\"input\":",
+        "\"12",
+        "*",
+        "(3"
+      ],
+      "anti_trigger_phrases": [
+        "percentage",
+        "ratio",
+        "solve x",
+        "mean",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "percentage_calculator",
+        "ratio_calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "calculator Evaluate safe arithmetic expressions, including basic math functions. Compute (9 + 6) * 3. math calculate calculator arithmetic expression compute required: arithmetic_expression"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use calculator only when the request provides: arithmetic_expression.",
+        "Do not choose hard negatives when their contract is more specific: percentage_calculator, ratio_calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Compute (9 + 6) * 3.",
+          "input": "Compute (9 + 6) * 3.",
+          "output_contains": [
+            "45"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use calculator on the earlier text.",
+          "why_not": "missing required information: arithmetic_expression"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "percentage_calculator",
+          "why_negative": "confusable with calculator but has different contract"
+        },
+        {
+          "wrong_skill": "ratio_calculator",
+          "why_negative": "confusable with calculator but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with calculator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "arithmetic_expression"
+        ],
+        "observations": [
+          "45"
+        ],
+        "final_answer": [
+          "45"
+        ]
+      }
+    }
+  },
+  {
+    "name": "unit_converter",
+    "version": "2.0",
+    "status": "active",
+    "category": "conversion_time",
+    "description": "Convert simple units such as cm to m, kg to g, and Celsius to Fahrenheit.",
+    "capability_scope": {
+      "can_do": [
+        "Convert simple units such as cm to m, kg to g, and Celsius to Fahrenheit.",
+        "Convert 3.5 kg to g.",
+        "{'input': '10 cm to m', 'output': '10 -> 0.1 m'}"
+      ],
+      "cannot_do": [
+        "currency conversion",
+        "timezone conversion",
+        "conversion with missing value or unit",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "numeric_value",
+        "source_unit",
+        "target_unit"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "numeric_value",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "3.5",
+          "kg",
+          "g"
+        ]
+      },
+      {
+        "name": "source_unit",
+        "type": "enum_or_text",
+        "required": true,
+        "patterns": [
+          "cm",
+          "m",
+          "kg",
+          "g",
+          "C",
+          "F"
+        ]
+      },
+      {
+        "name": "target_unit",
+        "type": "enum_or_text",
+        "required": true,
+        "patterns": [
+          "cm",
+          "m",
+          "kg",
+          "g",
+          "C",
+          "F"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "",
+      "success_contains": [
+        "3500",
+        "g"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "unit converter",
+        "unit",
+        "convert",
+        "conversion",
+        "cm",
+        "meter",
+        "kg",
+        "temperature",
+        "{\"input\":",
+        "\"10",
+        "to"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "percentage_calculator"
+      ],
+      "retrieval_text": "unit_converter Convert simple units such as cm to m, kg to g, and Celsius to Fahrenheit. Convert 3.5 kg to g. unit convert conversion cm meter kg temperature required: numeric_value, source_unit, target_unit"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use unit_converter only when the request provides: numeric_value, source_unit, target_unit.",
+        "Do not choose hard negatives when their contract is more specific: calculator, percentage_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "Do not rewrite the user request into an assertion with changed argument order."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Convert 3.5 kg to g.",
+          "input": "Convert 3.5 kg to g.",
+          "output_contains": [
+            "3500",
+            "g"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Convert this value to meters.",
+          "why_not": "missing required information: numeric_value, source_unit, target_unit"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with unit_converter but has different contract"
+        },
+        {
+          "wrong_skill": "percentage_calculator",
+          "why_negative": "confusable with unit_converter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "numeric_value",
+          "source_unit",
+          "target_unit"
+        ],
+        "observations": [
+          "3500",
+          "g"
+        ],
+        "final_answer": [
+          "3500"
+        ]
+      }
+    }
+  },
+  {
+    "name": "summarizer",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Produce a short rule-based summary of input text.",
+    "capability_scope": {
+      "can_do": [
+        "Produce a short rule-based summary of input text.",
+        "Summarize: A retriever proposes candidate skills. A planner calls one or more skills. Evaluation checks the trace.",
+        "{'input': 'Skill retrieval finds tools. Skill calling executes tools.', 'output': 'Summary: Skill retrieval finds tools. Skill calling executes tools.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "retriever proposes candidate skills"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Summarizer:",
+      "success_contains": [
+        "Summary"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "summarizer",
+        "summarize",
+        "summary",
+        "compress",
+        "shorten",
+        "abstract",
+        "{\"input\":",
+        "\"Skill",
+        "retrieval",
+        "finds"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "title_generator",
+        "outline_generator"
+      ],
+      "retrieval_text": "summarizer Produce a short rule-based summary of input text. Summarize: A retriever proposes candidate skills. A planner calls one or more skills. Evaluation checks the trace. summarize summary compress shorten abstract required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use summarizer only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: title_generator, outline_generator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "For dependent multi-skill calls, use $PREVIOUS_OUTPUT when the instruction refers to the previous result."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Summarize: A retriever proposes candidate skills. A planner calls one or more skills. Evaluation checks the trace.",
+          "input": "Summarize: A retriever proposes candidate skills. A planner calls one or more skills. Evaluation checks the trace.",
+          "output_contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Summarize the passage.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "title_generator",
+          "why_negative": "confusable with summarizer but has different contract"
+        },
+        {
+          "wrong_skill": "outline_generator",
+          "why_negative": "confusable with summarizer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Summary"
+        ],
+        "final_answer": [
+          "Summary"
+        ]
+      }
+    }
+  },
+  {
+    "name": "translator_zh_en",
+    "version": "2.0",
+    "status": "active",
+    "category": "translation",
+    "description": "Translate simple Chinese phrases into English with a rule-based placeholder.",
+    "capability_scope": {
+      "can_do": [
+        "Translate simple Chinese phrases into English with a rule-based placeholder.",
+        "Translate into English: 浣犲ソ skill agent",
+        "{'input': '人工智能技能检索', 'output': 'artificial intelligenceskillretrieval'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "chinese_source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "chinese_source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "浣犲ソ",
+          "skill agent"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TranslatorZhEn:",
+      "success_contains": [
+        "placeholder"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "translator zh en",
+        "translate",
+        "translation",
+        "Chinese",
+        "English",
+        "zh",
+        "en",
+        "中译英",
+        "{\"input\":",
+        "\"人工智能技能检索\",",
+        "\"output\":",
+        "\"artificial"
+      ],
+      "anti_trigger_phrases": [
+        "into Chinese",
+        "detect language",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "translator_en_zh",
+        "language_detector"
+      ],
+      "retrieval_text": "translator_zh_en Translate simple Chinese phrases into English with a rule-based placeholder. Translate into English: 浣犲ソ skill agent translate translation Chinese English zh en 中译英 required: chinese_source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use translator_zh_en only when the request provides: chinese_source_text.",
+        "Do not choose hard negatives when their contract is more specific: translator_en_zh, language_detector.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Translate into English: 浣犲ソ skill agent",
+          "input": "Translate into English: 浣犲ソ skill agent",
+          "output_contains": [
+            "placeholder"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use translator_zh_en on the earlier text.",
+          "why_not": "missing required information: chinese_source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "translator_en_zh",
+          "why_negative": "confusable with translator_zh_en but has different contract"
+        },
+        {
+          "wrong_skill": "language_detector",
+          "why_negative": "confusable with translator_zh_en but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "chinese_source_text"
+        ],
+        "observations": [
+          "placeholder"
+        ],
+        "final_answer": [
+          "placeholder"
+        ]
+      }
+    }
+  },
+  {
+    "name": "translator_en_zh",
+    "version": "2.0",
+    "status": "active",
+    "category": "translation",
+    "description": "Translate simple English phrases into Chinese with a rule-based placeholder.",
+    "capability_scope": {
+      "can_do": [
+        "Translate simple English phrases into Chinese with a rule-based placeholder.",
+        "Translate into Chinese: hello skill agent",
+        "{'input': 'hello skill retrieval agent', 'output': '你好 技能 检索 智能体'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "english_source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "english_source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "hello",
+          "skill",
+          "agent"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TranslatorEnZh:",
+      "success_contains": [
+        "浣"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "translator en zh",
+        "translate",
+        "translation",
+        "English",
+        "Chinese",
+        "en",
+        "zh",
+        "英译中",
+        "{\"input\":",
+        "\"hello",
+        "skill",
+        "retrieval"
+      ],
+      "anti_trigger_phrases": [
+        "into English",
+        "detect language",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "translator_zh_en",
+        "language_detector"
+      ],
+      "retrieval_text": "translator_en_zh Translate simple English phrases into Chinese with a rule-based placeholder. Translate into Chinese: hello skill agent translate translation English Chinese en zh 英译中 required: english_source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use translator_en_zh only when the request provides: english_source_text.",
+        "Do not choose hard negatives when their contract is more specific: translator_zh_en, language_detector.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Translate into Chinese: hello skill agent",
+          "input": "Translate into Chinese: hello skill agent",
+          "output_contains": [
+            "浣"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use translator_en_zh on the earlier text.",
+          "why_not": "missing required information: english_source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "translator_zh_en",
+          "why_negative": "confusable with translator_en_zh but has different contract"
+        },
+        {
+          "wrong_skill": "language_detector",
+          "why_negative": "confusable with translator_en_zh but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "english_source_text"
+        ],
+        "observations": [
+          "浣"
+        ],
+        "final_answer": [
+          "浣"
+        ]
+      }
+    }
+  },
+  {
+    "name": "keyword_extractor",
+    "version": "2.0",
+    "status": "active",
+    "category": "extraction",
+    "description": "Extract frequent keywords from a text input.",
+    "capability_scope": {
+      "can_do": [
+        "Extract frequent keywords from a text input.",
+        "Extract keywords from: retrieval-aware contracts reduce wrong tool calls.",
+        "{'input': 'Skill retrieval and skill calling are important for agents.', 'output': 'Keywords: skill, retrieval, calling, important, agents'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "retrieval-aware contracts"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "KeywordExtractor:",
+      "success_contains": [
+        "Keywords"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "keyword extractor",
+        "keyword",
+        "extract",
+        "terms",
+        "topics",
+        "tags",
+        "{\"input\":",
+        "\"Skill",
+        "retrieval",
+        "and"
+      ],
+      "anti_trigger_phrases": [
+        "named entities",
+        "emails and dates",
+        "todos",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "entity_extractor",
+        "regex_extractor"
+      ],
+      "retrieval_text": "keyword_extractor Extract frequent keywords from a text input. Extract keywords from: retrieval-aware contracts reduce wrong tool calls. keyword extract terms topics tags required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use keyword_extractor only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: entity_extractor, regex_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "For dependent multi-skill calls, use $PREVIOUS_OUTPUT when the instruction refers to the previous result."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Extract keywords from: retrieval-aware contracts reduce wrong tool calls.",
+          "input": "Extract keywords from: retrieval-aware contracts reduce wrong tool calls.",
+          "output_contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use keyword_extractor on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "entity_extractor",
+          "why_negative": "confusable with keyword_extractor but has different contract"
+        },
+        {
+          "wrong_skill": "regex_extractor",
+          "why_negative": "confusable with keyword_extractor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Keywords"
+        ],
+        "final_answer": [
+          "Keywords"
+        ]
+      }
+    }
+  },
+  {
+    "name": "text_rewriter",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Rewrite text with light normalization and punctuation cleanup.",
+    "capability_scope": {
+      "can_do": [
+        "Rewrite text with light normalization and punctuation cleanup.",
+        "Rewrite clearly: contracts help agents choose tools",
+        "{'input': 'skill calling helps agents', 'output': 'Rewritten: skill calling helps agents.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "contracts help agents choose tools"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TextRewriter:",
+      "success_contains": [
+        "Rewritten"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "text rewriter",
+        "rewrite",
+        "polish",
+        "edit",
+        "paraphrase",
+        "normalize",
+        "{\"input\":",
+        "\"skill",
+        "calling",
+        "helps"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "grammar_corrector",
+        "tone_converter"
+      ],
+      "retrieval_text": "text_rewriter Rewrite text with light normalization and punctuation cleanup. Rewrite clearly: contracts help agents choose tools rewrite polish edit paraphrase normalize required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use text_rewriter only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: grammar_corrector, tone_converter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Rewrite clearly: contracts help agents choose tools",
+          "input": "Rewrite clearly: contracts help agents choose tools",
+          "output_contains": [
+            "Rewritten"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use text_rewriter on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "grammar_corrector",
+          "why_negative": "confusable with text_rewriter but has different contract"
+        },
+        {
+          "wrong_skill": "tone_converter",
+          "why_negative": "confusable with text_rewriter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Rewritten"
+        ],
+        "final_answer": [
+          "Rewritten"
+        ]
+      }
+    }
+  },
+  {
+    "name": "sentiment_analyzer",
+    "version": "2.0",
+    "status": "active",
+    "category": "classification",
+    "description": "Classify simple sentiment as positive, negative, or neutral.",
+    "capability_scope": {
+      "can_do": [
+        "Classify simple sentiment as positive, negative, or neutral.",
+        "Analyze sentiment: I love the stable benchmark but hate slow runs.",
+        "{'input': 'This is a good baseline.', 'output': 'Sentiment: positive'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "love",
+          "hate"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "SentimentAnalyzer:",
+      "success_contains": [
+        "Sentiment"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "sentiment analyzer",
+        "sentiment",
+        "emotion",
+        "positive",
+        "negative",
+        "neutral",
+        "opinion",
+        "{\"input\":",
+        "\"This",
+        "is",
+        "a"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "tone_converter",
+        "intent_classifier"
+      ],
+      "retrieval_text": "sentiment_analyzer Classify simple sentiment as positive, negative, or neutral. Analyze sentiment: I love the stable benchmark but hate slow runs. sentiment emotion positive negative neutral opinion required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use sentiment_analyzer only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: tone_converter, intent_classifier.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Analyze sentiment: I love the stable benchmark but hate slow runs.",
+          "input": "Analyze sentiment: I love the stable benchmark but hate slow runs.",
+          "output_contains": [
+            "Sentiment"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use sentiment_analyzer on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "tone_converter",
+          "why_negative": "confusable with sentiment_analyzer but has different contract"
+        },
+        {
+          "wrong_skill": "intent_classifier",
+          "why_negative": "confusable with sentiment_analyzer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Sentiment"
+        ],
+        "final_answer": [
+          "Sentiment"
+        ]
+      }
+    }
+  },
+  {
+    "name": "paper_qa",
+    "version": "2.0",
+    "status": "active_placeholder",
+    "category": "code_and_research",
+    "description": "Placeholder paper question answering skill for later corpus integration.",
+    "capability_scope": {
+      "can_do": [
+        "Placeholder paper question answering skill for later corpus integration.",
+        "Answer this paper question: what does the method contribute?",
+        "{'input': 'What is the contribution of this paper?', 'output': 'Paper QA placeholder: no paper corpus is loaded yet.'}"
+      ],
+      "cannot_do": [
+        "answering from a real paper corpus before one is loaded",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "paper_question"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "paper_question",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "method contribute"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "PaperQa:",
+      "success_contains": [
+        "Paper QA placeholder"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "paper qa",
+        "paper",
+        "qa",
+        "question",
+        "answer",
+        "research",
+        "literature",
+        "{\"input\":",
+        "\"What",
+        "is",
+        "the"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "summarizer",
+        "citation_formatter"
+      ],
+      "retrieval_text": "paper_qa Placeholder paper question answering skill for later corpus integration. Answer this paper question: what does the method contribute? paper qa question answer research literature required: paper_question"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use paper_qa only when the request provides: paper_question.",
+        "Do not choose hard negatives when their contract is more specific: summarizer, citation_formatter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Answer this paper question: what does the method contribute?",
+          "input": "Answer this paper question: what does the method contribute?",
+          "output_contains": [
+            "Paper QA placeholder"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use paper_qa on the earlier text.",
+          "why_not": "missing required information: paper_question"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with paper_qa but has different contract"
+        },
+        {
+          "wrong_skill": "citation_formatter",
+          "why_negative": "confusable with paper_qa but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "paper_question"
+        ],
+        "observations": [
+          "Paper QA placeholder"
+        ],
+        "final_answer": [
+          "Paper QA placeholder"
+        ]
+      }
+    }
+  },
+  {
+    "name": "python_executor",
+    "version": "2.0",
+    "status": "active",
+    "category": "code_and_research",
+    "description": "Execute small restricted Python snippets without file, system, or network access.",
+    "capability_scope": {
+      "can_do": [
+        "Execute small restricted Python snippets without file, system, or network access.",
+        "Execute safe Python code: values=[2,4,6]; sum(values)",
+        "{'input': 'x = 2 + 3\\nx * 10', 'output': '50'}"
+      ],
+      "cannot_do": [
+        "file IO",
+        "network requests",
+        "system commands",
+        "unsafe imports",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "safe_python_code"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "safe_python_code",
+        "type": "code",
+        "required": true,
+        "patterns": [
+          "values",
+          "sum"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "",
+      "success_contains": [
+        "12"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "python executor",
+        "python",
+        "code",
+        "execute",
+        "program",
+        "snippet",
+        "compute",
+        "{\"input\":",
+        "\"x",
+        "=",
+        "2"
+      ],
+      "anti_trigger_phrases": [
+        "explain code conceptually",
+        "run unsafe code",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "python_executor Execute small restricted Python snippets without file, system, or network access. Execute safe Python code: values=[2,4,6]; sum(values) python code execute program snippet compute required: safe_python_code"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use python_executor only when the request provides: safe_python_code.",
+        "Do not choose hard negatives when their contract is more specific: calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "Only pass small, self-contained, safe Python code."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Execute safe Python code: values=[2,4,6]; sum(values)",
+          "input": "Execute safe Python code: values=[2,4,6]; sum(values)",
+          "output_contains": [
+            "12"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use python_executor on the earlier text.",
+          "why_not": "missing required information: safe_python_code"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with python_executor but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with python_executor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "safe_python_code"
+        ],
+        "observations": [
+          "12"
+        ],
+        "final_answer": [
+          "12"
+        ]
+      }
+    }
+  },
+  {
+    "name": "percentage_calculator",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Compute percentage-of, percentage change, discounts, increases, and decreases. Use this for percent reasoning, not general arithmetic.",
+    "capability_scope": {
+      "can_do": [
+        "Compute percentage-of, percentage change, discounts, increases, and decreases. Use this for percent reasoning, not general arithmetic.",
+        "A survey has 36 successful runs out of 144; compute the percentage.",
+        "{'input': '80 increased by 25%', 'output': 'Percentage: 80 increased by 25% = 100'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "part_or_base",
+        "whole_or_percent"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "part_or_base",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "36",
+          "144"
+        ]
+      },
+      {
+        "name": "whole_or_percent",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "36",
+          "144"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Percentage:",
+      "success_contains": [
+        "25"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "percentage calculator",
+        "percentage",
+        "percent",
+        "%",
+        "discount",
+        "increase",
+        "decrease",
+        "rate",
+        "proportion",
+        "{\"input\":",
+        "\"80",
+        "increased",
+        "by"
+      ],
+      "anti_trigger_phrases": [
+        "ratio",
+        "mean",
+        "raw arithmetic expression",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "ratio_calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "percentage_calculator Compute percentage-of, percentage change, discounts, increases, and decreases. Use this for percent reasoning, not general arithmetic. A survey has 36 successful runs out of 144; compute the percentage. percentage percent % discount increase decrease rate proportion required: part_or_base, whole_or_percent"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use percentage_calculator only when the request provides: part_or_base, whole_or_percent.",
+        "Do not choose hard negatives when their contract is more specific: calculator, ratio_calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "Do not rewrite the user request into an assertion with changed argument order."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "A survey has 36 successful runs out of 144; compute the percentage.",
+          "input": "A survey has 36 successful runs out of 144; compute the percentage.",
+          "output_contains": [
+            "25"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Calculate the percentage.",
+          "why_not": "missing required information: part_or_base, whole_or_percent"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with percentage_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "ratio_calculator",
+          "why_negative": "confusable with percentage_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with percentage_calculator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "part_or_base",
+          "whole_or_percent"
+        ],
+        "observations": [
+          "25"
+        ],
+        "final_answer": [
+          "25"
+        ]
+      }
+    }
+  },
+  {
+    "name": "statistics_calculator",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Calculate descriptive statistics such as mean, median, min, max, count, and sum from a list of numbers. Use this for statistics, not single arithmetic expressions.",
+    "capability_scope": {
+      "can_do": [
+        "Calculate descriptive statistics such as mean, median, min, max, count, and sum from a list of numbers. Use this for statistics, not single arithmetic expressions.",
+        "For the values 5, 9, 13, 17, report the mean and median.",
+        "{'input': 'mean and median of 2, 4, 8, 10', 'output': 'Statistics: mean=6, median=6, count=4'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "numeric_values"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "numeric_values",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "5",
+          "9",
+          "13"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Statistics:",
+      "success_contains": [
+        "mean=11",
+        "median=11"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "statistics calculator",
+        "statistics",
+        "mean",
+        "median",
+        "average",
+        "min",
+        "max",
+        "count",
+        "sum",
+        "{\"input\":",
+        "\"mean",
+        "and"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "number_sequence_analyzer"
+      ],
+      "retrieval_text": "statistics_calculator Calculate descriptive statistics such as mean, median, min, max, count, and sum from a list of numbers. Use this for statistics, not single arithmetic expressions. For the values 5, 9, 13, 17, report the mean and median. statistics mean median average min max count sum required: numeric_values"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use statistics_calculator only when the request provides: numeric_values.",
+        "Do not choose hard negatives when their contract is more specific: calculator, number_sequence_analyzer.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "For the values 5, 9, 13, 17, report the mean and median.",
+          "input": "For the values 5, 9, 13, 17, report the mean and median.",
+          "output_contains": [
+            "mean=11",
+            "median=11"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use statistics_calculator on the earlier text.",
+          "why_not": "missing required information: numeric_values"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with statistics_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "number_sequence_analyzer",
+          "why_negative": "confusable with statistics_calculator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "numeric_values"
+        ],
+        "observations": [
+          "mean=11",
+          "median=11"
+        ],
+        "final_answer": [
+          "mean=11"
+        ]
+      }
+    }
+  },
+  {
+    "name": "date_difference_calculator",
+    "version": "2.0",
+    "status": "active",
+    "category": "conversion_time",
+    "description": "Calculate the number of days between two dates in YYYY-MM-DD format. Use this for date intervals, not numeric arithmetic.",
+    "capability_scope": {
+      "can_do": [
+        "Calculate the number of days between two dates in YYYY-MM-DD format. Use this for date intervals, not numeric arithmetic.",
+        "How many days are between 2026-03-01 and 2026-03-18?",
+        "{'input': 'days between 2026-07-01 and 2026-07-15', 'output': 'Date difference: 14 days'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "first_date",
+        "second_date"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "first_date",
+        "type": "date",
+        "required": true,
+        "patterns": [
+          "2026-03-01"
+        ]
+      },
+      {
+        "name": "second_date",
+        "type": "date",
+        "required": true,
+        "patterns": [
+          "2026-03-01"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Date difference:",
+      "success_contains": [
+        "17 days"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "date difference calculator",
+        "date",
+        "days",
+        "between",
+        "duration",
+        "calendar",
+        "interval",
+        "YYYY-MM-DD",
+        "{\"input\":",
+        "\"days",
+        "2026-07-01"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "date_difference_calculator Calculate the number of days between two dates in YYYY-MM-DD format. Use this for date intervals, not numeric arithmetic. How many days are between 2026-03-01 and 2026-03-18? date days between duration calendar interval YYYY-MM-DD required: first_date, second_date"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use date_difference_calculator only when the request provides: first_date, second_date.",
+        "Do not choose hard negatives when their contract is more specific: calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "How many days are between 2026-03-01 and 2026-03-18?",
+          "input": "How many days are between 2026-03-01 and 2026-03-18?",
+          "output_contains": [
+            "17 days"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use date_difference_calculator on the earlier text.",
+          "why_not": "missing required information: first_date, second_date"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with date_difference_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with date_difference_calculator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "first_date",
+          "second_date"
+        ],
+        "observations": [
+          "17 days"
+        ],
+        "final_answer": [
+          "17 days"
+        ]
+      }
+    }
+  },
+  {
+    "name": "regex_extractor",
+    "version": "2.0",
+    "status": "active",
+    "category": "extraction",
+    "description": "Extract structured patterns such as emails, dates, phone numbers, and URLs. Use this for exact pattern extraction, not semantic keywords.",
+    "capability_scope": {
+      "can_do": [
+        "Extract structured patterns such as emails, dates, phone numbers, and URLs. Use this for exact pattern extraction, not semantic keywords.",
+        "Extract emails and dates from: lab@example.com on 2026-10-11.",
+        "{'input': 'Email alice@example.com before 2026-07-15.', 'output': 'Regex matches: emails=alice@example.com; dates=2026-07-15'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text_with_patterns"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text_with_patterns",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "lab@example.com",
+          "2026-10-11"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "RegexExtractor:",
+      "success_contains": [
+        "lab@example.com",
+        "2026-10-11"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "regex extractor",
+        "regex",
+        "pattern",
+        "email",
+        "date",
+        "phone",
+        "url",
+        "extract",
+        "{\"input\":",
+        "\"Email",
+        "alice@example.com",
+        "before"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "keyword_extractor",
+        "entity_extractor"
+      ],
+      "retrieval_text": "regex_extractor Extract structured patterns such as emails, dates, phone numbers, and URLs. Use this for exact pattern extraction, not semantic keywords. Extract emails and dates from: lab@example.com on 2026-10-11. regex pattern email date phone url extract required: source_text_with_patterns"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use regex_extractor only when the request provides: source_text_with_patterns.",
+        "Do not choose hard negatives when their contract is more specific: keyword_extractor, entity_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Extract emails and dates from: lab@example.com on 2026-10-11.",
+          "input": "Extract emails and dates from: lab@example.com on 2026-10-11.",
+          "output_contains": [
+            "lab@example.com",
+            "2026-10-11"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use regex_extractor on the earlier text.",
+          "why_not": "missing required information: source_text_with_patterns"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "keyword_extractor",
+          "why_negative": "confusable with regex_extractor but has different contract"
+        },
+        {
+          "wrong_skill": "entity_extractor",
+          "why_negative": "confusable with regex_extractor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text_with_patterns"
+        ],
+        "observations": [
+          "lab@example.com",
+          "2026-10-11"
+        ],
+        "final_answer": [
+          "lab@example.com"
+        ]
+      }
+    }
+  },
+  {
+    "name": "entity_extractor",
+    "version": "2.0",
+    "status": "active",
+    "category": "extraction",
+    "description": "Extract named entities such as people, organizations, and locations. Use this for named entities, not frequent keywords.",
+    "capability_scope": {
+      "can_do": [
+        "Extract named entities such as people, organizations, and locations. Use this for named entities, not frequent keywords.",
+        "Extract people, organizations, and locations: Alice joined OpenAI in Beijing.",
+        "{'input': 'Alice visited OpenAI in San Francisco.', 'output': 'Entities: person=Alice; organization=OpenAI'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "Alice",
+          "OpenAI",
+          "Beijing"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "EntityExtractor:",
+      "success_contains": [
+        "Alice",
+        "OpenAI",
+        "Beijing"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "entity extractor",
+        "entity",
+        "named entity",
+        "person",
+        "organization",
+        "location",
+        "NER",
+        "extract",
+        "{\"input\":",
+        "\"Alice",
+        "visited",
+        "OpenAI"
+      ],
+      "anti_trigger_phrases": [
+        "keywords",
+        "emails",
+        "dates",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "keyword_extractor",
+        "regex_extractor"
+      ],
+      "retrieval_text": "entity_extractor Extract named entities such as people, organizations, and locations. Use this for named entities, not frequent keywords. Extract people, organizations, and locations: Alice joined OpenAI in Beijing. entity named entity person organization location NER extract required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use entity_extractor only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: keyword_extractor, regex_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Extract people, organizations, and locations: Alice joined OpenAI in Beijing.",
+          "input": "Extract people, organizations, and locations: Alice joined OpenAI in Beijing.",
+          "output_contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use entity_extractor on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "keyword_extractor",
+          "why_negative": "confusable with entity_extractor but has different contract"
+        },
+        {
+          "wrong_skill": "regex_extractor",
+          "why_negative": "confusable with entity_extractor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Alice",
+          "OpenAI",
+          "Beijing"
+        ],
+        "final_answer": [
+          "Alice"
+        ]
+      }
+    }
+  },
+  {
+    "name": "topic_classifier",
+    "version": "2.0",
+    "status": "active",
+    "category": "classification",
+    "description": "Classify the broad topic of a text, such as machine learning, finance, health, education, or software. Use this for topic labels, not keyword extraction.",
+    "capability_scope": {
+      "can_do": [
+        "Classify the broad topic of a text, such as machine learning, finance, health, education, or software. Use this for topic labels, not keyword extraction.",
+        "Classify the topic: neural retrieval models use datasets and training.",
+        "{'input': 'The model trains on a retrieval dataset.', 'output': 'Topic: machine_learning'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "neural retrieval models"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TopicClassifier:",
+      "success_contains": [
+        "machine_learning"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "topic classifier",
+        "topic",
+        "classify",
+        "category",
+        "domain",
+        "machine learning",
+        "finance",
+        "health",
+        "{\"input\":",
+        "\"The",
+        "model",
+        "trains"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "intent_classifier",
+        "keyword_extractor"
+      ],
+      "retrieval_text": "topic_classifier Classify the broad topic of a text, such as machine learning, finance, health, education, or software. Use this for topic labels, not keyword extraction. Classify the topic: neural retrieval models use datasets and training. topic classify category domain machine learning finance health required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use topic_classifier only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: intent_classifier, keyword_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Classify the topic: neural retrieval models use datasets and training.",
+          "input": "Classify the topic: neural retrieval models use datasets and training.",
+          "output_contains": [
+            "machine_learning"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use topic_classifier on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "intent_classifier",
+          "why_negative": "confusable with topic_classifier but has different contract"
+        },
+        {
+          "wrong_skill": "keyword_extractor",
+          "why_negative": "confusable with topic_classifier but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "machine_learning"
+        ],
+        "final_answer": [
+          "machine_learning"
+        ]
+      }
+    }
+  },
+  {
+    "name": "intent_classifier",
+    "version": "2.0",
+    "status": "active",
+    "category": "classification",
+    "description": "Classify the user's intent, such as translation request, calculation request, summarization request, extraction request, editing request, or general question.",
+    "capability_scope": {
+      "can_do": [
+        "Classify the user's intent, such as translation request, calculation request, summarization request, extraction request, editing request, or general question.",
+        "Classify the intent: please translate this sentence into Chinese.",
+        "{'input': 'Please summarize this paragraph.', 'output': 'Intent: summarization_request'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "translate this sentence"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "IntentClassifier:",
+      "success_contains": [
+        "translation_request"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "intent classifier",
+        "intent",
+        "classify",
+        "request type",
+        "user goal",
+        "command",
+        "task type",
+        "{\"input\":",
+        "\"Please",
+        "summarize",
+        "this"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "translator_en_zh",
+        "topic_classifier"
+      ],
+      "retrieval_text": "intent_classifier Classify the user's intent, such as translation request, calculation request, summarization request, extraction request, editing request, or general question. Classify the intent: please translate this sentence into Chinese. intent classify request type user goal command task type required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use intent_classifier only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: translator_en_zh, topic_classifier.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Classify the intent: please translate this sentence into Chinese.",
+          "input": "Classify the intent: please translate this sentence into Chinese.",
+          "output_contains": [
+            "translation_request"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use intent_classifier on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "translator_en_zh",
+          "why_negative": "confusable with intent_classifier but has different contract"
+        },
+        {
+          "wrong_skill": "topic_classifier",
+          "why_negative": "confusable with intent_classifier but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "translation_request"
+        ],
+        "final_answer": [
+          "translation_request"
+        ]
+      }
+    }
+  },
+  {
+    "name": "grammar_corrector",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Fix simple grammar mistakes while preserving the sentence meaning. Use this for grammar correction, not broad rewriting or tone conversion.",
+    "capability_scope": {
+      "can_do": [
+        "Fix simple grammar mistakes while preserving the sentence meaning. Use this for grammar correction, not broad rewriting or tone conversion.",
+        "Fix grammar: we was testing a agent.",
+        "{'input': 'she go to school', 'output': 'Grammar corrected: She goes to school.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "we was",
+          "a agent"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "GrammarCorrector:",
+      "success_contains": [
+        "we were",
+        "an agent"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "grammar corrector",
+        "grammar",
+        "correct",
+        "fix",
+        "mistake",
+        "sentence",
+        "proofread",
+        "{\"input\":",
+        "\"she",
+        "go",
+        "to"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "text_rewriter",
+        "tone_converter"
+      ],
+      "retrieval_text": "grammar_corrector Fix simple grammar mistakes while preserving the sentence meaning. Use this for grammar correction, not broad rewriting or tone conversion. Fix grammar: we was testing a agent. grammar correct fix mistake sentence proofread required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use grammar_corrector only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: text_rewriter, tone_converter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Fix grammar: we was testing a agent.",
+          "input": "Fix grammar: we was testing a agent.",
+          "output_contains": [
+            "we were",
+            "an agent"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use grammar_corrector on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "text_rewriter",
+          "why_negative": "confusable with grammar_corrector but has different contract"
+        },
+        {
+          "wrong_skill": "tone_converter",
+          "why_negative": "confusable with grammar_corrector but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "we were",
+          "an agent"
+        ],
+        "final_answer": [
+          "we were"
+        ]
+      }
+    }
+  },
+  {
+    "name": "tone_converter",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Convert text into a requested tone such as formal, polite, or friendly. Use this for style and tone, not grammar correction.",
+    "capability_scope": {
+      "can_do": [
+        "Convert text into a requested tone such as formal, polite, or friendly. Use this for style and tone, not grammar correction.",
+        "Make this formal: send the logs now.",
+        "{'input': 'make it formal: send me the file', 'output': 'Formal tone: Please note that send me the file.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text",
+        "target_tone"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "formal",
+          "send the logs"
+        ]
+      },
+      {
+        "name": "target_tone",
+        "type": "enum_or_text",
+        "required": true,
+        "patterns": [
+          "formal",
+          "send the logs"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ToneConverter:",
+      "success_contains": [
+        "Formal tone"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "tone converter",
+        "tone",
+        "formal",
+        "friendly",
+        "polite",
+        "style",
+        "voice",
+        "rewrite",
+        "{\"input\":",
+        "\"make",
+        "it",
+        "formal:"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "email_drafter",
+        "grammar_corrector"
+      ],
+      "retrieval_text": "tone_converter Convert text into a requested tone such as formal, polite, or friendly. Use this for style and tone, not grammar correction. Make this formal: send the logs now. tone formal friendly polite style voice rewrite required: source_text, target_tone"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use tone_converter only when the request provides: source_text, target_tone.",
+        "Do not choose hard negatives when their contract is more specific: email_drafter, grammar_corrector.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Make this formal: send the logs now.",
+          "input": "Make this formal: send the logs now.",
+          "output_contains": [
+            "Formal tone"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use tone_converter on the earlier text.",
+          "why_not": "missing required information: source_text, target_tone"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "email_drafter",
+          "why_negative": "confusable with tone_converter but has different contract"
+        },
+        {
+          "wrong_skill": "grammar_corrector",
+          "why_negative": "confusable with tone_converter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text",
+          "target_tone"
+        ],
+        "observations": [
+          "Formal tone"
+        ],
+        "final_answer": [
+          "Formal tone"
+        ]
+      }
+    }
+  },
+  {
+    "name": "outline_generator",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Generate a simple outline with ordered sections for a topic. Use this for outlines, not summaries.",
+    "capability_scope": {
+      "can_do": [
+        "Generate a simple outline with ordered sections for a topic. Use this for outlines, not summaries.",
+        "Create an outline about evaluating skill calling.",
+        "{'input': 'outline for skill retrieval experiments', 'output': 'Outline: 1. Introduction; 2. Key points; 3. Method; 4. Conclusion.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "topic_or_source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "topic_or_source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "evaluating skill calling"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "OutlineGenerator:",
+      "success_contains": [
+        "Outline"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "outline generator",
+        "outline",
+        "plan",
+        "sections",
+        "structure",
+        "agenda",
+        "draft",
+        "{\"input\":",
+        "\"outline",
+        "for",
+        "skill"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "summarizer",
+        "title_generator"
+      ],
+      "retrieval_text": "outline_generator Generate a simple outline with ordered sections for a topic. Use this for outlines, not summaries. Create an outline about evaluating skill calling. outline plan sections structure agenda draft required: topic_or_source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use outline_generator only when the request provides: topic_or_source_text.",
+        "Do not choose hard negatives when their contract is more specific: summarizer, title_generator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Create an outline about evaluating skill calling.",
+          "input": "Create an outline about evaluating skill calling.",
+          "output_contains": [
+            "Outline"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use outline_generator on the earlier text.",
+          "why_not": "missing required information: topic_or_source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with outline_generator but has different contract"
+        },
+        {
+          "wrong_skill": "title_generator",
+          "why_negative": "confusable with outline_generator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "topic_or_source_text"
+        ],
+        "observations": [
+          "Outline"
+        ],
+        "final_answer": [
+          "Outline"
+        ]
+      }
+    }
+  },
+  {
+    "name": "citation_formatter",
+    "version": "2.0",
+    "status": "active",
+    "category": "structured_formatting",
+    "description": "Format bibliographic citation information such as author, year, and title. Use this for citations, not paper question answering.",
+    "capability_scope": {
+      "can_do": [
+        "Format bibliographic citation information such as author, year, and title. Use this for citations, not paper question answering.",
+        "Format citation: title: Tool Learning Baseline author: Smith year: 2026.",
+        "{'input': 'author: Smith year: 2024 title: Skill Retrieval', 'output': 'Citation: Smith (2024). Skill Retrieval.'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "citation_metadata"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "citation_metadata",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "Smith",
+          "2026"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "CitationFormatter:",
+      "success_contains": [
+        "Citation"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "citation formatter",
+        "citation",
+        "reference",
+        "bibliography",
+        "author",
+        "year",
+        "title",
+        "format",
+        "{\"input\":",
+        "\"author:",
+        "Smith",
+        "year:"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "paper_qa",
+        "regex_extractor"
+      ],
+      "retrieval_text": "citation_formatter Format bibliographic citation information such as author, year, and title. Use this for citations, not paper question answering. Format citation: title: Tool Learning Baseline author: Smith year: 2026. citation reference bibliography author year title format required: citation_metadata"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use citation_formatter only when the request provides: citation_metadata.",
+        "Do not choose hard negatives when their contract is more specific: paper_qa, regex_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Format citation: title: Tool Learning Baseline author: Smith year: 2026.",
+          "input": "Format citation: title: Tool Learning Baseline author: Smith year: 2026.",
+          "output_contains": [
+            "Citation"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use citation_formatter on the earlier text.",
+          "why_not": "missing required information: citation_metadata"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "paper_qa",
+          "why_negative": "confusable with citation_formatter but has different contract"
+        },
+        {
+          "wrong_skill": "regex_extractor",
+          "why_negative": "confusable with citation_formatter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "citation_metadata"
+        ],
+        "observations": [
+          "Citation"
+        ],
+        "final_answer": [
+          "Citation"
+        ]
+      }
+    }
+  },
+  {
+    "name": "table_formatter",
+    "version": "2.0",
+    "status": "active",
+    "category": "structured_formatting",
+    "description": "Format key-value text or comma-separated items as a Markdown table. Use this for table formatting, not summarization.",
+    "capability_scope": {
+      "can_do": [
+        "Format key-value text or comma-separated items as a Markdown table. Use this for table formatting, not summarization.",
+        "Format as a table: method: BM25; score: 0.82.",
+        "{'input': 'name: BM25; score: 0.8', 'output': '| field | value |\\n| --- | --- |\\n| name | BM25 |\\n| score | 0.8 |'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "structured_items_or_key_values"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "structured_items_or_key_values",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "method",
+          "BM25",
+          "score"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Table:",
+      "success_contains": [
+        "Table"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "table formatter",
+        "table",
+        "markdown table",
+        "format",
+        "rows",
+        "columns",
+        "key value",
+        "{\"input\":",
+        "\"name:",
+        "BM25;",
+        "score:"
+      ],
+      "anti_trigger_phrases": [
+        "validate json",
+        "summarize csv",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "csv_summarizer",
+        "json_validator"
+      ],
+      "retrieval_text": "table_formatter Format key-value text or comma-separated items as a Markdown table. Use this for table formatting, not summarization. Format as a table: method: BM25; score: 0.82. table markdown table format rows columns key value required: structured_items_or_key_values"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use table_formatter only when the request provides: structured_items_or_key_values.",
+        "Do not choose hard negatives when their contract is more specific: csv_summarizer, json_validator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "For dependent multi-skill calls, use $PREVIOUS_OUTPUT when the instruction refers to the previous result."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Format as a table: method: BM25; score: 0.82.",
+          "input": "Format as a table: method: BM25; score: 0.82.",
+          "output_contains": [
+            "Table"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use table_formatter on the earlier text.",
+          "why_not": "missing required information: structured_items_or_key_values"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "csv_summarizer",
+          "why_negative": "confusable with table_formatter but has different contract"
+        },
+        {
+          "wrong_skill": "json_validator",
+          "why_negative": "confusable with table_formatter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "structured_items_or_key_values"
+        ],
+        "observations": [
+          "Table"
+        ],
+        "final_answer": [
+          "Table"
+        ]
+      }
+    }
+  },
+  {
+    "name": "ratio_calculator",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Simplify ratios and compute decimal ratio values. Use this for ratio expressions such as 12:18, not general arithmetic or percentages.",
+    "capability_scope": {
+      "can_do": [
+        "Simplify ratios and compute decimal ratio values. Use this for ratio expressions such as 12:18, not general arithmetic or percentages.",
+        "Simplify the ratio 42 to 56.",
+        "{'input': 'simplify ratio 12:18', 'output': 'Ratio: 12:18 = 2:3; decimal=0.666667'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "first_quantity",
+        "second_quantity"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "first_quantity",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "42",
+          "56"
+        ]
+      },
+      {
+        "name": "second_quantity",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "42",
+          "56"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Ratio:",
+      "success_contains": [
+        "3:4"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "ratio calculator",
+        "ratio",
+        "proportion",
+        "simplify ratio",
+        "colon",
+        "decimal ratio",
+        "compare quantities",
+        "{\"input\":",
+        "\"simplify",
+        "12:18\","
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "percentage_calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "ratio_calculator Simplify ratios and compute decimal ratio values. Use this for ratio expressions such as 12:18, not general arithmetic or percentages. Simplify the ratio 42 to 56. ratio proportion simplify ratio colon decimal ratio compare quantities required: first_quantity, second_quantity"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use ratio_calculator only when the request provides: first_quantity, second_quantity.",
+        "Do not choose hard negatives when their contract is more specific: calculator, percentage_calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "Do not rewrite the user request into an assertion with changed argument order."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Simplify the ratio 42 to 56.",
+          "input": "Simplify the ratio 42 to 56.",
+          "output_contains": [
+            "3:4"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use ratio_calculator on the earlier text.",
+          "why_not": "missing required information: first_quantity, second_quantity"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with ratio_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "percentage_calculator",
+          "why_negative": "confusable with ratio_calculator but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with ratio_calculator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "first_quantity",
+          "second_quantity"
+        ],
+        "observations": [
+          "3:4"
+        ],
+        "final_answer": [
+          "3:4"
+        ]
+      }
+    }
+  },
+  {
+    "name": "equation_solver",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Solve simple one-variable linear equations for x. Use this for equations with an equals sign, not plain arithmetic expressions.",
+    "capability_scope": {
+      "can_do": [
+        "Solve simple one-variable linear equations for x. Use this for equations with an equals sign, not plain arithmetic expressions.",
+        "Find x for 7*x - 14 = 21.",
+        "{'input': 'solve 2*x + 3 = 11', 'output': 'Equation solution: x=4'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "linear_equation_with_x"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "linear_equation_with_x",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "7*x",
+          "21"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Equation solution:",
+      "success_contains": [
+        "x=5"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "equation solver",
+        "equation",
+        "solve",
+        "linear",
+        "x",
+        "unknown",
+        "equals",
+        "algebra",
+        "{\"input\":",
+        "\"solve",
+        "2*x",
+        "+"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "calculator",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "equation_solver Solve simple one-variable linear equations for x. Use this for equations with an equals sign, not plain arithmetic expressions. Find x for 7*x - 14 = 21. equation solve linear x unknown equals algebra required: linear_equation_with_x"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use equation_solver only when the request provides: linear_equation_with_x.",
+        "Do not choose hard negatives when their contract is more specific: calculator, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "Do not rewrite the user request into an assertion with changed argument order."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Find x for 7*x - 14 = 21.",
+          "input": "Find x for 7*x - 14 = 21.",
+          "output_contains": [
+            "x=5"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Solve for x.",
+          "why_not": "missing required information: linear_equation_with_x"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with equation_solver but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with equation_solver but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "linear_equation_with_x"
+        ],
+        "observations": [
+          "x=5"
+        ],
+        "final_answer": [
+          "x=5"
+        ]
+      }
+    }
+  },
+  {
+    "name": "number_sequence_analyzer",
+    "version": "2.0",
+    "status": "active",
+    "category": "arithmetic_numeric",
+    "description": "Analyze numeric sequences, detect arithmetic or geometric patterns, and predict the next value. Use this for sequences, not descriptive statistics.",
+    "capability_scope": {
+      "can_do": [
+        "Analyze numeric sequences, detect arithmetic or geometric patterns, and predict the next value. Use this for sequences, not descriptive statistics.",
+        "Continue the sequence 6, 12, 18, 24.",
+        "{'input': 'sequence 2, 4, 6, 8', 'output': 'Sequence: arithmetic difference=2; next=10'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "numeric_sequence"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "numeric_sequence",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "6",
+          "12",
+          "18"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Sequence:",
+      "success_contains": [
+        "next=30"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "number sequence analyzer",
+        "sequence",
+        "next number",
+        "pattern",
+        "arithmetic sequence",
+        "geometric sequence",
+        "series",
+        "{\"input\":",
+        "\"sequence",
+        "2,",
+        "4,"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "statistics_calculator",
+        "calculator"
+      ],
+      "retrieval_text": "number_sequence_analyzer Analyze numeric sequences, detect arithmetic or geometric patterns, and predict the next value. Use this for sequences, not descriptive statistics. Continue the sequence 6, 12, 18, 24. sequence next number pattern arithmetic sequence geometric sequence series required: numeric_sequence"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use number_sequence_analyzer only when the request provides: numeric_sequence.",
+        "Do not choose hard negatives when their contract is more specific: statistics_calculator, calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Continue the sequence 6, 12, 18, 24.",
+          "input": "Continue the sequence 6, 12, 18, 24.",
+          "output_contains": [
+            "next=30"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use number_sequence_analyzer on the earlier text.",
+          "why_not": "missing required information: numeric_sequence"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with number_sequence_analyzer but has different contract"
+        },
+        {
+          "wrong_skill": "calculator",
+          "why_negative": "confusable with number_sequence_analyzer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "numeric_sequence"
+        ],
+        "observations": [
+          "next=30"
+        ],
+        "final_answer": [
+          "next=30"
+        ]
+      }
+    }
+  },
+  {
+    "name": "range_filter",
+    "version": "2.0",
+    "status": "active",
+    "category": "list_data_ops",
+    "description": "Filter a list of numbers by a numeric range or threshold. Use this for selecting values, not sorting or statistics.",
+    "capability_scope": {
+      "can_do": [
+        "Filter a list of numbers by a numeric range or threshold. Use this for selecting values, not sorting or statistics.",
+        "Keep values between 10 and 20 from 4, 10, 12, 20, 25.",
+        "{'input': 'filter 1, 5, 9, 12 between 3 and 10', 'output': 'Filtered values: 5, 9'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "values",
+        "lower_bound",
+        "upper_bound"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "values",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "4",
+          "10",
+          "12"
+        ]
+      },
+      {
+        "name": "lower_bound",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "4",
+          "10",
+          "12"
+        ]
+      },
+      {
+        "name": "upper_bound",
+        "type": "number",
+        "required": true,
+        "patterns": [
+          "4",
+          "10",
+          "12"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "RangeFilter:",
+      "success_contains": [
+        "10",
+        "12",
+        "20"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "range filter",
+        "filter",
+        "range",
+        "between",
+        "threshold",
+        "above",
+        "below",
+        "select numbers",
+        "{\"input\":",
+        "\"filter",
+        "1,",
+        "5,"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "list_sorter",
+        "statistics_calculator"
+      ],
+      "retrieval_text": "range_filter Filter a list of numbers by a numeric range or threshold. Use this for selecting values, not sorting or statistics. Keep values between 10 and 20 from 4, 10, 12, 20, 25. filter range between threshold above below select numbers required: values, lower_bound, upper_bound"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use range_filter only when the request provides: values, lower_bound, upper_bound.",
+        "Do not choose hard negatives when their contract is more specific: list_sorter, statistics_calculator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Keep values between 10 and 20 from 4, 10, 12, 20, 25.",
+          "input": "Keep values between 10 and 20 from 4, 10, 12, 20, 25.",
+          "output_contains": [
+            "10",
+            "12",
+            "20"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use range_filter on the earlier text.",
+          "why_not": "missing required information: values, lower_bound, upper_bound"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "list_sorter",
+          "why_negative": "confusable with range_filter but has different contract"
+        },
+        {
+          "wrong_skill": "statistics_calculator",
+          "why_negative": "confusable with range_filter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "values",
+          "lower_bound",
+          "upper_bound"
+        ],
+        "observations": [
+          "10",
+          "12",
+          "20"
+        ],
+        "final_answer": [
+          "10"
+        ]
+      }
+    }
+  },
+  {
+    "name": "list_sorter",
+    "version": "2.0",
+    "status": "active",
+    "category": "list_data_ops",
+    "description": "Sort comma-separated numbers or words in ascending or descending order. Use this for ordering lists, not deduplication.",
+    "capability_scope": {
+      "can_do": [
+        "Sort comma-separated numbers or words in ascending or descending order. Use this for ordering lists, not deduplication.",
+        "Sort these labels alphabetically: retriever, agent, benchmark.",
+        "{'input': 'sort 3, 1, 2 ascending', 'output': 'Sorted list: 1, 2, 3'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "items"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "items",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "retriever",
+          "agent",
+          "benchmark"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ListSorter:",
+      "success_contains": [
+        "agent",
+        "benchmark",
+        "retriever"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "list sorter",
+        "sort",
+        "order",
+        "ascending",
+        "descending",
+        "rank",
+        "list",
+        "arrange",
+        "{\"input\":",
+        "\"sort",
+        "3,",
+        "1,"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "deduplicator",
+        "range_filter"
+      ],
+      "retrieval_text": "list_sorter Sort comma-separated numbers or words in ascending or descending order. Use this for ordering lists, not deduplication. Sort these labels alphabetically: retriever, agent, benchmark. sort order ascending descending rank list arrange required: items"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use list_sorter only when the request provides: items.",
+        "Do not choose hard negatives when their contract is more specific: deduplicator, range_filter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Sort these labels alphabetically: retriever, agent, benchmark.",
+          "input": "Sort these labels alphabetically: retriever, agent, benchmark.",
+          "output_contains": [
+            "agent",
+            "benchmark",
+            "retriever"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use list_sorter on the earlier text.",
+          "why_not": "missing required information: items"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "deduplicator",
+          "why_negative": "confusable with list_sorter but has different contract"
+        },
+        {
+          "wrong_skill": "range_filter",
+          "why_negative": "confusable with list_sorter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "items"
+        ],
+        "observations": [
+          "agent",
+          "benchmark",
+          "retriever"
+        ],
+        "final_answer": [
+          "agent"
+        ]
+      }
+    }
+  },
+  {
+    "name": "deduplicator",
+    "version": "2.0",
+    "status": "active",
+    "category": "list_data_ops",
+    "description": "Remove duplicate items from a list while preserving first occurrence order. Use this for uniqueness, not sorting.",
+    "capability_scope": {
+      "can_do": [
+        "Remove duplicate items from a list while preserving first occurrence order. Use this for uniqueness, not sorting.",
+        "Remove duplicates from: bm25, embedding, bm25, full, embedding.",
+        "{'input': 'deduplicate apple, banana, apple', 'output': 'Deduplicated items: apple, banana'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "items"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "items",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "bm25",
+          "embedding",
+          "full"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "Deduplicator:",
+      "success_contains": [
+        "bm25",
+        "embedding",
+        "full"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "deduplicator",
+        "deduplicate",
+        "remove duplicates",
+        "unique",
+        "distinct",
+        "repeat",
+        "list cleanup",
+        "{\"input\":",
+        "\"deduplicate",
+        "apple,",
+        "banana,"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "list_sorter",
+        "keyword_extractor"
+      ],
+      "retrieval_text": "deduplicator Remove duplicate items from a list while preserving first occurrence order. Use this for uniqueness, not sorting. Remove duplicates from: bm25, embedding, bm25, full, embedding. deduplicate remove duplicates unique distinct repeat list cleanup required: items"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use deduplicator only when the request provides: items.",
+        "Do not choose hard negatives when their contract is more specific: list_sorter, keyword_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Remove duplicates from: bm25, embedding, bm25, full, embedding.",
+          "input": "Remove duplicates from: bm25, embedding, bm25, full, embedding.",
+          "output_contains": [
+            "bm25",
+            "embedding",
+            "full"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use deduplicator on the earlier text.",
+          "why_not": "missing required information: items"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "list_sorter",
+          "why_negative": "confusable with deduplicator but has different contract"
+        },
+        {
+          "wrong_skill": "keyword_extractor",
+          "why_negative": "confusable with deduplicator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "items"
+        ],
+        "observations": [
+          "bm25",
+          "embedding",
+          "full"
+        ],
+        "final_answer": [
+          "bm25"
+        ]
+      }
+    }
+  },
+  {
+    "name": "json_validator",
+    "version": "2.0",
+    "status": "active",
+    "category": "structured_formatting",
+    "description": "Check whether a JSON string is syntactically valid and report the parsed type. Use this for JSON validation, not table formatting.",
+    "capability_scope": {
+      "can_do": [
+        "Check whether a JSON string is syntactically valid and report the parsed type. Use this for JSON validation, not table formatting.",
+        "Validate this JSON string: {\"agent\":\"v2\",\"valid\":true}",
+        "{'input': '{\"task\": \"retrieve\", \"top_k\": 5}', 'output': 'JSON valid: type=dict'}"
+      ],
+      "cannot_do": [
+        "fixing invalid JSON automatically",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "json_string"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "json_string",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "agent",
+          "valid"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "JSON",
+      "success_contains": [
+        "JSON valid"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "json validator",
+        "json",
+        "validate",
+        "syntax",
+        "parse",
+        "schema",
+        "object",
+        "array",
+        "{\"input\":",
+        "\"{\\\"task\\\":",
+        "\\\"retrieve\\\",",
+        "\\\"top_k\\\":"
+      ],
+      "anti_trigger_phrases": [
+        "format as table",
+        "summarize csv",
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "table_formatter",
+        "csv_summarizer"
+      ],
+      "retrieval_text": "json_validator Check whether a JSON string is syntactically valid and report the parsed type. Use this for JSON validation, not table formatting. Validate this JSON string: {\"agent\":\"v2\",\"valid\":true} json validate syntax parse schema object array required: json_string"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use json_validator only when the request provides: json_string.",
+        "Do not choose hard negatives when their contract is more specific: table_formatter, csv_summarizer.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Validate this JSON string: {\"agent\":\"v2\",\"valid\":true}",
+          "input": "Validate this JSON string: {\"agent\":\"v2\",\"valid\":true}",
+          "output_contains": [
+            "JSON valid"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Validate this JSON.",
+          "why_not": "missing required information: json_string"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "table_formatter",
+          "why_negative": "confusable with json_validator but has different contract"
+        },
+        {
+          "wrong_skill": "csv_summarizer",
+          "why_negative": "confusable with json_validator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "json_string"
+        ],
+        "observations": [
+          "JSON valid"
+        ],
+        "final_answer": [
+          "JSON valid"
+        ]
+      }
+    }
+  },
+  {
+    "name": "csv_summarizer",
+    "version": "2.0",
+    "status": "active",
+    "category": "structured_formatting",
+    "description": "Summarize CSV text by row count, column count, and simple numeric aggregates. Use this for CSV data, not Markdown tables.",
+    "capability_scope": {
+      "can_do": [
+        "Summarize CSV text by row count, column count, and simple numeric aggregates. Use this for CSV data, not Markdown tables.",
+        "Summarize CSV rows:\nname,score\nKai,8\nLin,10",
+        "{'input': 'name,score\\nbm25,0.8\\nfull,0.6', 'output': 'CSV summary: rows=2, columns=2; score:sum=1.4,mean=0.7'}"
+      ],
+      "cannot_do": [
+        "fetching external CSV files",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "csv_rows"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "csv_rows",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "name,score",
+          "Kai,8",
+          "Lin,10"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "CSV summary:",
+      "success_contains": [
+        "rows=2",
+        "columns=2"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "csv summarizer",
+        "csv",
+        "comma separated",
+        "rows",
+        "columns",
+        "aggregate",
+        "spreadsheet",
+        "summarize data",
+        "{\"input\":",
+        "\"name,score\\nbm25,0.8\\nfull,0.6\",",
+        "\"output\":",
+        "\"CSV"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "table_formatter",
+        "json_validator"
+      ],
+      "retrieval_text": "csv_summarizer Summarize CSV text by row count, column count, and simple numeric aggregates. Use this for CSV data, not Markdown tables. Summarize CSV rows:\nname,score\nKai,8\nLin,10 csv comma separated rows columns aggregate spreadsheet summarize data required: csv_rows"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use csv_summarizer only when the request provides: csv_rows.",
+        "Do not choose hard negatives when their contract is more specific: table_formatter, json_validator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Summarize CSV rows:\nname,score\nKai,8\nLin,10",
+          "input": "Summarize CSV rows:\nname,score\nKai,8\nLin,10",
+          "output_contains": [
+            "rows=2",
+            "columns=2"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use csv_summarizer on the earlier text.",
+          "why_not": "missing required information: csv_rows"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "table_formatter",
+          "why_negative": "confusable with csv_summarizer but has different contract"
+        },
+        {
+          "wrong_skill": "json_validator",
+          "why_negative": "confusable with csv_summarizer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "csv_rows"
+        ],
+        "observations": [
+          "rows=2",
+          "columns=2"
+        ],
+        "final_answer": [
+          "rows=2"
+        ]
+      }
+    }
+  },
+  {
+    "name": "language_detector",
+    "version": "2.0",
+    "status": "active",
+    "category": "classification",
+    "description": "Detect whether text is mainly English, Chinese, numeric, or unknown. Use this for language identification, not translation.",
+    "capability_scope": {
+      "can_do": [
+        "Detect whether text is mainly English, Chinese, numeric, or unknown. Use this for language identification, not translation.",
+        "Detect the language of this text: Skill retrieval baseline.",
+        "{'input': 'hello skill agent', 'output': 'Language: English'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "Skill retrieval baseline"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "LanguageDetector:",
+      "success_contains": [
+        "English"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "language detector",
+        "language",
+        "detect",
+        "English",
+        "Chinese",
+        "identify language",
+        "script",
+        "{\"input\":",
+        "\"hello",
+        "skill",
+        "agent\","
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "translator_en_zh",
+        "intent_classifier"
+      ],
+      "retrieval_text": "language_detector Detect whether text is mainly English, Chinese, numeric, or unknown. Use this for language identification, not translation. Detect the language of this text: Skill retrieval baseline. language detect English Chinese identify language script required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use language_detector only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: translator_en_zh, intent_classifier.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Detect the language of this text: Skill retrieval baseline.",
+          "input": "Detect the language of this text: Skill retrieval baseline.",
+          "output_contains": [
+            "English"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use language_detector on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "translator_en_zh",
+          "why_negative": "confusable with language_detector but has different contract"
+        },
+        {
+          "wrong_skill": "intent_classifier",
+          "why_negative": "confusable with language_detector but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "English"
+        ],
+        "final_answer": [
+          "English"
+        ]
+      }
+    }
+  },
+  {
+    "name": "readability_scorer",
+    "version": "2.0",
+    "status": "active",
+    "category": "classification",
+    "description": "Estimate simple English readability using sentence length and word length. Use this for readability, not sentiment or grammar correction.",
+    "capability_scope": {
+      "can_do": [
+        "Estimate simple English readability using sentence length and word length. Use this for readability, not sentiment or grammar correction.",
+        "Estimate readability: This agent uses tools. It checks outputs.",
+        "{'input': 'This sentence is short. It is easy to read.', 'output': 'Readability: easy'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "agent uses tools"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ReadabilityScorer:",
+      "success_contains": [
+        "Readability"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "readability scorer",
+        "readability",
+        "reading level",
+        "easy",
+        "hard",
+        "sentence length",
+        "complexity",
+        "{\"input\":",
+        "\"This",
+        "sentence",
+        "is"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "summarizer",
+        "text_rewriter"
+      ],
+      "retrieval_text": "readability_scorer Estimate simple English readability using sentence length and word length. Use this for readability, not sentiment or grammar correction. Estimate readability: This agent uses tools. It checks outputs. readability reading level easy hard sentence length complexity required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use readability_scorer only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: summarizer, text_rewriter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Estimate readability: This agent uses tools. It checks outputs.",
+          "input": "Estimate readability: This agent uses tools. It checks outputs.",
+          "output_contains": [
+            "Readability"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use readability_scorer on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with readability_scorer but has different contract"
+        },
+        {
+          "wrong_skill": "text_rewriter",
+          "why_negative": "confusable with readability_scorer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Readability"
+        ],
+        "final_answer": [
+          "Readability"
+        ]
+      }
+    }
+  },
+  {
+    "name": "title_generator",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Generate a concise title from a passage or topic. Use this for titles, not summaries or outlines.",
+    "capability_scope": {
+      "can_do": [
+        "Generate a concise title from a passage or topic. Use this for titles, not summaries or outlines.",
+        "Create a title for: tool contracts improve skill calling.",
+        "{'input': 'Skill retrieval improves agent tool use.', 'output': 'Title: Skill Retrieval Improves Agent Tool Use'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text_or_topic"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text_or_topic",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "tool contracts improve skill calling"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TitleGenerator:",
+      "success_contains": [
+        "Title"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "title generator",
+        "title",
+        "headline",
+        "name",
+        "caption",
+        "generate title",
+        "short label",
+        "{\"input\":",
+        "\"Skill",
+        "retrieval",
+        "improves"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "summarizer",
+        "outline_generator"
+      ],
+      "retrieval_text": "title_generator Generate a concise title from a passage or topic. Use this for titles, not summaries or outlines. Create a title for: tool contracts improve skill calling. title headline name caption generate title short label required: source_text_or_topic"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use title_generator only when the request provides: source_text_or_topic.",
+        "Do not choose hard negatives when their contract is more specific: summarizer, outline_generator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill.",
+        "For dependent multi-skill calls, use $PREVIOUS_OUTPUT when the instruction refers to the previous result."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Create a title for: tool contracts improve skill calling.",
+          "input": "Create a title for: tool contracts improve skill calling.",
+          "output_contains": [
+            "Title"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use title_generator on the earlier text.",
+          "why_not": "missing required information: source_text_or_topic"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with title_generator but has different contract"
+        },
+        {
+          "wrong_skill": "outline_generator",
+          "why_negative": "confusable with title_generator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text_or_topic"
+        ],
+        "observations": [
+          "Title"
+        ],
+        "final_answer": [
+          "Title"
+        ]
+      }
+    }
+  },
+  {
+    "name": "question_generator",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Generate simple study or discussion questions from a topic. Use this for questions, not answering questions.",
+    "capability_scope": {
+      "can_do": [
+        "Generate simple study or discussion questions from a topic. Use this for questions, not answering questions.",
+        "Generate study questions about no-tool decisions.",
+        "{'input': 'skill retrieval evaluation', 'output': 'Questions: 1. What is the main idea...'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text_or_topic"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text_or_topic",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "no-tool decisions"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "QuestionGenerator:",
+      "success_contains": [
+        "Questions"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "question generator",
+        "question",
+        "generate questions",
+        "quiz",
+        "discussion",
+        "study questions",
+        "ask",
+        "{\"input\":",
+        "\"skill",
+        "retrieval",
+        "evaluation\","
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "outline_generator",
+        "checklist_generator"
+      ],
+      "retrieval_text": "question_generator Generate simple study or discussion questions from a topic. Use this for questions, not answering questions. Generate study questions about no-tool decisions. question generate questions quiz discussion study questions ask required: source_text_or_topic"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use question_generator only when the request provides: source_text_or_topic.",
+        "Do not choose hard negatives when their contract is more specific: outline_generator, checklist_generator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Generate study questions about no-tool decisions.",
+          "input": "Generate study questions about no-tool decisions.",
+          "output_contains": [
+            "Questions"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use question_generator on the earlier text.",
+          "why_not": "missing required information: source_text_or_topic"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "outline_generator",
+          "why_negative": "confusable with question_generator but has different contract"
+        },
+        {
+          "wrong_skill": "checklist_generator",
+          "why_negative": "confusable with question_generator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text_or_topic"
+        ],
+        "observations": [
+          "Questions"
+        ],
+        "final_answer": [
+          "Questions"
+        ]
+      }
+    }
+  },
+  {
+    "name": "checklist_generator",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Generate a short checklist for completing a task. Use this for actionable checklists, not outlines.",
+    "capability_scope": {
+      "can_do": [
+        "Generate a short checklist for completing a task. Use this for actionable checklists, not outlines.",
+        "Create a checklist for running an ablation experiment.",
+        "{'input': 'checklist for running a benchmark', 'output': 'Checklist: [ ] Define running a benchmark; [ ] Prepare inputs...'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "task_or_topic"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "task_or_topic",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "ablation experiment"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ChecklistGenerator:",
+      "success_contains": [
+        "Checklist"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "checklist generator",
+        "checklist",
+        "to check",
+        "steps",
+        "action list",
+        "verify",
+        "workflow",
+        "{\"input\":",
+        "\"checklist",
+        "for",
+        "running"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "todo_extractor",
+        "outline_generator"
+      ],
+      "retrieval_text": "checklist_generator Generate a short checklist for completing a task. Use this for actionable checklists, not outlines. Create a checklist for running an ablation experiment. checklist to check steps action list verify workflow required: task_or_topic"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use checklist_generator only when the request provides: task_or_topic.",
+        "Do not choose hard negatives when their contract is more specific: todo_extractor, outline_generator.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Create a checklist for running an ablation experiment.",
+          "input": "Create a checklist for running an ablation experiment.",
+          "output_contains": [
+            "Checklist"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use checklist_generator on the earlier text.",
+          "why_not": "missing required information: task_or_topic"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "todo_extractor",
+          "why_negative": "confusable with checklist_generator but has different contract"
+        },
+        {
+          "wrong_skill": "outline_generator",
+          "why_negative": "confusable with checklist_generator but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "task_or_topic"
+        ],
+        "observations": [
+          "Checklist"
+        ],
+        "final_answer": [
+          "Checklist"
+        ]
+      }
+    }
+  },
+  {
+    "name": "pros_cons_analyzer",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Produce a balanced pros and cons note for an option or decision. Use this for tradeoff analysis, not sentiment classification.",
+    "capability_scope": {
+      "can_do": [
+        "Produce a balanced pros and cons note for an option or decision. Use this for tradeoff analysis, not sentiment classification.",
+        "Give pros and cons of using embedding retrieval.",
+        "{'input': 'using BM25 as a baseline', 'output': 'Pros/Cons: Pros - using BM25 as a baseline...'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "topic_or_option"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "topic_or_option",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "embedding retrieval"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ProsConsAnalyzer:",
+      "success_contains": [
+        "Pros/Cons"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "pros cons analyzer",
+        "pros",
+        "cons",
+        "tradeoff",
+        "advantages",
+        "disadvantages",
+        "decision",
+        "analysis",
+        "{\"input\":",
+        "\"using",
+        "BM25",
+        "as"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "summarizer",
+        "argument_mapper"
+      ],
+      "retrieval_text": "pros_cons_analyzer Produce a balanced pros and cons note for an option or decision. Use this for tradeoff analysis, not sentiment classification. Give pros and cons of using embedding retrieval. pros cons tradeoff advantages disadvantages decision analysis required: topic_or_option"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use pros_cons_analyzer only when the request provides: topic_or_option.",
+        "Do not choose hard negatives when their contract is more specific: summarizer, argument_mapper.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Give pros and cons of using embedding retrieval.",
+          "input": "Give pros and cons of using embedding retrieval.",
+          "output_contains": [
+            "Pros/Cons"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use pros_cons_analyzer on the earlier text.",
+          "why_not": "missing required information: topic_or_option"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with pros_cons_analyzer but has different contract"
+        },
+        {
+          "wrong_skill": "argument_mapper",
+          "why_negative": "confusable with pros_cons_analyzer but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "topic_or_option"
+        ],
+        "observations": [
+          "Pros/Cons"
+        ],
+        "final_answer": [
+          "Pros/Cons"
+        ]
+      }
+    }
+  },
+  {
+    "name": "argument_mapper",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Extract a simple claim, evidence, and support relation from argumentative text. Use this for reasoning structure, not sentiment.",
+    "capability_scope": {
+      "can_do": [
+        "Extract a simple claim, evidence, and support relation from argumentative text. Use this for reasoning structure, not sentiment.",
+        "Map this argument: claim: contracts improve agents because they clarify inputs.",
+        "{'input': 'claim: BM25 is useful because it is simple', 'output': 'Argument map: claim=BM25 is useful; evidence=it is simple; relation=supports'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "claim_or_argument"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "claim_or_argument",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "contracts improve agents",
+          "clarify inputs"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "ArgumentMapper:",
+      "success_contains": [
+        "Argument map"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "argument mapper",
+        "argument",
+        "claim",
+        "evidence",
+        "reasoning",
+        "support",
+        "premise",
+        "map",
+        "{\"input\":",
+        "\"claim:",
+        "BM25",
+        "is"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "pros_cons_analyzer",
+        "summarizer"
+      ],
+      "retrieval_text": "argument_mapper Extract a simple claim, evidence, and support relation from argumentative text. Use this for reasoning structure, not sentiment. Map this argument: claim: contracts improve agents because they clarify inputs. argument claim evidence reasoning support premise map required: claim_or_argument"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use argument_mapper only when the request provides: claim_or_argument.",
+        "Do not choose hard negatives when their contract is more specific: pros_cons_analyzer, summarizer.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Map this argument: claim: contracts improve agents because they clarify inputs.",
+          "input": "Map this argument: claim: contracts improve agents because they clarify inputs.",
+          "output_contains": [
+            "Argument map"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use argument_mapper on the earlier text.",
+          "why_not": "missing required information: claim_or_argument"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "pros_cons_analyzer",
+          "why_negative": "confusable with argument_mapper but has different contract"
+        },
+        {
+          "wrong_skill": "summarizer",
+          "why_negative": "confusable with argument_mapper but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "claim_or_argument"
+        ],
+        "observations": [
+          "Argument map"
+        ],
+        "final_answer": [
+          "Argument map"
+        ]
+      }
+    }
+  },
+  {
+    "name": "email_drafter",
+    "version": "2.0",
+    "status": "active",
+    "category": "transformation_generation",
+    "description": "Draft a short email from a request, recipient, and topic. Use this for email composition, not tone conversion alone.",
+    "capability_scope": {
+      "can_do": [
+        "Draft a short email from a request, recipient, and topic. Use this for email composition, not tone conversion alone.",
+        "Draft an email to Professor Lee about SkillBench results.",
+        "{'input': 'draft email to Lee about the benchmark meeting', 'output': 'Email draft: Dear Lee, I am writing about...'}"
+      ],
+      "cannot_do": [
+        "sending real emails",
+        "accessing a mailbox",
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "recipient_or_topic"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "recipient_or_topic",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "Professor Lee",
+          "SkillBench results"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "EmailDrafter:",
+      "success_contains": [
+        "Email draft"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "email drafter",
+        "email",
+        "draft",
+        "compose",
+        "recipient",
+        "subject",
+        "message",
+        "mail",
+        "{\"input\":",
+        "\"draft",
+        "to"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "tone_converter",
+        "text_rewriter"
+      ],
+      "retrieval_text": "email_drafter Draft a short email from a request, recipient, and topic. Use this for email composition, not tone conversion alone. Draft an email to Professor Lee about SkillBench results. email draft compose recipient subject message mail required: recipient_or_topic"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use email_drafter only when the request provides: recipient_or_topic.",
+        "Do not choose hard negatives when their contract is more specific: tone_converter, text_rewriter.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Draft an email to Professor Lee about SkillBench results.",
+          "input": "Draft an email to Professor Lee about SkillBench results.",
+          "output_contains": [
+            "Email draft"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use email_drafter on the earlier text.",
+          "why_not": "missing required information: recipient_or_topic"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "tone_converter",
+          "why_negative": "confusable with email_drafter but has different contract"
+        },
+        {
+          "wrong_skill": "text_rewriter",
+          "why_negative": "confusable with email_drafter but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "recipient_or_topic"
+        ],
+        "observations": [
+          "Email draft"
+        ],
+        "final_answer": [
+          "Email draft"
+        ]
+      }
+    }
+  },
+  {
+    "name": "todo_extractor",
+    "version": "2.0",
+    "status": "active",
+    "category": "extraction",
+    "description": "Extract action items and todos from notes. Use this for tasks and action items, not named entities.",
+    "capability_scope": {
+      "can_do": [
+        "Extract action items and todos from notes. Use this for tasks and action items, not named entities.",
+        "Extract todos: We need to inspect Dev; remember to export metrics.",
+        "{'input': 'We need to run BM25. Todo: analyze failures.', 'output': 'Todos: run BM25; analyze failures'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "source_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": true,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "source_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "inspect Dev",
+          "export metrics"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "TodoExtractor:",
+      "success_contains": [
+        "Todos"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "todo extractor",
+        "todo",
+        "action item",
+        "task",
+        "need to",
+        "must",
+        "should",
+        "extract actions",
+        "{\"input\":",
+        "\"We",
+        "need",
+        "to"
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "keyword_extractor",
+        "meeting_notes_extractor"
+      ],
+      "retrieval_text": "todo_extractor Extract action items and todos from notes. Use this for tasks and action items, not named entities. Extract todos: We need to inspect Dev; remember to export metrics. todo action item task need to must should extract actions required: source_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use todo_extractor only when the request provides: source_text.",
+        "Do not choose hard negatives when their contract is more specific: keyword_extractor, meeting_notes_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "allowed"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Extract todos: We need to inspect Dev; remember to export metrics.",
+          "input": "Extract todos: We need to inspect Dev; remember to export metrics.",
+          "output_contains": [
+            "Todos"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use todo_extractor on the earlier text.",
+          "why_not": "missing required information: source_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "keyword_extractor",
+          "why_negative": "confusable with todo_extractor but has different contract"
+        },
+        {
+          "wrong_skill": "meeting_notes_extractor",
+          "why_negative": "confusable with todo_extractor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "source_text"
+        ],
+        "observations": [
+          "Todos"
+        ],
+        "final_answer": [
+          "Todos"
+        ]
+      }
+    }
+  },
+  {
+    "name": "meeting_notes_extractor",
+    "version": "2.0",
+    "status": "active",
+    "category": "extraction",
+    "description": "Extract decisions, action items, and dates from meeting notes. Use this for meeting minutes, not general summarization.",
+    "capability_scope": {
+      "can_do": [
+        "Extract decisions, action items, and dates from meeting notes. Use this for meeting minutes, not general summarization.",
+        "Extract meeting notes: decision: keep BM25; action: rerun Hard on 2026-08-05.",
+        "{'input': 'Decision: use BM25. Action: run benchmark by 2026-07-15.', 'output': 'Meeting notes: decisions=use BM25; actions=run benchmark by 2026-07-15; dates=2026-07-15'}"
+      ],
+      "cannot_do": [
+        "operate when required input information is missing",
+        "perform external side effects unless explicitly implemented as a local skill"
+      ]
+    },
+    "input_contract": {
+      "input_type": "text",
+      "required_information": [
+        "meeting_note_text"
+      ],
+      "optional_information": [],
+      "requires_complete_input": true,
+      "can_use_previous_output": false,
+      "missing_info_behavior": "return NONE and ask for the missing information before calling this skill"
+    },
+    "argument_slots": [
+      {
+        "name": "meeting_note_text",
+        "type": "text",
+        "required": true,
+        "patterns": [
+          "decision",
+          "action",
+          "2026-08-05"
+        ]
+      }
+    ],
+    "output_contract": {
+      "success_prefix": "MeetingNotesExtractor:",
+      "success_contains": [
+        "Meeting notes"
+      ],
+      "error_prefixes": [
+        "Error:",
+        "Unsupported"
+      ],
+      "faithfulness_rule": "The final answer must preserve successful observation values or report the tool error."
+    },
+    "retrieval_contract": {
+      "trigger_phrases": [
+        "meeting notes extractor",
+        "meeting",
+        "notes",
+        "minutes",
+        "decision",
+        "action",
+        "owner",
+        "date",
+        "follow up",
+        "{\"input\":",
+        "\"Decision:",
+        "use",
+        "BM25."
+      ],
+      "anti_trigger_phrases": [
+        "what does this skill mean",
+        "explain conceptually",
+        "missing input"
+      ],
+      "hard_negative_skills": [
+        "todo_extractor",
+        "regex_extractor"
+      ],
+      "retrieval_text": "meeting_notes_extractor Extract decisions, action items, and dates from meeting notes. Use this for meeting minutes, not general summarization. Extract meeting notes: decision: keep BM25; action: rerun Hard on 2026-08-05. meeting notes minutes decision action owner date follow up required: meeting_note_text"
+    },
+    "calling_contract": {
+      "selection_rules": [
+        "Use meeting_notes_extractor only when the request provides: meeting_note_text.",
+        "Do not choose hard negatives when their contract is more specific: todo_extractor, regex_extractor.",
+        "If required information is missing, choose NONE and ask for clarification."
+      ],
+      "input_builder_hints": [
+        "Preserve all numbers, labels, units, dates, and source text needed by the skill."
+      ],
+      "previous_output_policy": "never"
+    },
+    "examples": {
+      "positive": [
+        {
+          "instruction": "Extract meeting notes: decision: keep BM25; action: rerun Hard on 2026-08-05.",
+          "input": "Extract meeting notes: decision: keep BM25; action: rerun Hard on 2026-08-05.",
+          "output_contains": [
+            "Meeting notes"
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "instruction": "Use meeting_notes_extractor on the earlier text.",
+          "why_not": "missing required information: meeting_note_text"
+        }
+      ],
+      "minimal_pairs": [
+        {
+          "wrong_skill": "todo_extractor",
+          "why_negative": "confusable with meeting_notes_extractor but has different contract"
+        },
+        {
+          "wrong_skill": "regex_extractor",
+          "why_negative": "confusable with meeting_notes_extractor but has different contract"
+        }
+      ]
+    },
+    "benchmark_support": {
+      "task_types": [
+        "single_skill",
+        "multi_skill",
+        "missing_info"
+      ],
+      "recommended_splits": [
+        "dev",
+        "hard",
+        "hidden"
+      ],
+      "expected_check_templates": {
+        "arguments": [
+          "meeting_note_text"
+        ],
+        "observations": [
+          "Meeting notes"
+        ],
+        "final_answer": [
+          "Meeting notes"
+        ]
+      }
+    }
+  }
+]

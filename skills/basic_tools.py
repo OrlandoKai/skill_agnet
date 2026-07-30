@@ -27,19 +27,66 @@ def unit_converter(text: str) -> str:
             return "Error: no numeric value found for unit conversion."
 
         value = float(number_match.group(0))
-        conversions = [
-            (("cm to m", "centimeter to meter", "centimeters to meters"), value / 100, "m"),
-            (("m to cm", "meter to centimeter", "meters to centimeters"), value * 100, "cm"),
-            (("km to m", "kilometer to meter", "kilometers to meters"), value * 1000, "m"),
-            (("m to km", "meter to kilometer", "meters to kilometers"), value / 1000, "km"),
-            (("kg to g", "kilogram to gram", "kilograms to grams"), value * 1000, "g"),
-            (("g to kg", "gram to kilogram", "grams to kilograms"), value / 1000, "kg"),
-            (("c to f", "celsius to fahrenheit"), value * 9 / 5 + 32, "F"),
-            (("f to c", "fahrenheit to celsius"), (value - 32) * 5 / 9, "C"),
-        ]
-        for phrases, converted, unit in conversions:
-            if any(phrase in lowered for phrase in phrases):
-                return f"{value:g} -> {converted:g} {unit}"
+        unit_aliases = {
+            "cm": "cm",
+            "centimeter": "cm",
+            "centimeters": "cm",
+            "m": "m",
+            "meter": "m",
+            "meters": "m",
+            "km": "km",
+            "kilometer": "km",
+            "kilometers": "km",
+            "g": "g",
+            "gram": "g",
+            "grams": "g",
+            "kg": "kg",
+            "kilogram": "kg",
+            "kilograms": "kg",
+            "c": "C",
+            "celsius": "C",
+            "f": "F",
+            "fahrenheit": "F",
+        }
+        unit_pattern = "|".join(sorted((re.escape(key) for key in unit_aliases), key=len, reverse=True))
+        explicit = re.search(
+            rf"[-+]?\d+(?:\.\d+)?\s*({unit_pattern})\s*(?:to|into|in)\s*({unit_pattern})\b",
+            lowered,
+        )
+        natural = re.search(
+            rf"[-+]?\d+(?:\.\d+)?\s*({unit_pattern}).*?(?:to|into|in)\s+({unit_pattern})\b",
+            lowered,
+        )
+        target_only = re.search(rf"(?:to|into|in)\s+({unit_pattern})\b", lowered)
+        source_match = re.search(rf"[-+]?\d+(?:\.\d+)?\s*({unit_pattern})\b", lowered)
+
+        if explicit:
+            source_unit = unit_aliases[explicit.group(1)]
+            target_unit = unit_aliases[explicit.group(2)]
+        elif natural:
+            source_unit = unit_aliases[natural.group(1)]
+            target_unit = unit_aliases[natural.group(2)]
+        elif source_match and target_only:
+            source_unit = unit_aliases[source_match.group(1)]
+            target_unit = unit_aliases[target_only.group(1)]
+        else:
+            return f"Unsupported conversion: {raw}"
+
+        conversions = {
+            ("cm", "m"): (value / 100, "m"),
+            ("m", "cm"): (value * 100, "cm"),
+            ("km", "m"): (value * 1000, "m"),
+            ("m", "km"): (value / 1000, "km"),
+            ("kg", "g"): (value * 1000, "g"),
+            ("g", "kg"): (value / 1000, "kg"),
+            ("C", "F"): (value * 9 / 5 + 32, "F"),
+            ("F", "C"): ((value - 32) * 5 / 9, "C"),
+        }
+        if source_unit == target_unit:
+            return f"{value:g} {source_unit} -> {value:g} {target_unit}"
+        if (source_unit, target_unit) in conversions:
+            converted, unit = conversions[(source_unit, target_unit)]
+            return f"{value:g} {source_unit} -> {converted:g} {unit}"
         return f"Unsupported conversion: {raw}"
     except Exception as exc:
         return f"Error: unit conversion failed: {exc}"
@@ -209,6 +256,29 @@ def percentage_calculator(text: str) -> str:
         if not numbers:
             return "Error: no numeric value found for percentage calculation."
         lowered = text.lower()
+        if len(numbers) >= 2:
+            out_of = re.search(
+                r"([-+]?\d+(?:\.\d+)?)\s+(?:passed|success(?:ful)?|items?|runs?)?\s*(?:out of|of)\s+([-+]?\d+(?:\.\d+)?)",
+                lowered,
+            )
+            if out_of and "percent" in lowered:
+                part = float(out_of.group(1))
+                whole = float(out_of.group(2))
+                return f"Percentage: {part:g} is {part / whole * 100:g}% of {whole:g}"
+
+            change = re.search(
+                r"(?:from\s+)?([-+]?\d+(?:\.\d+)?)\s+(?:by|with)\s+([-+]?\d+(?:\.\d+)?)\s*%",
+                lowered,
+            )
+            if change and any(word in lowered for word in ["increase", "increased", "rose", "raise", "raised"]):
+                base = float(change.group(1))
+                percent = float(change.group(2))
+                return f"Percentage: {base:g} increased by {percent:g}% = {base * (1 + percent / 100):g}"
+            if change and any(word in lowered for word in ["decrease", "decreased", "fell", "discount", "reduce", "reduced"]):
+                base = float(change.group(1))
+                percent = float(change.group(2))
+                return f"Percentage: {base:g} decreased by {percent:g}% = {base * (1 - percent / 100):g}"
+
         if len(numbers) >= 2:
             percent_match = re.search(r"([-+]?\d+(?:\.\d+)?)\s*%", lowered)
             percent_first = bool(percent_match and float(percent_match.group(1)) == numbers[0])
@@ -396,6 +466,9 @@ def table_formatter(text: str) -> str:
         if ":" in chunk:
             key, value = chunk.split(":", 1)
             rows.append((key.strip(), value.strip()))
+        elif "=" in chunk:
+            key, value = chunk.split("=", 1)
+            rows.append((key.strip(), value.strip()))
     if not rows:
         items = [item.strip() for item in re.split(r",", text) if item.strip()]
         rows = [(f"item_{index}", item) for index, item in enumerate(items, start=1)]
@@ -563,6 +636,7 @@ def csv_summarizer(text: str) -> str:
     cleaned = str(text).strip()
     if not cleaned:
         return "CSV summary: empty input."
+    cleaned = _extract_csv_block(cleaned)
     try:
         rows = list(csv.reader(io.StringIO(cleaned)))
         if not rows:
@@ -588,9 +662,13 @@ def csv_summarizer(text: str) -> str:
 
 def language_detector(text: str) -> str:
     cleaned = str(text)
-    if re.search(r"[\u4e00-\u9fff]", cleaned):
+    has_chinese = bool(re.search(r"[\u4e00-\u9fff]", cleaned))
+    has_english = bool(re.search(r"[A-Za-z]", cleaned))
+    if has_chinese and has_english:
+        language = "mixed Chinese-English"
+    elif has_chinese:
         language = "Chinese"
-    elif re.search(r"[A-Za-z]", cleaned):
+    elif has_english:
         language = "English"
     elif re.search(r"\d", cleaned):
         language = "numeric_or_symbolic"
@@ -888,6 +966,26 @@ def _normalize_text(text: str) -> str:
 
 def _numbers_from_text(text: str) -> list[float]:
     return [float(match) for match in re.findall(r"[-+]?\d+(?:\.\d+)?", str(text))]
+
+
+def _extract_csv_block(text: str) -> str:
+    lines = [line.strip() for line in str(text).strip().splitlines() if line.strip()]
+    if len(lines) >= 2:
+        csv_like = [line for line in lines if "," in line]
+        if len(csv_like) >= 2:
+            return "\n".join(csv_like)
+
+    wrapper_match = re.search(
+        r"(?:csv(?:\s+data|\s+rows)?[: ]+)(.+)",
+        str(text),
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    candidate = wrapper_match.group(1).strip() if wrapper_match else str(text).strip()
+    if ";" in candidate and "," in candidate:
+        parts = [part.strip() for part in candidate.split(";") if part.strip()]
+        if len(parts) >= 2:
+            return "\n".join(parts)
+    return candidate
 
 
 def _split_items(text: str) -> list[str]:

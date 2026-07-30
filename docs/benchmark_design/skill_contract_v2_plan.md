@@ -23,6 +23,50 @@ Therefore SkillBench V2 should introduce `Skill Contract V2`: a richer skill
 metadata format aligned with BFCL-style function schemas, API-Bank-style call
 traces, MetaTool-style natural intents, and ToolBench-style retrieval documents.
 
+## Current Status: 2026-07-31
+
+The benchmark side of SkillBench V2 has now moved past the first 60-task Dev
+trial batch.
+
+Completed benchmark artifacts:
+
+```text
+data/skillbench_dev.json      # 240 tasks
+data/skillbench_hard.json     # 120 tasks
+data/skillbench_hidden.json   # 80 tasks
+data/skillbench_hidden_answer_key.json
+```
+
+Current split counts:
+
+| Split | single_skill | multi_skill | no_tool | missing_info | unsupported_tool | total |
+|---|---:|---:|---:|---:|---:|---:|
+| Dev | 120 | 75 | 30 | 10 | 5 | 240 |
+| Hard | 50 | 40 | 15 | 10 | 5 | 120 |
+| Hidden | 30 | 25 | 15 | 7 | 3 | 80 |
+
+All three V2 files preserve the existing task schema and add:
+
+- `gold_sequence`
+- `difficulty`
+- `benchmark_tags`
+- `source_inspiration`
+- `hard_negative_skills`
+- `expected_checks`
+
+The benchmark inspector verifies all three files with `--require_expected_checks`.
+Each split covers all 40 registered skills.
+
+Remaining contract-side work:
+
+1. Generate `data/skill_library_v2.json` for the current 40 skills. **Done.**
+2. Add `scripts/inspect_skill_contracts.py`. **Done.**
+3. Fix the first set of high-risk rule skills before treating Hard/Hidden
+   scores as final. **Partly done:** `unit_converter`, `percentage_calculator`,
+   `csv_summarizer`, `language_detector`, and `table_formatter` were patched.
+4. Connect V2 contracts to retrieval text and Agent candidate prompts.
+5. Run the three planned experiment/improvement loops and record each version.
+
 ## Core Decision
 
 Do **not** add many new skills immediately.

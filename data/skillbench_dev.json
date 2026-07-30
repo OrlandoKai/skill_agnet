@@ -3785,5 +3785,3436 @@
       },
       "faithfulness": true
     }
+  },
+  {
+    "task_id": "dev_181",
+    "instruction": "For a Dev contract check, a survey has 36 successful runs out of 144; compute the percentage.",
+    "gold_skills": [
+      "percentage_calculator"
+    ],
+    "expected_answer": "25%",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for percentage_calculator.",
+    "gold_sequence": [
+      "percentage_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "arithmetic_numeric"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "calculator",
+      "ratio_calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "36",
+            "144"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "25"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_182",
+    "instruction": "Use the most specific skill for this request: Simplify the ratio 42 to 56.",
+    "gold_skills": [
+      "ratio_calculator"
+    ],
+    "expected_answer": "3:4",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for ratio_calculator.",
+    "gold_sequence": [
+      "ratio_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "arithmetic_numeric"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "42",
+            "56"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "3:4"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "3:4"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_183",
+    "instruction": "Find x for 7*x - 14 = 21.",
+    "gold_skills": [
+      "equation_solver"
+    ],
+    "expected_answer": "x=5",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for equation_solver.",
+    "gold_sequence": [
+      "equation_solver"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "arithmetic_numeric"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "7*x",
+            "21"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "x=5"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "x=5"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_184",
+    "instruction": "For a Dev contract check, for the values 5, 9, 13, 17, report the mean and median.",
+    "gold_skills": [
+      "statistics_calculator"
+    ],
+    "expected_answer": "mean=11, median=11",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for statistics_calculator.",
+    "gold_sequence": [
+      "statistics_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "arithmetic_numeric"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "calculator",
+      "number_sequence_analyzer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "5",
+            "9",
+            "13"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "statistics_calculator",
+          "contains": [
+            "mean=11",
+            "median=11"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "mean=11"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_185",
+    "instruction": "Use the most specific skill for this request: Continue the sequence 6, 12, 18, 24.",
+    "gold_skills": [
+      "number_sequence_analyzer"
+    ],
+    "expected_answer": "next=30",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for number_sequence_analyzer.",
+    "gold_sequence": [
+      "number_sequence_analyzer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "arithmetic_numeric"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "statistics_calculator",
+      "calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "number_sequence_analyzer",
+          "contains": [
+            "6",
+            "12",
+            "18"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "number_sequence_analyzer",
+          "contains": [
+            "next=30"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "next=30"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_186",
+    "instruction": "Convert 3.5 kg to g.",
+    "gold_skills": [
+      "unit_converter"
+    ],
+    "expected_answer": "3500 g",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for unit_converter.",
+    "gold_sequence": [
+      "unit_converter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "conversion_time"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "3.5",
+            "kg",
+            "g"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "3500",
+            "g"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "3500"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_187",
+    "instruction": "For a Dev contract check, how many days are between 2026-03-01 and 2026-03-18?",
+    "gold_skills": [
+      "date_difference_calculator"
+    ],
+    "expected_answer": "17 days",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for date_difference_calculator.",
+    "gold_sequence": [
+      "date_difference_calculator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "conversion_time"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "2026-03-01",
+            "2026-03-18"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "17 days"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "17 days"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_188",
+    "instruction": "Use the most specific skill for this request: Keep values between 10 and 20 from 4, 10, 12, 20, 25.",
+    "gold_skills": [
+      "range_filter"
+    ],
+    "expected_answer": "10, 12, 20",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for range_filter.",
+    "gold_sequence": [
+      "range_filter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "list_data_ops"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "list_sorter",
+      "statistics_calculator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "4",
+            "10",
+            "12"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "10",
+            "12",
+            "20"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "10"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_189",
+    "instruction": "Sort these labels alphabetically: retriever, agent, benchmark.",
+    "gold_skills": [
+      "list_sorter"
+    ],
+    "expected_answer": "agent, benchmark, retriever",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for list_sorter.",
+    "gold_sequence": [
+      "list_sorter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "list_data_ops"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "deduplicator",
+      "range_filter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "list_sorter",
+          "contains": [
+            "retriever",
+            "agent",
+            "benchmark"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "list_sorter",
+          "contains": [
+            "agent",
+            "benchmark",
+            "retriever"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "agent"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_190",
+    "instruction": "For a Dev contract check, remove duplicates from: bm25, embedding, bm25, full, embedding.",
+    "gold_skills": [
+      "deduplicator"
+    ],
+    "expected_answer": "bm25, embedding, full",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for deduplicator.",
+    "gold_sequence": [
+      "deduplicator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "list_data_ops"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "list_sorter",
+      "keyword_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "deduplicator",
+          "contains": [
+            "bm25",
+            "embedding",
+            "full"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "deduplicator",
+          "contains": [
+            "bm25",
+            "embedding",
+            "full"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "bm25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_191",
+    "instruction": "Use the most specific skill for this request: Validate this JSON string: {\"agent\":\"v2\",\"valid\":true}",
+    "gold_skills": [
+      "json_validator"
+    ],
+    "expected_answer": "JSON valid",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for json_validator.",
+    "gold_sequence": [
+      "json_validator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "structured_formatting"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "table_formatter",
+      "csv_summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "agent",
+            "valid"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "JSON valid"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "JSON valid"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_192",
+    "instruction": "Summarize CSV rows:\nname,score\nKai,8\nLin,10",
+    "gold_skills": [
+      "csv_summarizer"
+    ],
+    "expected_answer": "rows=2, columns=2",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for csv_summarizer.",
+    "gold_sequence": [
+      "csv_summarizer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "structured_formatting"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "table_formatter",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "name,score",
+            "Kai,8",
+            "Lin,10"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "rows=2",
+            "columns=2"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "rows=2"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_193",
+    "instruction": "For a Dev contract check, detect the language of this text: Skill retrieval baseline.",
+    "gold_skills": [
+      "language_detector"
+    ],
+    "expected_answer": "English",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for language_detector.",
+    "gold_sequence": [
+      "language_detector"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "classification"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "translator_en_zh",
+      "intent_classifier"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "language_detector",
+          "contains": [
+            "Skill retrieval baseline"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "language_detector",
+          "contains": [
+            "English"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "English"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_194",
+    "instruction": "Use the most specific skill for this request: Estimate readability: This agent uses tools. It checks outputs.",
+    "gold_skills": [
+      "readability_scorer"
+    ],
+    "expected_answer": "Readability",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for readability_scorer.",
+    "gold_sequence": [
+      "readability_scorer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "classification"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "summarizer",
+      "text_rewriter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "readability_scorer",
+          "contains": [
+            "agent uses tools"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "readability_scorer",
+          "contains": [
+            "Readability"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Readability"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_195",
+    "instruction": "Create a title for: tool contracts improve skill calling.",
+    "gold_skills": [
+      "title_generator"
+    ],
+    "expected_answer": "Title",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for title_generator.",
+    "gold_sequence": [
+      "title_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "summarizer",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "tool contracts improve skill calling"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Title"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Title"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_196",
+    "instruction": "For a Dev contract check, generate study questions about no-tool decisions.",
+    "gold_skills": [
+      "question_generator"
+    ],
+    "expected_answer": "Questions",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for question_generator.",
+    "gold_sequence": [
+      "question_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "outline_generator",
+      "checklist_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "no-tool decisions"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "Questions"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Questions"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_197",
+    "instruction": "Use the most specific skill for this request: Create a checklist for running an ablation experiment.",
+    "gold_skills": [
+      "checklist_generator"
+    ],
+    "expected_answer": "Checklist",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for checklist_generator.",
+    "gold_sequence": [
+      "checklist_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "todo_extractor",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "ablation experiment"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "Checklist"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Checklist"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_198",
+    "instruction": "Give pros and cons of using embedding retrieval.",
+    "gold_skills": [
+      "pros_cons_analyzer"
+    ],
+    "expected_answer": "Pros/Cons",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for pros_cons_analyzer.",
+    "gold_sequence": [
+      "pros_cons_analyzer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "summarizer",
+      "argument_mapper"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "pros_cons_analyzer",
+          "contains": [
+            "embedding retrieval"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "pros_cons_analyzer",
+          "contains": [
+            "Pros/Cons"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Pros/Cons"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_199",
+    "instruction": "For a Dev contract check, map this argument: claim: contracts improve agents because they clarify inputs.",
+    "gold_skills": [
+      "argument_mapper"
+    ],
+    "expected_answer": "Argument map",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for argument_mapper.",
+    "gold_sequence": [
+      "argument_mapper"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "pros_cons_analyzer",
+      "summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "argument_mapper",
+          "contains": [
+            "contracts improve agents",
+            "clarify inputs"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "argument_mapper",
+          "contains": [
+            "Argument map"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Argument map"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_200",
+    "instruction": "Use the most specific skill for this request: Draft an email to Professor Lee about SkillBench results.",
+    "gold_skills": [
+      "email_drafter"
+    ],
+    "expected_answer": "Email draft",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for email_drafter.",
+    "gold_sequence": [
+      "email_drafter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "tone_converter",
+      "text_rewriter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Professor Lee",
+            "SkillBench results"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Email draft"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Email draft"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_201",
+    "instruction": "Extract todos: We need to inspect Dev; remember to export metrics.",
+    "gold_skills": [
+      "todo_extractor"
+    ],
+    "expected_answer": "Todos",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for todo_extractor.",
+    "gold_sequence": [
+      "todo_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "extraction"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "meeting_notes_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "inspect Dev",
+            "export metrics"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "Todos"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Todos"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_202",
+    "instruction": "For a Dev contract check, extract meeting notes: decision: keep BM25; action: rerun Hard on 2026-08-05.",
+    "gold_skills": [
+      "meeting_notes_extractor"
+    ],
+    "expected_answer": "Meeting notes",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for meeting_notes_extractor.",
+    "gold_sequence": [
+      "meeting_notes_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "extraction"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "todo_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "meeting_notes_extractor",
+          "contains": [
+            "decision",
+            "action",
+            "2026-08-05"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "meeting_notes_extractor",
+          "contains": [
+            "Meeting notes"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Meeting notes"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_203",
+    "instruction": "Use the most specific skill for this request: Translate into English: 浣犲ソ skill agent",
+    "gold_skills": [
+      "translator_zh_en"
+    ],
+    "expected_answer": "hello skill agent",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for translator_zh_en.",
+    "gold_sequence": [
+      "translator_zh_en"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "translation"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "translator_en_zh",
+      "language_detector"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "translator_zh_en",
+          "contains": [
+            "浣犲ソ",
+            "skill agent"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "translator_zh_en",
+          "contains": [
+            "placeholder"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "placeholder"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_204",
+    "instruction": "Translate into Chinese: hello skill agent",
+    "gold_skills": [
+      "translator_en_zh"
+    ],
+    "expected_answer": "Chinese translation",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for translator_en_zh.",
+    "gold_sequence": [
+      "translator_en_zh"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "translation"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "translator_zh_en",
+      "language_detector"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "translator_en_zh",
+          "contains": [
+            "hello",
+            "skill",
+            "agent"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "translator_en_zh",
+          "contains": [
+            "浣"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "浣"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_205",
+    "instruction": "For a Dev contract check, extract keywords from: retrieval-aware contracts reduce wrong tool calls.",
+    "gold_skills": [
+      "keyword_extractor"
+    ],
+    "expected_answer": "Keywords",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for keyword_extractor.",
+    "gold_sequence": [
+      "keyword_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "extraction"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "entity_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "retrieval-aware contracts"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_206",
+    "instruction": "Use the most specific skill for this request: Extract emails and dates from: lab@example.com on 2026-10-11.",
+    "gold_skills": [
+      "regex_extractor"
+    ],
+    "expected_answer": "lab@example.com, 2026-10-11",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for regex_extractor.",
+    "gold_sequence": [
+      "regex_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "extraction"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "entity_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "lab@example.com",
+            "2026-10-11"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "regex_extractor",
+          "contains": [
+            "lab@example.com",
+            "2026-10-11"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "lab@example.com"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_207",
+    "instruction": "Extract people, organizations, and locations: Alice joined OpenAI in Beijing.",
+    "gold_skills": [
+      "entity_extractor"
+    ],
+    "expected_answer": "Alice, OpenAI, Beijing",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for entity_extractor.",
+    "gold_sequence": [
+      "entity_extractor"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "extraction"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "entity_extractor",
+          "contains": [
+            "Alice",
+            "OpenAI",
+            "Beijing"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Alice"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_208",
+    "instruction": "For a Dev contract check, classify the topic: neural retrieval models use datasets and training.",
+    "gold_skills": [
+      "topic_classifier"
+    ],
+    "expected_answer": "machine_learning",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for topic_classifier.",
+    "gold_sequence": [
+      "topic_classifier"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "classification"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "intent_classifier",
+      "keyword_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "topic_classifier",
+          "contains": [
+            "neural retrieval models"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "topic_classifier",
+          "contains": [
+            "machine_learning"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "machine_learning"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_209",
+    "instruction": "Use the most specific skill for this request: Classify the intent: please translate this sentence into Chinese.",
+    "gold_skills": [
+      "intent_classifier"
+    ],
+    "expected_answer": "translation_request",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for intent_classifier.",
+    "gold_sequence": [
+      "intent_classifier"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "classification"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "translator_en_zh",
+      "topic_classifier"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "intent_classifier",
+          "contains": [
+            "translate this sentence"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "intent_classifier",
+          "contains": [
+            "translation_request"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "translation_request"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_210",
+    "instruction": "Analyze sentiment: I love the stable benchmark but hate slow runs.",
+    "gold_skills": [
+      "sentiment_analyzer"
+    ],
+    "expected_answer": "neutral",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for sentiment_analyzer.",
+    "gold_sequence": [
+      "sentiment_analyzer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "classification"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "tone_converter",
+      "intent_classifier"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "sentiment_analyzer",
+          "contains": [
+            "love",
+            "hate"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "sentiment_analyzer",
+          "contains": [
+            "Sentiment"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Sentiment"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_211",
+    "instruction": "For a Dev contract check, rewrite clearly: contracts help agents choose tools",
+    "gold_skills": [
+      "text_rewriter"
+    ],
+    "expected_answer": "Rewritten",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for text_rewriter.",
+    "gold_sequence": [
+      "text_rewriter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "grammar_corrector",
+      "tone_converter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "contracts help agents choose tools"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "Rewritten"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Rewritten"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_212",
+    "instruction": "Use the most specific skill for this request: Fix grammar: we was testing a agent.",
+    "gold_skills": [
+      "grammar_corrector"
+    ],
+    "expected_answer": "we were testing an agent",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for grammar_corrector.",
+    "gold_sequence": [
+      "grammar_corrector"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "text_rewriter",
+      "tone_converter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "we was",
+            "a agent"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "grammar_corrector",
+          "contains": [
+            "we were",
+            "an agent"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "we were"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_213",
+    "instruction": "Make this formal: send the logs now.",
+    "gold_skills": [
+      "tone_converter"
+    ],
+    "expected_answer": "Formal tone",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for tone_converter.",
+    "gold_sequence": [
+      "tone_converter"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "email_drafter",
+      "grammar_corrector"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "formal",
+            "send the logs"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "Formal tone"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Formal tone"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_214",
+    "instruction": "For a Dev contract check, create an outline about evaluating skill calling.",
+    "gold_skills": [
+      "outline_generator"
+    ],
+    "expected_answer": "Outline",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for outline_generator.",
+    "gold_sequence": [
+      "outline_generator"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "summarizer",
+      "title_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "outline_generator",
+          "contains": [
+            "evaluating skill calling"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "outline_generator",
+          "contains": [
+            "Outline"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Outline"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_215",
+    "instruction": "Use the most specific skill for this request: Summarize: A retriever proposes candidate skills. A planner calls one or more skills. Evaluation checks the trace.",
+    "gold_skills": [
+      "summarizer"
+    ],
+    "expected_answer": "Summary",
+    "task_type": "single_skill",
+    "notes": "dev single-skill contract task for summarizer.",
+    "gold_sequence": [
+      "summarizer"
+    ],
+    "difficulty": "medium",
+    "benchmark_tags": [
+      "dev",
+      "single_skill",
+      "skill_contract_v2",
+      "transformation_generation"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "summarizer",
+          "contains": [
+            "retriever proposes candidate skills"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_216",
+    "instruction": "Compute (8 + 4) * 2 and express the result in one short sentence.",
+    "gold_skills": [
+      "calculator",
+      "summarizer"
+    ],
+    "expected_answer": "calculator followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: calculator -> summarizer.",
+    "gold_sequence": [
+      "calculator",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "percentage_calculator",
+      "ratio_calculator",
+      "statistics_calculator",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "9",
+            "6"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "calculator",
+          "contains": [
+            "45"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_217",
+    "instruction": "A score rose from 80 by 10%; rewrite the computed result clearly.",
+    "gold_skills": [
+      "percentage_calculator",
+      "text_rewriter"
+    ],
+    "expected_answer": "percentage_calculator followed by text_rewriter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: percentage_calculator -> text_rewriter.",
+    "gold_sequence": [
+      "percentage_calculator",
+      "text_rewriter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "calculator",
+      "ratio_calculator",
+      "statistics_calculator",
+      "grammar_corrector",
+      "tone_converter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "36",
+            "144"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|contracts help agents choose tools)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "percentage_calculator",
+          "contains": [
+            "25"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "Rewritten"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Rewritten"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_218",
+    "instruction": "Simplify the ratio 24 to 36 and present the ratio result as a table.",
+    "gold_skills": [
+      "ratio_calculator",
+      "table_formatter"
+    ],
+    "expected_answer": "ratio_calculator followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: ratio_calculator -> table_formatter.",
+    "gold_sequence": [
+      "ratio_calculator",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator",
+      "statistics_calculator",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "42",
+            "56"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "ratio_calculator",
+          "contains": [
+            "3:4"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_219",
+    "instruction": "Find x for 4*x + 8 = 28 and summarize the solution.",
+    "gold_skills": [
+      "equation_solver",
+      "summarizer"
+    ],
+    "expected_answer": "equation_solver followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: equation_solver -> summarizer.",
+    "gold_sequence": [
+      "equation_solver",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "7*x",
+            "21"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "equation_solver",
+          "contains": [
+            "x=5"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_220",
+    "instruction": "Continue 3, 6, 9, 12 and give the analysis a concise title.",
+    "gold_skills": [
+      "number_sequence_analyzer",
+      "title_generator"
+    ],
+    "expected_answer": "number_sequence_analyzer followed by title_generator",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: number_sequence_analyzer -> title_generator.",
+    "gold_sequence": [
+      "number_sequence_analyzer",
+      "title_generator"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "statistics_calculator",
+      "calculator",
+      "summarizer",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "number_sequence_analyzer",
+          "contains": [
+            "6",
+            "12"
+          ]
+        },
+        {
+          "skill": "title_generator",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|tool contracts improve skill calling)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "number_sequence_analyzer",
+          "contains": [
+            "next=30"
+          ]
+        },
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Title"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Title"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_221",
+    "instruction": "Convert 750 g to kg and state the converted value briefly.",
+    "gold_skills": [
+      "unit_converter",
+      "summarizer"
+    ],
+    "expected_answer": "unit_converter followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: unit_converter -> summarizer.",
+    "gold_sequence": [
+      "unit_converter",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "calculator",
+      "percentage_calculator",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "3.5",
+            "kg"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "unit_converter",
+          "contains": [
+            "3500"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_222",
+    "instruction": "Find the days between 2026-04-01 and 2026-04-20 and summarize it.",
+    "gold_skills": [
+      "date_difference_calculator",
+      "summarizer"
+    ],
+    "expected_answer": "date_difference_calculator followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: date_difference_calculator -> summarizer.",
+    "gold_sequence": [
+      "date_difference_calculator",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "calculator",
+      "statistics_calculator",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "2026-03-01",
+            "2026-03-18"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "date_difference_calculator",
+          "contains": [
+            "17 days"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_223",
+    "instruction": "Keep 5 to 15 from 3, 5, 8, 15, 22 and organize the kept values as a table.",
+    "gold_skills": [
+      "range_filter",
+      "table_formatter"
+    ],
+    "expected_answer": "range_filter followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: range_filter -> table_formatter.",
+    "gold_sequence": [
+      "range_filter",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "list_sorter",
+      "statistics_calculator",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "4",
+            "10"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "range_filter",
+          "contains": [
+            "10"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_224",
+    "instruction": "Sort alpha, beta, alpha, gamma alphabetically and remove repeated items.",
+    "gold_skills": [
+      "list_sorter",
+      "deduplicator"
+    ],
+    "expected_answer": "list_sorter followed by deduplicator",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: list_sorter -> deduplicator.",
+    "gold_sequence": [
+      "list_sorter",
+      "deduplicator"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "parallel_composition"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "deduplicator",
+      "range_filter",
+      "list_sorter",
+      "keyword_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "list_sorter",
+          "contains": [
+            "retriever",
+            "agent"
+          ]
+        },
+        {
+          "skill": "deduplicator",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|bm25|embedding)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "list_sorter",
+          "contains": [
+            "agent"
+          ]
+        },
+        {
+          "skill": "deduplicator",
+          "contains": [
+            "bm25"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "bm25"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_225",
+    "instruction": "Remove duplicates from bm25, full, bm25, embedding and format the unique methods as a table.",
+    "gold_skills": [
+      "deduplicator",
+      "table_formatter"
+    ],
+    "expected_answer": "deduplicator followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: deduplicator -> table_formatter.",
+    "gold_sequence": [
+      "deduplicator",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "list_sorter",
+      "keyword_extractor",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "deduplicator",
+          "contains": [
+            "bm25",
+            "embedding"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "deduplicator",
+          "contains": [
+            "bm25"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_226",
+    "instruction": "Check JSON {\"ok\":true,\"task\":\"hard\"} and summarize the validation result.",
+    "gold_skills": [
+      "json_validator",
+      "summarizer"
+    ],
+    "expected_answer": "json_validator followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: json_validator -> summarizer.",
+    "gold_sequence": [
+      "json_validator",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "table_formatter",
+      "csv_summarizer",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "agent",
+            "valid"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "json_validator",
+          "contains": [
+            "JSON valid"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_227",
+    "instruction": "Summarize CSV data name,score; A,1; B,3 and format the summary as a table.",
+    "gold_skills": [
+      "csv_summarizer",
+      "table_formatter"
+    ],
+    "expected_answer": "csv_summarizer followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: csv_summarizer -> table_formatter.",
+    "gold_sequence": [
+      "csv_summarizer",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "table_formatter",
+      "json_validator",
+      "csv_summarizer"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "name,score",
+            "Kai,8"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "csv_summarizer",
+          "contains": [
+            "rows=2"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_228",
+    "instruction": "Detect the language and classify the intent: please translate this into Chinese.",
+    "gold_skills": [
+      "language_detector",
+      "intent_classifier"
+    ],
+    "expected_answer": "language_detector followed by intent_classifier",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: language_detector -> intent_classifier.",
+    "gold_sequence": [
+      "language_detector",
+      "intent_classifier"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "parallel_composition"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "translator_en_zh",
+      "intent_classifier",
+      "topic_classifier"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "language_detector",
+          "contains": [
+            "Skill retrieval baseline"
+          ]
+        },
+        {
+          "skill": "intent_classifier",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|translate this sentence)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "language_detector",
+          "contains": [
+            "English"
+          ]
+        },
+        {
+          "skill": "intent_classifier",
+          "contains": [
+            "translation_request"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "translation_request"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_229",
+    "instruction": "Score readability for 'Agents call tools. They verify outputs.' and rewrite the text cleanly.",
+    "gold_skills": [
+      "readability_scorer",
+      "text_rewriter"
+    ],
+    "expected_answer": "readability_scorer followed by text_rewriter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: readability_scorer -> text_rewriter.",
+    "gold_sequence": [
+      "readability_scorer",
+      "text_rewriter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "summarizer",
+      "text_rewriter",
+      "grammar_corrector",
+      "tone_converter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "readability_scorer",
+          "contains": [
+            "agent uses tools"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|contracts help agents choose tools)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "readability_scorer",
+          "contains": [
+            "Readability"
+          ]
+        },
+        {
+          "skill": "text_rewriter",
+          "contains": [
+            "Rewritten"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Rewritten"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_230",
+    "instruction": "Give 'contracts guide skill calling' a title and extract keywords from that title.",
+    "gold_skills": [
+      "title_generator",
+      "keyword_extractor"
+    ],
+    "expected_answer": "title_generator followed by keyword_extractor",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: title_generator -> keyword_extractor.",
+    "gold_sequence": [
+      "title_generator",
+      "keyword_extractor"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "summarizer",
+      "outline_generator",
+      "entity_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "tool contracts improve skill calling"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retrieval-aware contracts)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "title_generator",
+          "contains": [
+            "Title"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_231",
+    "instruction": "Generate questions about no-tool gating and turn them into a study checklist.",
+    "gold_skills": [
+      "question_generator",
+      "checklist_generator"
+    ],
+    "expected_answer": "question_generator followed by checklist_generator",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: question_generator -> checklist_generator.",
+    "gold_sequence": [
+      "question_generator",
+      "checklist_generator"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "outline_generator",
+      "checklist_generator",
+      "todo_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "no-tool decisions"
+          ]
+        },
+        {
+          "skill": "checklist_generator",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|ablation experiment)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "question_generator",
+          "contains": [
+            "Questions"
+          ]
+        },
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "Checklist"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Checklist"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_232",
+    "instruction": "Make a checklist for the SkillBench experiment and draft an email about it.",
+    "gold_skills": [
+      "checklist_generator",
+      "email_drafter"
+    ],
+    "expected_answer": "checklist_generator followed by email_drafter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: checklist_generator -> email_drafter.",
+    "gold_sequence": [
+      "checklist_generator",
+      "email_drafter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "todo_extractor",
+      "outline_generator",
+      "tone_converter",
+      "text_rewriter"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "ablation experiment"
+          ]
+        },
+        {
+          "skill": "email_drafter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|Professor Lee|SkillBench results)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "checklist_generator",
+          "contains": [
+            "Checklist"
+          ]
+        },
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Email draft"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Email draft"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_233",
+    "instruction": "Analyze pros and cons of embedding retrieval and summarize the result.",
+    "gold_skills": [
+      "pros_cons_analyzer",
+      "summarizer"
+    ],
+    "expected_answer": "pros_cons_analyzer followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: pros_cons_analyzer -> summarizer.",
+    "gold_sequence": [
+      "pros_cons_analyzer",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_irrelevance",
+    "hard_negative_skills": [
+      "summarizer",
+      "argument_mapper",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "pros_cons_analyzer",
+          "contains": [
+            "embedding retrieval"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "pros_cons_analyzer",
+          "contains": [
+            "Pros/Cons"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_234",
+    "instruction": "Map claim: contracts help because inputs are explicit, and put the argument map in a table.",
+    "gold_skills": [
+      "argument_mapper",
+      "table_formatter"
+    ],
+    "expected_answer": "argument_mapper followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: argument_mapper -> table_formatter.",
+    "gold_sequence": [
+      "argument_mapper",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_param",
+    "hard_negative_skills": [
+      "pros_cons_analyzer",
+      "summarizer",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "argument_mapper",
+          "contains": [
+            "contracts improve agents",
+            "clarify inputs"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "argument_mapper",
+          "contains": [
+            "Argument map"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_235",
+    "instruction": "Draft an email to Professor Lee about ablation results and make it formal.",
+    "gold_skills": [
+      "email_drafter",
+      "tone_converter"
+    ],
+    "expected_answer": "email_drafter followed by tone_converter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: email_drafter -> tone_converter.",
+    "gold_sequence": [
+      "email_drafter",
+      "tone_converter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "BFCL_missing_func",
+    "hard_negative_skills": [
+      "tone_converter",
+      "text_rewriter",
+      "email_drafter",
+      "grammar_corrector"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Professor Lee",
+            "SkillBench results"
+          ]
+        },
+        {
+          "skill": "tone_converter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|formal|send the logs)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "email_drafter",
+          "contains": [
+            "Email draft"
+          ]
+        },
+        {
+          "skill": "tone_converter",
+          "contains": [
+            "Formal tone"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Formal tone"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_236",
+    "instruction": "Extract todos from 'must run Hard; remember to save metrics' and put them in a table.",
+    "gold_skills": [
+      "todo_extractor",
+      "table_formatter"
+    ],
+    "expected_answer": "todo_extractor followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: todo_extractor -> table_formatter.",
+    "gold_sequence": [
+      "todo_extractor",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "APIBank_level1",
+    "hard_negative_skills": [
+      "keyword_extractor",
+      "meeting_notes_extractor",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "inspect Dev",
+            "export metrics"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "todo_extractor",
+          "contains": [
+            "Todos"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_237",
+    "instruction": "Extract meeting notes from 'decision: freeze Dev; action: run Hard on 2026-08-01' and summarize them.",
+    "gold_skills": [
+      "meeting_notes_extractor",
+      "summarizer"
+    ],
+    "expected_answer": "meeting_notes_extractor followed by summarizer",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: meeting_notes_extractor -> summarizer.",
+    "gold_sequence": [
+      "meeting_notes_extractor",
+      "summarizer"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "APIBank_level2",
+    "hard_negative_skills": [
+      "todo_extractor",
+      "regex_extractor",
+      "title_generator",
+      "outline_generator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "meeting_notes_extractor",
+          "contains": [
+            "decision",
+            "action"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retriever proposes candidate skills)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "meeting_notes_extractor",
+          "contains": [
+            "Meeting notes"
+          ]
+        },
+        {
+          "skill": "summarizer",
+          "contains": [
+            "Summary"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Summary"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_238",
+    "instruction": "Translate '浣犲ソ skill agent' into English and extract keywords from the translation.",
+    "gold_skills": [
+      "translator_zh_en",
+      "keyword_extractor"
+    ],
+    "expected_answer": "translator_zh_en followed by keyword_extractor",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: translator_zh_en -> keyword_extractor.",
+    "gold_sequence": [
+      "translator_zh_en",
+      "keyword_extractor"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "ToolBench_trajectory_taxonomy",
+    "hard_negative_skills": [
+      "translator_en_zh",
+      "language_detector",
+      "entity_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "translator_zh_en",
+          "contains": [
+            "浣犲ソ",
+            "skill agent"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retrieval-aware contracts)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "translator_zh_en",
+          "contains": [
+            "placeholder"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_239",
+    "instruction": "Translate 'hello skill retrieval' into Chinese and extract keywords from the translation.",
+    "gold_skills": [
+      "translator_en_zh",
+      "keyword_extractor"
+    ],
+    "expected_answer": "translator_en_zh followed by keyword_extractor",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: translator_en_zh -> keyword_extractor.",
+    "gold_sequence": [
+      "translator_en_zh",
+      "keyword_extractor"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "StableToolBench_evaluation_setting",
+    "hard_negative_skills": [
+      "translator_zh_en",
+      "language_detector",
+      "entity_extractor",
+      "regex_extractor"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "translator_en_zh",
+          "contains": [
+            "hello",
+            "skill"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|retrieval-aware contracts)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "translator_en_zh",
+          "contains": [
+            "浣"
+          ]
+        },
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Keywords"
+        ]
+      },
+      "faithfulness": true
+    }
+  },
+  {
+    "task_id": "dev_240",
+    "instruction": "Extract keywords from 'retrieval contracts reduce wrong calls' and show them in a table.",
+    "gold_skills": [
+      "keyword_extractor",
+      "table_formatter"
+    ],
+    "expected_answer": "keyword_extractor followed by table_formatter",
+    "task_type": "multi_skill",
+    "notes": "dev implicit multi-skill task: keyword_extractor -> table_formatter.",
+    "gold_sequence": [
+      "keyword_extractor",
+      "table_formatter"
+    ],
+    "difficulty": "hard",
+    "benchmark_tags": [
+      "dev",
+      "multi_skill",
+      "implicit_or_composed",
+      "skill_contract_v2",
+      "dependency"
+    ],
+    "source_inspiration": "MetaTool_tool_decision",
+    "hard_negative_skills": [
+      "entity_extractor",
+      "regex_extractor",
+      "csv_summarizer",
+      "json_validator"
+    ],
+    "expected_checks": {
+      "arguments": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "retrieval-aware contracts"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "regex": [
+            "(\\$PREVIOUS_OUTPUT|Summary|Title|Table|Email draft|Keywords|Readability|Sentiment|method|BM25)"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "skill": "keyword_extractor",
+          "contains": [
+            "Keywords"
+          ]
+        },
+        {
+          "skill": "table_formatter",
+          "contains": [
+            "Table"
+          ]
+        }
+      ],
+      "final_answer": {
+        "contains": [
+          "Table"
+        ]
+      },
+      "faithfulness": true
+    }
   }
 ]
